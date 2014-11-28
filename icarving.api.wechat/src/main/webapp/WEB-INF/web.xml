@@ -37,8 +37,17 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>wechat</servlet-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Configuration for Log4j -->
+	<context-param>
+	    <param-name>log4jConfigLocation</param-name>
+    	<param-value>/WEB-INF/classes/log4j.properties</param-value>
+	</context-param>
+	<listener>
+   	 	<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>	
 
 	<!-- Welcome File List -->
 	<welcome-file-list>

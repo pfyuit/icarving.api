@@ -13,7 +13,7 @@
 	 http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
 
 	<!-- Configuration for scanning -->
-	<context:component-scan base-package="com.pfyuit.myblog.dao"></context:component-scan>
+	<context:component-scan base-package="cn.icarving.api.wechat.dao"></context:component-scan>
 
 	<!-- Configuration for JDBC property -->
 	<context:property-placeholder order="1"
@@ -32,29 +32,20 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="annotatedClasses">
-			<list>
-				<value>com.pfyuit.myblog.domain.Blog</value>
-				<value>com.pfyuit.myblog.domain.Category</value>
-				<value>com.pfyuit.myblog.domain.Comment</value>
-				<value>com.pfyuit.myblog.domain.Link</value>
-				<value>com.pfyuit.myblog.domain.User</value>
-			</list>
-		</property>
+<!-- 		<property name="annotatedClasses"> -->
+<!-- 			<list> -->
+<!-- 				<value>cn.icarving.api.wechat.xxx</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.current_session_context_class">thread</prop>
 				<prop key="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
 			</props>
 		</property>
 	</bean>
-	<cache:annotation-driven />
-
+	
 	<!-- Configuration for Transaction Manager -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
