@@ -24,6 +24,7 @@ import cn.icarving.api.wechat.message.send.WxNewsAllBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsCustomerMessage;
 import cn.icarving.api.wechat.message.send.WxNewsGroupBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsOpenidBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxTemplateMessage;
 import cn.icarving.api.wechat.message.send.WxTextCustomerMessage;
 import cn.icarving.api.wechat.message.send.WxTextGroupBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextOpenidBroadcastMessage;
@@ -161,6 +162,12 @@ public class MessageController {
 	public @ResponseBody
 	void broadcastCustomerOpenidImage(@RequestBody WxImageOpenidBroadcastMessage msg) {
 		messageService.broadcastCustomerOpenidImage(msg);
+	}
+	
+	@RequestMapping(value = "/template/send", method = RequestMethod.POST)
+	public @ResponseBody
+	void sendTemplateMessage(@RequestBody WxTemplateMessage msg) {
+		messageService.sendTemplateMessage(msg);
 	}
 
 }

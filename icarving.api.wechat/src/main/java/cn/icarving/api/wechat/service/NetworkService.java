@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class NetworkService {
 
 	public static final String SEND_CUSTOMER_ENDPOINT = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
+	public static final String SEND_CUSTOMER_TEMPLATE_ENDPOINT = "https://api.weixin.qq.com/cgi-bin/message/template/send";
 	public static final String BROADCAST_CUSTOMER_ENDPOINT_NEWS = "https://api.weixin.qq.com/cgi-bin/media/uploadnews";
 	public static final String BROADCAST_CUSTOMER_ENDPOINT_GROUP = "https://api.weixin.qq.com/cgi-bin/message/mass/sendall";
 	public static final String BROADCAST_CUSTOMER_ENDPOINT_OPENID = "https://api.weixin.qq.com/cgi-bin/message/mass/send";

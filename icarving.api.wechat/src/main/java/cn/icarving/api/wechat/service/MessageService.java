@@ -38,6 +38,7 @@ import cn.icarving.api.wechat.message.send.WxNewsGroupBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsResMessage;
 import cn.icarving.api.wechat.message.send.WxResMessageBuilder;
+import cn.icarving.api.wechat.message.send.WxTemplateMessage;
 import cn.icarving.api.wechat.message.send.WxTextGroupBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextResMessage;
@@ -398,6 +399,22 @@ public class MessageService {
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
 			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sendTemplateMessage(WxTemplateMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("Template message to send to customer: " + json);
+
+			serviceService.post(NetworkService.SEND_CUSTOMER_TEMPLATE_ENDPOINT, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
