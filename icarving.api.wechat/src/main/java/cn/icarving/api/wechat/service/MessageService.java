@@ -31,16 +31,25 @@ import cn.icarving.api.wechat.message.recv.WxSubEventMessage;
 import cn.icarving.api.wechat.message.recv.WxTextMessage;
 import cn.icarving.api.wechat.message.recv.WxVideoMessage;
 import cn.icarving.api.wechat.message.recv.WxVoiceMessage;
+import cn.icarving.api.wechat.message.send.WxImageGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxImageOpenidBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxNewsAllBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxNewsGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxNewsOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsResMessage;
 import cn.icarving.api.wechat.message.send.WxResMessageBuilder;
+import cn.icarving.api.wechat.message.send.WxTextGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxTextOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextResMessage;
+import cn.icarving.api.wechat.message.send.WxVoiceGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxVoiceOpenidBroadcastMessage;
 import cn.icarving.api.wechat.oxm.XMLProcessor;
 
 import com.google.common.base.Strings;
 
 @Service
 public class MessageService {
-	
+
 	@Autowired
 	private NetworkService serviceService;
 
@@ -237,14 +246,158 @@ public class MessageService {
 		String response = processor1.objectToXML(resMsg);
 		return response;
 	}
-	
-	public void sendCustomer(Object msg){
+
+	public void sendCustomer(Object msg) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(msg);
-			LOGGER.info("JSON to send to customer: "+json);
-			
+			LOGGER.info("JSON to send to customer: " + json);
+
 			serviceService.post(NetworkService.SEND_CUSTOMER_ENDPOINT, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerAllNews(WxNewsAllBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to send to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_NEWS, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerGroupNews(WxNewsGroupBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerGroupText(WxTextGroupBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerGroupVoice(WxVoiceGroupBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerGroupImage(WxImageGroupBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerOpenidNews(WxNewsOpenidBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerOpenidText(WxTextOpenidBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerOpenidVoice(WxVoiceOpenidBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void broadcastCustomerOpenidImage(WxImageOpenidBroadcastMessage msg) {
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(msg);
+			LOGGER.info("JSON to broadcast to customer: " + json);
+
+			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

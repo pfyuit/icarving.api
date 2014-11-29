@@ -17,11 +17,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.wechat.message.send.WxImageCustomerMessage;
+import cn.icarving.api.wechat.message.send.WxImageGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxImageOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxMusicCustomerMessage;
+import cn.icarving.api.wechat.message.send.WxNewsAllBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxNewsCustomerMessage;
+import cn.icarving.api.wechat.message.send.WxNewsGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxNewsOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextCustomerMessage;
+import cn.icarving.api.wechat.message.send.WxTextGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxTextOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxVideoCustomerMessage;
 import cn.icarving.api.wechat.message.send.WxVoiceCustomerMessage;
+import cn.icarving.api.wechat.message.send.WxVoiceGroupBroadcastMessage;
+import cn.icarving.api.wechat.message.send.WxVoiceOpenidBroadcastMessage;
 import cn.icarving.api.wechat.service.MessageService;
 
 @Controller
@@ -98,6 +107,60 @@ public class MessageController {
 	public @ResponseBody
 	void sendCustomerNews(@RequestBody WxNewsCustomerMessage msg) {
 		messageService.sendCustomer(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/all/news", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerAllNews(@RequestBody WxNewsAllBroadcastMessage msg) {
+		messageService.broadcastCustomerAllNews(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/group/news", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerGroupNews(@RequestBody WxNewsGroupBroadcastMessage msg) {
+		messageService.broadcastCustomerGroupNews(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/group/text", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerGroupText(@RequestBody WxTextGroupBroadcastMessage msg) {
+		messageService.broadcastCustomerGroupText(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/group/voice", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerGroupVoice(@RequestBody WxVoiceGroupBroadcastMessage msg) {
+		messageService.broadcastCustomerGroupVoice(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/group/image", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerGroupImage(@RequestBody WxImageGroupBroadcastMessage msg) {
+		messageService.broadcastCustomerGroupImage(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/openid/news", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerOpenidNews(@RequestBody WxNewsOpenidBroadcastMessage msg) {
+		messageService.broadcastCustomerOpenidNews(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/openid/text", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerOpenidText(@RequestBody WxTextOpenidBroadcastMessage msg) {
+		messageService.broadcastCustomerOpenidText(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/openid/voice", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerOpenidVoice(@RequestBody WxVoiceOpenidBroadcastMessage msg) {
+		messageService.broadcastCustomerOpenidVoice(msg);
+	}
+
+	@RequestMapping(value = "/broadcastCustomer/openid/image", method = RequestMethod.POST)
+	public @ResponseBody
+	void broadcastCustomerOpenidImage(@RequestBody WxImageOpenidBroadcastMessage msg) {
+		messageService.broadcastCustomerOpenidImage(msg);
 	}
 
 }
