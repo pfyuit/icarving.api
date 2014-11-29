@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthenticateController {
 
 	@RequestMapping("/callback")
 	public String authCallback() {
