@@ -2,7 +2,7 @@ package cn.icarving.api.wechat.message.user;
 
 import java.util.List;
 
-public class FindGroupResponse {
+public class GetGroupResponse {
 
 	private List<Group> groups;
 

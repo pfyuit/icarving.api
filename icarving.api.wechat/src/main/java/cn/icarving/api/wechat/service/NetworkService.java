@@ -28,19 +28,24 @@ public class NetworkService {
 	public static final String CUSTOMER_BROADCAST_DELETE = "https://api.weixin.qq.com/cgi-bin/message/mass/delete";
 	
 	public static final String USER_GROUP_CREATE = "https://api.weixin.qq.com/cgi-bin/groups/create";
-	public static final String USER_GROUP_FIND = "https://api.weixin.qq.com/cgi-bin/groups/get";
-	public static final String USER_GROUP_FIND_BYUSER = "https://api.weixin.qq.com/cgi-bin/groups/getid";
+	public static final String USER_GROUP_GET = "https://api.weixin.qq.com/cgi-bin/groups/get";
+	public static final String USER_GROUP_GET_BYUSER = "https://api.weixin.qq.com/cgi-bin/groups/getid";
 	public static final String USER_GROUP_UPDATE = "https://api.weixin.qq.com/cgi-bin/groups/update";
 	public static final String USER_GROUP_UPDATE_BYUSER = "https://api.weixin.qq.com/cgi-bin/groups/members/update";
 	
 	public static final String USER_NOTE_UPDATE = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark";
 	
-	public static final String USER_INFO_FIND = "https://api.weixin.qq.com/cgi-bin/user/info";
+	public static final String USER_INFO_GET = "https://api.weixin.qq.com/cgi-bin/user/info";
 	
-	public static final String USER_SUBSCRIBES_FIND = "https://api.weixin.qq.com/cgi-bin/user/get";
+	public static final String USER_SUBSCRIBES_GET = "https://api.weixin.qq.com/cgi-bin/user/get";
+	
+	public static final String AUTH_USER_ACCESS_TOKEN_GET = "https://api.weixin.qq.com/sns/oauth2/access_token";
+	public static final String AUTH_USER_ACCESS_TOKEN_REFRESH = "https://api.weixin.qq.com/sns/oauth2/refresh_token";
+	public static final String AUTH_USER_ACCESS_TOKEN_VALIDATE = "https://api.weixin.qq.com/sns/auth";
+	public static final String AUTH_USER_INFO_GET = "https://api.weixin.qq.com/sns/userinfo";
 	
 	public static final String SYSTEM_BASIC_TOKEN = "https://api.weixin.qq.com/cgi-bin/token";
-	public static final String SYSTSEM_BASIC_SERVER_IP = "https://api.weixin.qq.com/cgi-bin/getcallbackip";
+	public static final String SYSTEM_BASIC_SERVER_IP = "https://api.weixin.qq.com/cgi-bin/getcallbackip";
 
 	private static Logger LOGGER = Logger.getLogger(NetworkService.class);
 

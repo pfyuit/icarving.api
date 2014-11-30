@@ -74,100 +74,100 @@ public class MessageController {
 		}
 	}
 
-	@RequestMapping(value = "/sendCustomer/text", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/text", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerText(@RequestBody WxTextCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
 
-	@RequestMapping(value = "/sendCustomer/image", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/image", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerImage(@RequestBody WxImageCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
 
-	@RequestMapping(value = "/sendCustomer/voice", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/voice", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerVoice(@RequestBody WxVoiceCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
 
-	@RequestMapping(value = "/sendCustomer/video", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/video", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerVideo(@RequestBody WxVideoCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
 
-	@RequestMapping(value = "/sendCustomer/music", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/music", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerMusic(@RequestBody WxMusicCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
 
-	@RequestMapping(value = "/sendCustomer/news", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/send/news", method = RequestMethod.POST)
 	public @ResponseBody
 	void sendCustomerNews(@RequestBody WxNewsCustomerMessage msg) {
 		messageService.sendCustomer(msg);
 	}
+	
+	@RequestMapping(value = "/customer/send/template", method = RequestMethod.POST)
+	public @ResponseBody
+	void sendTemplateMessage(@RequestBody WxTemplateMessage msg) {
+		messageService.sendTemplateMessage(msg);
+	}
 
-	@RequestMapping(value = "/broadcastCustomer/all/news", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/all/news", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerAllNews(@RequestBody WxNewsAllBroadcastMessage msg) {
 		messageService.broadcastCustomerAllNews(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/group/news", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/group/news", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerGroupNews(@RequestBody WxNewsGroupBroadcastMessage msg) {
 		messageService.broadcastCustomerGroupNews(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/group/text", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/group/text", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerGroupText(@RequestBody WxTextGroupBroadcastMessage msg) {
 		messageService.broadcastCustomerGroupText(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/group/voice", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/group/voice", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerGroupVoice(@RequestBody WxVoiceGroupBroadcastMessage msg) {
 		messageService.broadcastCustomerGroupVoice(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/group/image", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/group/image", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerGroupImage(@RequestBody WxImageGroupBroadcastMessage msg) {
 		messageService.broadcastCustomerGroupImage(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/openid/news", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/openid/news", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerOpenidNews(@RequestBody WxNewsOpenidBroadcastMessage msg) {
 		messageService.broadcastCustomerOpenidNews(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/openid/text", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/openid/text", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerOpenidText(@RequestBody WxTextOpenidBroadcastMessage msg) {
 		messageService.broadcastCustomerOpenidText(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/openid/voice", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/openid/voice", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerOpenidVoice(@RequestBody WxVoiceOpenidBroadcastMessage msg) {
 		messageService.broadcastCustomerOpenidVoice(msg);
 	}
 
-	@RequestMapping(value = "/broadcastCustomer/openid/image", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer/broadcast/openid/image", method = RequestMethod.POST)
 	public @ResponseBody
 	void broadcastCustomerOpenidImage(@RequestBody WxImageOpenidBroadcastMessage msg) {
 		messageService.broadcastCustomerOpenidImage(msg);
-	}
-	
-	@RequestMapping(value = "/template/send", method = RequestMethod.POST)
-	public @ResponseBody
-	void sendTemplateMessage(@RequestBody WxTemplateMessage msg) {
-		messageService.sendTemplateMessage(msg);
 	}
 
 }

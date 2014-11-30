@@ -1,6 +1,6 @@
 package cn.icarving.api.wechat.message.user;
 
-public class FindUserResponse {
+public class GetUserInfoResponse {
 	private String subscribe;
 	private String openid;
 	private String nickname;

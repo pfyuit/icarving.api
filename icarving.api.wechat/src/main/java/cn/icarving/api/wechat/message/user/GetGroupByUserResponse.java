@@ -1,6 +1,6 @@
 package cn.icarving.api.wechat.message.user;
 
-public class FindGroupByUserResponse {
+public class GetGroupByUserResponse {
 	private String groupid;
 
 	public String getGroupid() {

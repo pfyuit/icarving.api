@@ -62,7 +62,7 @@ public class BasicService {
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			HttpResponse response = networkService.get(NetworkService.SYSTSEM_BASIC_SERVER_IP, params);
+			HttpResponse response = networkService.get(NetworkService.SYSTEM_BASIC_SERVER_IP, params);
 			
 			HttpEntity entity = response.getEntity();
 			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));

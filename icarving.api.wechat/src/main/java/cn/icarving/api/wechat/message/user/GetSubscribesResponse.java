@@ -2,7 +2,7 @@ package cn.icarving.api.wechat.message.user;
 
 import java.util.List;
 
-public class FindSubscribesResponse {
+public class GetSubscribesResponse {
 	private int total;
 	private int count;
 	private Data data;
