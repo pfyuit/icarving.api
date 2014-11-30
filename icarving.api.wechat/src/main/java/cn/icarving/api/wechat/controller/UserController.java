@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.wechat.message.user.CreateGroupRequest;
@@ -11,6 +12,7 @@ import cn.icarving.api.wechat.message.user.CreateGroupResponse;
 import cn.icarving.api.wechat.message.user.FindGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.FindGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.FindGroupResponse;
+import cn.icarving.api.wechat.message.user.FindUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupRequest;
@@ -60,6 +62,12 @@ public class UserController {
 	public @ResponseBody
 	UpdateNoteResponse updateNote(@RequestBody UpdateNoteRequest request) {
 		return userService.updateNote(request);
+	}
+	
+	@RequestMapping("/info/find")
+	public @ResponseBody
+	FindUserResponse findUser(@RequestParam(value="openid", required =true) String openid, @RequestParam(value="lang", required=true) String lang) {
+		return userService.findUser(openid, lang);
 	}
 
 	@RequestMapping("/callback")

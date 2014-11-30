@@ -3,9 +3,13 @@ package cn.icarving.api.wechat.service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -17,6 +21,7 @@ import cn.icarving.api.wechat.message.user.CreateGroupResponse;
 import cn.icarving.api.wechat.message.user.FindGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.FindGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.FindGroupResponse;
+import cn.icarving.api.wechat.message.user.FindUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupRequest;
@@ -192,6 +197,36 @@ public class UserService {
 			}
 
 			result = objectMapper.readValue(sb.toString(), UpdateNoteResponse.class);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public FindUserResponse findUser(String openid, String lang) {
+		FindUserResponse result = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("openid", openid));
+			params.add(new BasicNameValuePair("lang", lang));
+			HttpResponse response = networkService.get(NetworkService.USER_INFO_FIND, params);
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			char[] buf = new char[1024];
+			int len = 0;
+			StringBuffer sb = new StringBuffer();
+			while ((len = br.read(buf)) != -1) {
+				sb.append(buf, 0, len);
+			}
+
+			result = objectMapper.readValue(sb.toString(), FindUserResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
