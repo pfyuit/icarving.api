@@ -21,6 +21,8 @@ import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupResponse;
+import cn.icarving.api.wechat.message.user.UpdateNoteRequest;
+import cn.icarving.api.wechat.message.user.UpdateNoteResponse;
 
 public class UserService {
 
@@ -161,6 +163,35 @@ public class UserService {
 			}
 
 			result = objectMapper.readValue(sb.toString(), UpdateGroupByUserResponse.class);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public UpdateNoteResponse updateNote(UpdateNoteRequest request) {
+		UpdateNoteResponse result = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(request);
+			LOGGER.info("JSON to update note: " + json);
+
+			HttpResponse response = networkService.post(NetworkService.USER_NOTE_UPDATE, json);
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			char[] buf = new char[1024];
+			int len = 0;
+			StringBuffer sb = new StringBuffer();
+			while ((len = br.read(buf)) != -1) {
+				sb.append(buf, 0, len);
+			}
+
+			result = objectMapper.readValue(sb.toString(), UpdateNoteResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

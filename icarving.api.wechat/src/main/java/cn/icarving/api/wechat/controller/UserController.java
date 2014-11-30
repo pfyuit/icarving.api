@@ -15,6 +15,8 @@ import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupResponse;
+import cn.icarving.api.wechat.message.user.UpdateNoteRequest;
+import cn.icarving.api.wechat.message.user.UpdateNoteResponse;
 import cn.icarving.api.wechat.service.UserService;
 
 @Controller
@@ -52,6 +54,12 @@ public class UserController {
 	public @ResponseBody
 	UpdateGroupByUserResponse updateGroupByUser(@RequestBody UpdateGroupByUserRequest request) {
 		return userService.updateGroupByUser(request);
+	}
+	
+	@RequestMapping("/note/update")
+	public @ResponseBody
+	UpdateNoteResponse updateNote(@RequestBody UpdateNoteRequest request) {
+		return userService.updateNote(request);
 	}
 
 	@RequestMapping("/callback")
