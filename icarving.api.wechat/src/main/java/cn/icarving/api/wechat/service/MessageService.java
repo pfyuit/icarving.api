@@ -254,7 +254,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to send to customer: " + json);
 
-			serviceService.post(NetworkService.SEND_CUSTOMER_ENDPOINT, json);
+			serviceService.post(NetworkService.CUSTOMER_SEND, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -270,7 +270,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to send to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_NEWS, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_ALL, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -286,7 +286,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_GROUP, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -302,7 +302,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_GROUP, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -318,7 +318,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_GROUP, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -334,7 +334,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_GROUP, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_GROUP, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -350,7 +350,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_OPENID, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -366,7 +366,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_OPENID, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -382,7 +382,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_OPENID, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -398,7 +398,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("JSON to broadcast to customer: " + json);
 
-			serviceService.post(NetworkService.BROADCAST_CUSTOMER_ENDPOINT_OPENID, json);
+			serviceService.post(NetworkService.CUSTOMER_BROADCAST_OPENID, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -414,7 +414,7 @@ public class MessageService {
 			String json = objectMapper.writeValueAsString(msg);
 			LOGGER.info("Template message to send to customer: " + json);
 
-			serviceService.post(NetworkService.SEND_CUSTOMER_TEMPLATE_ENDPOINT, json);
+			serviceService.post(NetworkService.CUSTOMER_SEND_TEMPLATE, json);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

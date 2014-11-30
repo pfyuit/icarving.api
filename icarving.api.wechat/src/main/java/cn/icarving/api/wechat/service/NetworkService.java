@@ -19,12 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class NetworkService {
 
-	public static final String SEND_CUSTOMER_ENDPOINT = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
-	public static final String SEND_CUSTOMER_TEMPLATE_ENDPOINT = "https://api.weixin.qq.com/cgi-bin/message/template/send";
-	public static final String BROADCAST_CUSTOMER_ENDPOINT_NEWS = "https://api.weixin.qq.com/cgi-bin/media/uploadnews";
-	public static final String BROADCAST_CUSTOMER_ENDPOINT_GROUP = "https://api.weixin.qq.com/cgi-bin/message/mass/sendall";
-	public static final String BROADCAST_CUSTOMER_ENDPOINT_OPENID = "https://api.weixin.qq.com/cgi-bin/message/mass/send";
-	public static final String BROADCAST_CUSTOMER_ENDPOINT_DELETE = "https://api.weixin.qq.com/cgi-bin/message/mass/delete";
+	public static final String CUSTOMER_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
+	public static final String CUSTOMER_SEND_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/message/template/send";
+	public static final String CUSTOMER_BROADCAST_ALL = "https://api.weixin.qq.com/cgi-bin/media/uploadnews";
+	public static final String CUSTOMER_BROADCAST_GROUP = "https://api.weixin.qq.com/cgi-bin/message/mass/sendall";
+	public static final String CUSTOMER_BROADCAST_OPENID = "https://api.weixin.qq.com/cgi-bin/message/mass/send";
+	public static final String CUSTOMER_BROADCAST_DELETE = "https://api.weixin.qq.com/cgi-bin/message/mass/delete";
+	public static final String USER_GROUP_CREATE = "https://api.weixin.qq.com/cgi-bin/groups/create";
+	public static final String USER_GROUP_FIND = "https://api.weixin.qq.com/cgi-bin/groups/get";
+	public static final String USER_GROUP_FIND_BYUSER = "https://api.weixin.qq.com/cgi-bin/groups/getid";
+	public static final String USER_GROUP_UPDATE = "https://api.weixin.qq.com/cgi-bin/groups/update";
+	public static final String USER_GROUP_UPDATE_BYUSER = "https://api.weixin.qq.com/cgi-bin/groups/members/update";
 
 	private static Logger LOGGER = Logger.getLogger(NetworkService.class);
 
