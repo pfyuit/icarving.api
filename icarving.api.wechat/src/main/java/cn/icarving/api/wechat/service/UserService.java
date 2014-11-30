@@ -15,6 +15,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.icarving.api.wechat.message.user.CreateGroupRequest;
 import cn.icarving.api.wechat.message.user.CreateGroupResponse;
@@ -30,6 +31,7 @@ import cn.icarving.api.wechat.message.user.UpdateGroupResponse;
 import cn.icarving.api.wechat.message.user.UpdateNoteRequest;
 import cn.icarving.api.wechat.message.user.UpdateNoteResponse;
 
+@Service
 public class UserService {
 
 	private static Logger LOGGER = Logger.getLogger(MessageService.class);

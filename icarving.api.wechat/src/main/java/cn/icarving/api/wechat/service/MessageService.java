@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import cn.icarving.api.wechat.message.oxm.XMLProcessor;
 import cn.icarving.api.wechat.message.recv.Wx2DCodeEventMessage;
 import cn.icarving.api.wechat.message.recv.WxImageMessage;
 import cn.icarving.api.wechat.message.recv.WxLinkMessage;
@@ -44,7 +45,6 @@ import cn.icarving.api.wechat.message.send.WxTextOpenidBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxTextResMessage;
 import cn.icarving.api.wechat.message.send.WxVoiceGroupBroadcastMessage;
 import cn.icarving.api.wechat.message.send.WxVoiceOpenidBroadcastMessage;
-import cn.icarving.api.wechat.oxm.XMLProcessor;
 
 import com.google.common.base.Strings;
 

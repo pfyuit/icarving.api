@@ -1,4 +1,4 @@
-package cn.icarving.api.wechat.oxm;
+package cn.icarving.api.wechat.message.oxm;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;

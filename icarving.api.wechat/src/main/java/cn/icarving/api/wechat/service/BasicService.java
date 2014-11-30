@@ -14,10 +14,12 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cn.icarving.api.wechat.message.basic.GetAccessTokenResponse;
 import cn.icarving.api.wechat.message.user.GetServerIPResponse;
 
+@Service
 public class BasicService {
 	
 	@Autowired
