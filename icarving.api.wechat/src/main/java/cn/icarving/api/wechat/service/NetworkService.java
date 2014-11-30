@@ -40,6 +40,7 @@ public class NetworkService {
 	public static final String USER_SUBSCRIBES_FIND = "https://api.weixin.qq.com/cgi-bin/user/get";
 	
 	public static final String SYSTEM_BASIC_TOKEN = "https://api.weixin.qq.com/cgi-bin/token";
+	public static final String SYSTSEM_BASIC_SERVER_IP = "https://api.weixin.qq.com/cgi-bin/getcallbackip";
 
 	private static Logger LOGGER = Logger.getLogger(NetworkService.class);
 

@@ -16,6 +16,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.icarving.api.wechat.message.basic.GetAccessTokenResponse;
+import cn.icarving.api.wechat.message.user.GetServerIPResponse;
 
 public class BasicService {
 	
@@ -42,6 +43,34 @@ public class BasicService {
 			}
 
 			result = objectMapper.readValue(sb.toString(), GetAccessTokenResponse.class);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public GetServerIPResponse getServerIP() {
+		GetServerIPResponse result = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			HttpResponse response = networkService.get(NetworkService.SYSTSEM_BASIC_SERVER_IP, params);
+			
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			char[] buf = new char[1024];
+			int len = 0;
+			StringBuffer sb = new StringBuffer();
+			while ((len = br.read(buf)) != -1) {
+				sb.append(buf, 0, len);
+			}
+			result = objectMapper.readValue(sb.toString(), GetServerIPResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
