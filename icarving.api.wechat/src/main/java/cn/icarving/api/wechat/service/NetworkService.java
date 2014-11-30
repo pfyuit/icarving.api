@@ -38,6 +38,8 @@ public class NetworkService {
 	public static final String USER_INFO_FIND = "https://api.weixin.qq.com/cgi-bin/user/info";
 	
 	public static final String USER_SUBSCRIBES_FIND = "https://api.weixin.qq.com/cgi-bin/user/get";
+	
+	public static final String SYSTEM_BASIC_TOKEN = "https://api.weixin.qq.com/cgi-bin/token";
 
 	private static Logger LOGGER = Logger.getLogger(NetworkService.class);
 
