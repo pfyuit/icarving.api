@@ -36,6 +36,8 @@ public class NetworkService {
 	public static final String USER_NOTE_UPDATE = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark";
 	
 	public static final String USER_INFO_FIND = "https://api.weixin.qq.com/cgi-bin/user/info";
+	
+	public static final String USER_SUBSCRIBES_FIND = "https://api.weixin.qq.com/cgi-bin/user/get";
 
 	private static Logger LOGGER = Logger.getLogger(NetworkService.class);
 

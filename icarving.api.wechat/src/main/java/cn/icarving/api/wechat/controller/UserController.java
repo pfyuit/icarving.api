@@ -12,6 +12,7 @@ import cn.icarving.api.wechat.message.user.CreateGroupResponse;
 import cn.icarving.api.wechat.message.user.FindGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.FindGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.FindGroupResponse;
+import cn.icarving.api.wechat.message.user.FindSubscribesResponse;
 import cn.icarving.api.wechat.message.user.FindUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
@@ -68,6 +69,12 @@ public class UserController {
 	public @ResponseBody
 	FindUserResponse findUser(@RequestParam(value="openid", required =true) String openid, @RequestParam(value="lang", required=true) String lang) {
 		return userService.findUser(openid, lang);
+	}
+	
+	@RequestMapping("/subscribes/find")
+	public @ResponseBody
+	FindSubscribesResponse findSubscribes(@RequestParam(value="next_openid ", required =true) String nextOpenid) {
+		return userService.findSubscribes(nextOpenid);
 	}
 
 	@RequestMapping("/callback")

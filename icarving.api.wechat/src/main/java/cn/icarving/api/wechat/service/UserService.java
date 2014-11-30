@@ -21,6 +21,7 @@ import cn.icarving.api.wechat.message.user.CreateGroupResponse;
 import cn.icarving.api.wechat.message.user.FindGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.FindGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.FindGroupResponse;
+import cn.icarving.api.wechat.message.user.FindSubscribesResponse;
 import cn.icarving.api.wechat.message.user.FindUserResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
@@ -227,6 +228,35 @@ public class UserService {
 			}
 
 			result = objectMapper.readValue(sb.toString(), FindUserResponse.class);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public FindSubscribesResponse findSubscribes(String nextOpenid) {
+		FindSubscribesResponse result = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("next_openid ", nextOpenid));
+			HttpResponse response = networkService.get(NetworkService.USER_SUBSCRIBES_FIND, params);
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			char[] buf = new char[1024];
+			int len = 0;
+			StringBuffer sb = new StringBuffer();
+			while ((len = br.read(buf)) != -1) {
+				sb.append(buf, 0, len);
+			}
+
+			result = objectMapper.readValue(sb.toString(), FindSubscribesResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
