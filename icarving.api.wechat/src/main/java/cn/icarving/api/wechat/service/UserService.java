@@ -1,8 +1,6 @@
 package cn.icarving.api.wechat.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +8,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -20,12 +19,12 @@ import org.springframework.stereotype.Service;
 import cn.icarving.api.wechat.message.user.CreateGroupRequest;
 import cn.icarving.api.wechat.message.user.CreateGroupResponse;
 import cn.icarving.api.wechat.message.user.FindGroupByUserRequest;
+import cn.icarving.api.wechat.message.user.GetAuthUserInfoResponse;
 import cn.icarving.api.wechat.message.user.GetGroupByUserResponse;
 import cn.icarving.api.wechat.message.user.GetGroupResponse;
 import cn.icarving.api.wechat.message.user.GetSubscribesResponse;
-import cn.icarving.api.wechat.message.user.GetUserInfoResponse;
-import cn.icarving.api.wechat.message.user.GetAuthUserInfoResponse;
 import cn.icarving.api.wechat.message.user.GetUserAccessTokenResponse;
+import cn.icarving.api.wechat.message.user.GetUserInfoResponse;
 import cn.icarving.api.wechat.message.user.RefreshUserAccessTokenResponse;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserRequest;
 import cn.icarving.api.wechat.message.user.UpdateGroupByUserResponse;
@@ -49,18 +48,9 @@ public class UserService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(request);
 			LOGGER.info("JSON to create group: " + json);
-
 			HttpResponse response = networkService.post(NetworkService.USER_GROUP_CREATE, json);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), CreateGroupResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), CreateGroupResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -76,18 +66,9 @@ public class UserService {
 		GetGroupResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			HttpResponse response = networkService.get(NetworkService.USER_GROUP_GET, null);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetGroupResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetGroupResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -105,18 +86,9 @@ public class UserService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(request);
 			LOGGER.info("JSON to find group by user: " + json);
-
 			HttpResponse response = networkService.post(NetworkService.USER_GROUP_GET_BYUSER, json);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetGroupByUserResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetGroupByUserResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -134,18 +106,9 @@ public class UserService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(request);
 			LOGGER.info("JSON to update group: " + json);
-
 			HttpResponse response = networkService.post(NetworkService.USER_GROUP_UPDATE, json);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), UpdateGroupResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), UpdateGroupResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -163,18 +126,9 @@ public class UserService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(request);
 			LOGGER.info("JSON to update group by user: " + json);
-
 			HttpResponse response = networkService.post(NetworkService.USER_GROUP_UPDATE_BYUSER, json);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), UpdateGroupByUserResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), UpdateGroupByUserResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -192,18 +146,9 @@ public class UserService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(request);
 			LOGGER.info("JSON to update note: " + json);
-
 			HttpResponse response = networkService.post(NetworkService.USER_NOTE_UPDATE, json);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), UpdateNoteResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), UpdateNoteResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -219,21 +164,12 @@ public class UserService {
 		GetUserInfoResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("openid", openid));
 			params.add(new BasicNameValuePair("lang", lang));
 			HttpResponse response = networkService.get(NetworkService.USER_INFO_GET, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetUserInfoResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetUserInfoResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -249,20 +185,11 @@ public class UserService {
 		GetSubscribesResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("next_openid ", nextOpenid));
 			HttpResponse response = networkService.get(NetworkService.USER_SUBSCRIBES_GET, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetSubscribesResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetSubscribesResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -278,7 +205,6 @@ public class UserService {
 		GetUserAccessTokenResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("appid ", appid));
 			params.add(new BasicNameValuePair("secret", secret));
@@ -286,15 +212,7 @@ public class UserService {
 			params.add(new BasicNameValuePair("grantType", grantType));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_ACCESS_TOKEN_GET, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetUserAccessTokenResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetUserAccessTokenResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -310,22 +228,13 @@ public class UserService {
 		RefreshUserAccessTokenResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("appid ", appid));
 			params.add(new BasicNameValuePair("grantType", grantType));
 			params.add(new BasicNameValuePair("refresh_token", refreshToken));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_ACCESS_TOKEN_REFRESH, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), RefreshUserAccessTokenResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), RefreshUserAccessTokenResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -341,22 +250,13 @@ public class UserService {
 		GetAuthUserInfoResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("access_token", accessToken));
 			params.add(new BasicNameValuePair("openid", openid));
 			params.add(new BasicNameValuePair("lang", lang));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_INFO_GET, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), GetAuthUserInfoResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), GetAuthUserInfoResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -372,21 +272,12 @@ public class UserService {
 		ValidateUserAccessTokenResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
-
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("access_token", accessToken));
 			params.add(new BasicNameValuePair("openid", openid));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_ACCESS_TOKEN_VALIDATE, params);
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			char[] buf = new char[1024];
-			int len = 0;
-			StringBuffer sb = new StringBuffer();
-			while ((len = br.read(buf)) != -1) {
-				sb.append(buf, 0, len);
-			}
-
-			result = objectMapper.readValue(sb.toString(), ValidateUserAccessTokenResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity), ValidateUserAccessTokenResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
