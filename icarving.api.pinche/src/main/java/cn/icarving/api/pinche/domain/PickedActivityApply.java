@@ -13,13 +13,13 @@ public class PickedActivityApply {
 
 	@Id
 	@Column(name = "picked_activity_apply_id")
-	private String pickedActivityApplyId;
+	private long pickedActivityApplyId;
 
 	@Column(name = "picked_activity_id")
-	private String pickedActivityId;
+	private long pickedActivityId;
 
 	@Column(name = "apply_user_id")
-	private String applyUserId;
+	private long applyUserId;
 
 	private String status;
 
@@ -29,27 +29,27 @@ public class PickedActivityApply {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public String getPickedActivityApplyId() {
+	public long getPickedActivityApplyId() {
 		return pickedActivityApplyId;
 	}
 
-	public void setPickedActivityApplyId(String pickedActivityApplyId) {
+	public void setPickedActivityApplyId(long pickedActivityApplyId) {
 		this.pickedActivityApplyId = pickedActivityApplyId;
 	}
 
-	public String getPickedActivityId() {
+	public long getPickedActivityId() {
 		return pickedActivityId;
 	}
 
-	public void setPickedActivityId(String pickedActivityId) {
+	public void setPickedActivityId(long pickedActivityId) {
 		this.pickedActivityId = pickedActivityId;
 	}
 
-	public String getApplyUserId() {
+	public long getApplyUserId() {
 		return applyUserId;
 	}
 
-	public void setApplyUserId(String applyUserId) {
+	public void setApplyUserId(long applyUserId) {
 		this.applyUserId = applyUserId;
 	}
 

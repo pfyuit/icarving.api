@@ -32,4 +32,9 @@ public class PickActivityService {
 		return pickActivityDao.findAll();
 	}
 
+	public List<PickActivity> findPickActivityByUser(long uid) {
+		List<PickActivity> result = pickActivityDao.findPickActivityByUser(uid);
+		return result;
+	}
+
 }

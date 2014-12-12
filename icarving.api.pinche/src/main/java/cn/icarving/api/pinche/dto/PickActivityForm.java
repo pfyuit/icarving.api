@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 
 public class PickActivityForm {
 
+	private long ownerId;
+
 	private Timestamp startTime;
 
 	private Timestamp returnTime;
@@ -20,6 +22,14 @@ public class PickActivityForm {
 	private int capacity;
 
 	private String note;
+
+	public long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
 
 	public Timestamp getStartTime() {
 		return startTime;

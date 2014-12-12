@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	private String uid;
+	private long uid;
 
 	private String name;
 
@@ -29,11 +29,11 @@ public class User {
 	@Column(name = "is_login")
 	private boolean isLogin;
 
-	public String getUid() {
+	public long getUid() {
 		return uid;
 	}
 
-	public void setUid(String uid) {
+	public void setUid(long uid) {
 		this.uid = uid;
 	}
 

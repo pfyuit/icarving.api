@@ -32,4 +32,9 @@ public class PickedActivityService {
 		return pickedActivityDao.findAll();
 	}
 
+	public List<PickedActivity> findPickedActivityByUser(long uid) {
+		List<PickedActivity> result = pickedActivityDao.findPickedActivityByUser(uid);
+		return result;
+	}
+
 }

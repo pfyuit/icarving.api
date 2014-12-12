@@ -1,8 +1,8 @@
 package cn.icarving.api.pinche.common;
 
+@SuppressWarnings("serial")
 public class ApiException extends RuntimeException {
 
-	private static final long serialVersionUID = 3985874829107065907L;
 	private String code;
 	private String message;
 

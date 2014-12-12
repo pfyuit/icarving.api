@@ -2,12 +2,14 @@ package cn.icarving.api.pinche.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
@@ -33,6 +35,7 @@ public class ActivityController {
 	public @ResponseBody
 	ApiResponse createPickActivity(@RequestBody PickActivityForm form) {
 		PickActivity pickActivity = new PickActivity();
+		pickActivity.setOwnerId(form.getOwnerId());
 		pickActivity.setStartTime(form.getStartTime());
 		pickActivity.setReturnTime(form.getReturnTime());
 		pickActivity.setSourceAddress(form.getSourceAddress());
@@ -58,10 +61,11 @@ public class ActivityController {
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickActivity);
 	}
 
-	@RequestMapping(value = "/pick/find", method = RequestMethod.GET)
+	@RequestMapping(value = "/pick/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickActivity() {
-		return null;
+	ApiResponse findPickActivityByUser(@RequestParam(value="uid", required=true) long uid) {
+		List<PickActivity> list = pickActivityService.findPickActivityByUser(uid);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 
 	// //////////////////////////////////////////////////////////////////////
@@ -71,6 +75,7 @@ public class ActivityController {
 	public @ResponseBody
 	ApiResponse createPickedActivity(@RequestBody PickedActivityForm form) {
 		PickedActivity pickedActivity = new PickedActivity();
+		pickedActivity.setOwnerId(form.getOwnerId());
 		pickedActivity.setStartTime(form.getStartTime());
 		pickedActivity.setReturnTime(form.getReturnTime());
 		pickedActivity.setSourceAddress(form.getSourceAddress());
@@ -93,10 +98,11 @@ public class ActivityController {
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickedActivity);
 	}
 
-	@RequestMapping(value = "/picked/find", method = RequestMethod.GET)
+	@RequestMapping(value = "/picked/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickedActivity() {
-		return null;
+	ApiResponse findPickedActivityByUser(@RequestParam(value="uid", required=true) long uid) {
+		List<PickedActivity> list = pickedActivityService.findPickedActivityByUser(uid);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 
 }

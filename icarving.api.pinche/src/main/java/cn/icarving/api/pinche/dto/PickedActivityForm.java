@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class PickedActivityForm {
-	
+
+	private long ownerId;
+
 	private Timestamp startTime;
 
 	private Timestamp returnTime;
@@ -18,6 +20,14 @@ public class PickedActivityForm {
 	private String carType;
 
 	private String note;
+
+	public long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
+	}
 
 	public Timestamp getStartTime() {
 		return startTime;

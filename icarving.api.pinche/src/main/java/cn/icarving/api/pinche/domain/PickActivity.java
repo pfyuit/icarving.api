@@ -14,7 +14,10 @@ public class PickActivity {
 
 	@Id
 	@Column(name = "pick_activity_id")
-	private String pickActivityId;
+	private long pickActivityId;
+
+	@Column(name = "owner_id")
+	private long ownerId;
 
 	@Column(name = "start_time")
 	private Timestamp startTime;
@@ -51,12 +54,20 @@ public class PickActivity {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public String getPickActivityId() {
+	public long getPickActivityId() {
 		return pickActivityId;
 	}
 
-	public void setPickActivityId(String pickActivityId) {
+	public void setPickActivityId(long pickActivityId) {
 		this.pickActivityId = pickActivityId;
+	}
+
+	public long getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(long ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public Timestamp getStartTime() {
