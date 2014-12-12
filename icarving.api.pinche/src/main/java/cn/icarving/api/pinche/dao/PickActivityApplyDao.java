@@ -20,10 +20,11 @@ public class PickActivityApplyDao extends BaseDao<PickActivityApply> {
 		super(PickActivityApply.class);
 	}
 
-	public List<PickActivityApply> findAll() {
+	public List<PickActivityApply> findPickActivityApplyByUser(long uid) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
-		Query query = session.createQuery("from PickActivityApply");
+		Query query = session.createQuery("from PickActivityApply where applyUserId = :applyUserId");
+		query.setParameter("applyUserId", uid);
 		@SuppressWarnings("unchecked")
 		List<PickActivityApply> result = query.list();
 		session.getTransaction().commit();

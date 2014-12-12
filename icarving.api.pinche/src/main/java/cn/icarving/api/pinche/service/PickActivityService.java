@@ -20,16 +20,8 @@ public class PickActivityService {
 		pickActivityDao.save(pickActivity);
 	}
 
-	public void delete(PickActivity pickActivity) {
-		pickActivityDao.delete(pickActivity);
-	}
-
 	public void update(PickActivity pickActivity) {
 		pickActivityDao.update(pickActivity);
-	}
-
-	public List<PickActivity> findAll() {
-		return pickActivityDao.findAll();
 	}
 
 	public List<PickActivity> findPickActivityByUser(long uid) {

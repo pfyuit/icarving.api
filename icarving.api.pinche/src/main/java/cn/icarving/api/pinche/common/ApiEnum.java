@@ -13,7 +13,17 @@ public enum ApiEnum {
 	USER_LOGOFF_FAILED_PASSWORD_NOT_MATCH("1000005", "Password not match"),
 	
 	USER_UPDATE_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user"),
-	USER_UPDATE_FAILED_PASSWORD_NOT_MATCH("1000007", "Password not match");
+	USER_UPDATE_FAILED_PASSWORD_NOT_MATCH("1000007", "Password not match"),
+	
+	APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity"),
+	
+	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000009", "Cannot find pick/picked activity"),
+	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000010", "Cannot find pick/picked activity apply"),
+	
+	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000011", "Cannot find pick/picked activity"),
+	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000012", "Cannot find pick/picked activity apply"),
+	
+	APPLY_FIND_FAILED_CANNOT_FIND_USER("1000013", "Cannot find user");
 
 	private String code;
 	private String message;

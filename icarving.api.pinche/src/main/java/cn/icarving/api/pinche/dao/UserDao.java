@@ -31,15 +31,4 @@ public class UserDao extends BaseDao<User> {
 		session.close();
 		return result == null ? null : result.get(0);
 	}
-
-	public List<User> findAll() {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
-		Query query = session.createQuery("from User");
-		@SuppressWarnings("unchecked")
-		List<User> result = query.list();
-		session.getTransaction().commit();
-		session.close();
-		return result;
-	}
 }

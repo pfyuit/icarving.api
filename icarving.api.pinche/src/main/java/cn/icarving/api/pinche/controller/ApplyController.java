@@ -2,12 +2,14 @@ package cn.icarving.api.pinche.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
@@ -33,27 +35,34 @@ public class ApplyController {
 	public @ResponseBody
 	ApiResponse createPickActivityApply(@RequestBody PickActivityApplyForm form) {
 		PickActivityApply apply = new PickActivityApply();
-		apply.setApplyUserId(form.getApplyUserId());
 		apply.setPickActivityId(form.getPickActivityId());
-		apply.setStatus("start");
+		apply.setApplyUserId(form.getApplyUserId());
+		apply.setStatus("unapproved");
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
-
-		pickActivityApplyService.save(apply);
+		pickActivityApplyService.createPickActivityApply(apply);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
 	}
 
-	@RequestMapping(value = "/pick/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/pick/approve", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse updatePickActivityApply(@RequestBody PickActivityApply apply) {
-		pickActivityApplyService.save(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
+	ApiResponse approvePickActivityApply(@RequestParam(value="pickActivityApplyId", required=true) long pickActivityApplyId) {
+		pickActivityApplyService.approvePickActivityApply(pickActivityApplyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+	}
+	
+	@RequestMapping(value = "/pick/unapprove", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse unApprovePickActivityApply(@RequestParam(value="pickActivityApplyId", required=true) long pickActivityApplyId) {
+		pickActivityApplyService.unApprovePickActivityApply(pickActivityApplyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
-	@RequestMapping(value = "/pick/find", method = RequestMethod.GET)
+	@RequestMapping(value = "/pick/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickActivityApply() {
-		return null;
+	ApiResponse findPickActivityApplyByUser(@RequestParam(value="uid", required=true) long uid) {
+		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByUser(uid);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 
 	// //////////////////////////////////////////////////////////////////////
@@ -63,26 +72,33 @@ public class ApplyController {
 	public @ResponseBody
 	ApiResponse createPickedActivityApply(@RequestBody PickedActivityApplyForm form) {
 		PickedActivityApply apply = new PickedActivityApply();
-		apply.setApplyUserId(form.getApplyUserId());
 		apply.setPickedActivityId(form.getPickedActivityId());
-		apply.setStatus("start");
+		apply.setApplyUserId(form.getApplyUserId());
+		apply.setStatus("unapproved");
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
-
-		pickedActivityApplyService.save(apply);
+		pickedActivityApplyService.createPickedActivityApply(apply);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
 	}
 
-	@RequestMapping(value = "/picked/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/picked/approve", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse updatePickedActivityApply(@RequestBody PickedActivityApply apply) {
-		pickedActivityApplyService.save(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
+	ApiResponse approvePickedActivityApply(@RequestParam(value="pickedActivityApplyId", required=true) long pickedActivityApplyId) {
+		pickedActivityApplyService.approvePickedActivityApply(pickedActivityApplyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+	}
+	
+	@RequestMapping(value = "/picked/unapprove", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse unApprovePickedActivityApply(@RequestParam(value="pickedActivityApplyId", required=true) long pickedActivityApplyId) {
+		pickedActivityApplyService.unApprovePickedActivityApply(pickedActivityApplyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
-	@RequestMapping(value = "/picked/find", method = RequestMethod.GET)
+	@RequestMapping(value = "/picked/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickedActivityApply() {
-		return null;
+	ApiResponse findPickedActivityApplyByUser(@RequestParam(value="uid", required=true) long uid) {
+		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByUser(uid);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 }

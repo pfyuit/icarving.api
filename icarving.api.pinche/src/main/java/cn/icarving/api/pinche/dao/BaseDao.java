@@ -55,7 +55,7 @@ public class BaseDao<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T find(int id) {
+	public T find(long id) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
 		T result = (T) session.get(type, id);
