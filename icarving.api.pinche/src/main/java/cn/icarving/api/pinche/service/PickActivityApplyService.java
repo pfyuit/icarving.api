@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
+import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.dao.PickActivityApplyDao;
 import cn.icarving.api.pinche.dao.PickActivityDao;
 import cn.icarving.api.pinche.dao.UserDao;
@@ -35,6 +36,9 @@ public class PickActivityApplyService {
 		if (pickActivity == null) {
 			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
+		if (!pickActivity.getStatus().equals(ApiStatus.ACTIVITY_STATUS_VALID)) {
+			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getMessage());
+		}
 		int applyNumber = pickActivity.getApplyNumber();
 		applyNumber = applyNumber + 1;
 		pickActivity.setApplyNumber(applyNumber);
@@ -50,7 +54,7 @@ public class PickActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickActivityApply.setStatus("approved");
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.save(pickActivityApply);
 
@@ -65,6 +69,9 @@ public class PickActivityApplyService {
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
+		if(pickActivity.getApplyNumber() == pickActivity.getCapacity()){
+			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
+		}
 		pickActivityDao.save(pickActivity);
 	}
 
@@ -74,7 +81,7 @@ public class PickActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickActivityApply.setStatus("unapproved");
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.save(pickActivityApply);
 
@@ -89,6 +96,7 @@ public class PickActivityApplyService {
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
 		pickActivityDao.save(pickActivity);
 	}
 

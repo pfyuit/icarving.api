@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiResponse;
+import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivityApply;
 import cn.icarving.api.pinche.domain.PickedActivityApply;
 import cn.icarving.api.pinche.dto.PickActivityApplyForm;
@@ -37,7 +38,7 @@ public class ApplyController {
 		PickActivityApply apply = new PickActivityApply();
 		apply.setPickActivityId(form.getPickActivityId());
 		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus("unapproved");
+		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyService.createPickActivityApply(apply);
@@ -74,7 +75,7 @@ public class ApplyController {
 		PickedActivityApply apply = new PickedActivityApply();
 		apply.setPickedActivityId(form.getPickedActivityId());
 		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus("unapproved");
+		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyService.createPickedActivityApply(apply);

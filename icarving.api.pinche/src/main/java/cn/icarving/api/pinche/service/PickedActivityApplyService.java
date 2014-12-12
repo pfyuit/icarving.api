@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
+import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.dao.PickedActivityApplyDao;
 import cn.icarving.api.pinche.dao.PickedActivityDao;
 import cn.icarving.api.pinche.dao.UserDao;
@@ -35,6 +36,9 @@ public class PickedActivityApplyService {
 		if (pickedActivity == null) {
 			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
+		if (!pickedActivity.getStatus().equals(ApiStatus.ACTIVITY_STATUS_VALID)) {
+			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getMessage());
+		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityDao.save(pickedActivity);
 
@@ -47,7 +51,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickedActivityApply.setStatus("approved");
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED);
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.save(pickedActivityApply);
 
@@ -56,6 +60,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
 		pickedActivityDao.save(pickedActivity);
 	}
 
@@ -65,7 +70,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickedActivityApply.setStatus("unapproved");
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.save(pickedActivityApply);
 
@@ -74,6 +79,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
 		pickedActivityDao.save(pickedActivity);
 	}
 

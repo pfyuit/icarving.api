@@ -16,6 +16,7 @@ public enum ApiEnum {
 	USER_UPDATE_FAILED_PASSWORD_NOT_MATCH("1000007", "Password not match"),
 	
 	APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity"),
+	APPLY_CREATE_FAILED_INVALID_ACTIVITY("1000008", "Invalid pick/picked activity"),
 	
 	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000009", "Cannot find pick/picked activity"),
 	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000010", "Cannot find pick/picked activity apply"),
