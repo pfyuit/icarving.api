@@ -69,7 +69,7 @@ public class PickActivityApplyService {
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
-		if(pickActivity.getApplyNumber() == pickActivity.getCapacity()){
+		if (pickActivity.getApplyNumber() == pickActivity.getCapacity()) {
 			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
 		}
 		pickActivityDao.save(pickActivity);
@@ -108,6 +108,44 @@ public class PickActivityApplyService {
 
 		List<PickActivityApply> result = pickActivityApplyDao.findPickActivityApplyByUser(uid);
 		return result;
+	}
+
+	public void cancelPickActivityApply(long uid, long pickActivityApplyId) {
+		User user = userDao.find(uid);
+		if (user == null) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getMessage());
+		}
+
+		PickActivityApply pickActivityApply = pickActivityApplyDao.find(pickActivityApplyId);
+		if (pickActivityApply == null) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
+		}
+		if (pickActivityApply.getApplyUserId() != uid) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getCode(),
+					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
+		}
+		String oldStatus = pickActivityApply.getStatus();
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
+		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
+		pickActivityApplyDao.save(pickActivityApply);
+		
+		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
+		if (pickActivity == null) {
+			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
+		}
+		int applyNumber = pickActivity.getApplyNumber();
+		int approveNumber = pickActivity.getApproveNumber();
+		if(oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)){
+			approveNumber = approveNumber - 1;
+		}
+		if(oldStatus.equals(ApiStatus.APPLY_STATUS_UNAPPROVED)){
+			applyNumber = applyNumber -1;
+		}
+		pickActivity.setApplyNumber(applyNumber);
+		pickActivity.setApproveNumber(approveNumber);
+		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickActivityDao.save(pickActivity);
 	}
 
 }

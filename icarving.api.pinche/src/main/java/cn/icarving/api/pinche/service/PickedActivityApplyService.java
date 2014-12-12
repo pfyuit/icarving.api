@@ -93,4 +93,31 @@ public class PickedActivityApplyService {
 		return result;
 	}
 
+	public void cancelPickedActivityApply(long uid, long pickedActivityApplyId) {
+		User user = userDao.find(uid);
+		if (user == null) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getMessage());
+		}
+
+		PickedActivityApply pickedActivityApply = pickedActivityApplyDao.find(pickedActivityApplyId);
+		if (pickedActivityApply == null) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
+		}
+		if (pickedActivityApply.getApplyUserId() != uid) {
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getCode(),
+					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
+		}
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
+		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
+		pickedActivityApplyDao.save(pickedActivityApply);
+		
+		PickedActivity pickedActivity = pickedActivityDao.find(pickedActivityApply.getPickedActivityId());
+		if (pickedActivity == null) {
+			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
+		}
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickedActivityDao.save(pickedActivity);
+	}
+
 }

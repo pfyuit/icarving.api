@@ -24,7 +24,11 @@ public enum ApiEnum {
 	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000011", "Cannot find pick/picked activity"),
 	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000012", "Cannot find pick/picked activity apply"),
 	
-	APPLY_FIND_FAILED_CANNOT_FIND_USER("1000013", "Cannot find user");
+	APPLY_FIND_FAILED_CANNOT_FIND_USER("1000013", "Cannot find user"),
+	
+	APPLY_CANCEL_FAILED_CANNOT_FIND_USER("1000014", "Cannot find user"),
+	APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000015", "Cannot find pick/picked activity apply"),
+	APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY("1000016", "User is not owner of pick/picked activity");
 
 	private String code;
 	private String message;
