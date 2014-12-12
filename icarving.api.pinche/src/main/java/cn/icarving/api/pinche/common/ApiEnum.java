@@ -15,6 +15,11 @@ public enum ApiEnum {
 	USER_UPDATE_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user"),
 	USER_UPDATE_FAILED_PASSWORD_NOT_MATCH("1000007", "Password not match"),
 	
+	ACTIVITY_UPDATE_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user"),
+	
+	ACTIVITY_CANCEL_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user"),
+	ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity"),
+	
 	APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity"),
 	APPLY_CREATE_FAILED_INVALID_ACTIVITY("1000008", "Invalid pick/picked activity"),
 	

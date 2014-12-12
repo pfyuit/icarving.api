@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiResponse;
+import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivity;
 import cn.icarving.api.pinche.domain.PickedActivity;
 import cn.icarving.api.pinche.dto.PickActivityForm;
@@ -46,18 +47,18 @@ public class ActivityController {
 		pickActivity.setApplyNumber(0);
 		pickActivity.setApproveNumber(0);
 		pickActivity.setNote(form.getNote());
-		pickActivity.setStatus("start");
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
 		pickActivity.setPublishTime(new Timestamp(new Date().getTime()));
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 
-		pickActivityService.save(pickActivity);
+		pickActivityService.createPickActivity(pickActivity);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickActivity);
 	}
 
 	@RequestMapping(value = "/pick/update", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse updatePickActivity(@RequestBody PickActivity pickActivity) {
-		pickActivityService.update(pickActivity);
+		pickActivityService.updatePickActivity(pickActivity);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickActivity);
 	}
 
@@ -66,6 +67,13 @@ public class ActivityController {
 	ApiResponse findPickActivityByUser(@RequestParam(value="uid", required=true) long uid) {
 		List<PickActivity> list = pickActivityService.findPickActivityByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+	}
+	
+	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse cancelPickActivity(@RequestParam(value="uid", required=true) long uid, @RequestParam(value="pickActivityId", required=true) long pickActivityId) {
+		pickActivityService.cancelPickActivity(uid, pickActivityId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 	// //////////////////////////////////////////////////////////////////////
@@ -83,18 +91,18 @@ public class ActivityController {
 		pickedActivity.setCharge(form.getCharge());
 		pickedActivity.setCarType(form.getCarType());
 		pickedActivity.setNote(form.getNote());
-		pickedActivity.setStatus("start");
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
 		pickedActivity.setPublishTime(new Timestamp(new Date().getTime()));
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 
-		pickedActivityService.save(pickedActivity);
+		pickedActivityService.createPickedActivity(pickedActivity);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickedActivity);
 	}
 
 	@RequestMapping(value = "/picked/update", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse updatePickedActivity(@RequestBody PickedActivity pickedActivity) {
-		pickedActivityService.update(pickedActivity);
+		pickedActivityService.updatePickedActivity(pickedActivity);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickedActivity);
 	}
 
@@ -103,6 +111,13 @@ public class ActivityController {
 	ApiResponse findPickedActivityByUser(@RequestParam(value="uid", required=true) long uid) {
 		List<PickedActivity> list = pickedActivityService.findPickedActivityByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+	}
+	
+	@RequestMapping(value = "/picked/cancel", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse cancelPickedActivity(@RequestParam(value="uid", required=true) long uid, @RequestParam(value="pickedActivityId", required=true) long pickedActivityId) {
+		pickedActivityService.cancelPickedActivity(uid, pickedActivityId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 }
