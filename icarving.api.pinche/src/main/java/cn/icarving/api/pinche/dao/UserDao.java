@@ -23,12 +23,12 @@ public class UserDao extends BaseDao<User> {
 	public User findByUserName(String username) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
-		Query query = session.createQuery("from User where username = :username");
+		Query query = session.createQuery("FROM User WHERE username = :username");
 		query.setParameter("username", username);
 		@SuppressWarnings("unchecked")
 		List<User> result = query.list();
 		session.getTransaction().commit();
 		session.close();
-		return result == null ? null : result.get(0);
+		return result.isEmpty()? null : result.get(0);
 	}
 }

@@ -32,7 +32,7 @@ public class UserController {
 	public @ResponseBody
 	ApiResponse userRegister(@RequestBody RegisterForm registerForm) {
 		User user = userService.findUser(registerForm.getUsername());
-		if (user != null) {
+		if (user != null ) {
 			throw new ApiException(ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getCode(), ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getMessage());
 		}
 

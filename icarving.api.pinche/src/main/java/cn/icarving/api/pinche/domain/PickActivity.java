@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,11 +14,12 @@ import javax.persistence.Table;
 public class PickActivity {
 
 	@Id
+	@GeneratedValue
 	@Column(name = "pick_activity_id")
-	private long pickActivityId;
+	private int pickActivityId;
 
 	@Column(name = "owner_id")
-	private long ownerId;
+	private int ownerId;
 
 	@Column(name = "start_time")
 	private Timestamp startTime;
@@ -54,19 +56,19 @@ public class PickActivity {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public long getPickActivityId() {
+	public int getPickActivityId() {
 		return pickActivityId;
 	}
 
-	public void setPickActivityId(long pickActivityId) {
+	public void setPickActivityId(int pickActivityId) {
 		this.pickActivityId = pickActivityId;
 	}
 
-	public long getOwnerId() {
+	public int getOwnerId() {
 		return ownerId;
 	}
 
-	public void setOwnerId(long ownerId) {
+	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,14 +13,15 @@ import javax.persistence.Table;
 public class PickedActivityApply {
 
 	@Id
+	@GeneratedValue
 	@Column(name = "picked_activity_apply_id")
-	private long pickedActivityApplyId;
+	private int pickedActivityApplyId;
 
 	@Column(name = "picked_activity_id")
-	private long pickedActivityId;
+	private int pickedActivityId;
 
 	@Column(name = "apply_user_id")
-	private long applyUserId;
+	private int applyUserId;
 
 	private String status;
 
@@ -29,27 +31,27 @@ public class PickedActivityApply {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public long getPickedActivityApplyId() {
+	public int getPickedActivityApplyId() {
 		return pickedActivityApplyId;
 	}
 
-	public void setPickedActivityApplyId(long pickedActivityApplyId) {
+	public void setPickedActivityApplyId(int pickedActivityApplyId) {
 		this.pickedActivityApplyId = pickedActivityApplyId;
 	}
 
-	public long getPickedActivityId() {
+	public int getPickedActivityId() {
 		return pickedActivityId;
 	}
 
-	public void setPickedActivityId(long pickedActivityId) {
+	public void setPickedActivityId(int pickedActivityId) {
 		this.pickedActivityId = pickedActivityId;
 	}
 
-	public long getApplyUserId() {
+	public int getApplyUserId() {
 		return applyUserId;
 	}
 
-	public void setApplyUserId(long applyUserId) {
+	public void setApplyUserId(int applyUserId) {
 		this.applyUserId = applyUserId;
 	}
 

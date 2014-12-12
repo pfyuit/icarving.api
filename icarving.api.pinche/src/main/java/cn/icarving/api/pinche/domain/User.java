@@ -2,6 +2,7 @@ package cn.icarving.api.pinche.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 public class User {
 
 	@Id
-	private long uid;
+	@GeneratedValue
+	private int uid;
 
 	private String name;
 
@@ -26,14 +28,13 @@ public class User {
 	@Column(name = "wechat_unionid")
 	private String wechatUnionid;
 
-	@Column(name = "is_login")
-	private boolean isLogin;
+	private int login;
 
-	public long getUid() {
+	public int getUid() {
 		return uid;
 	}
 
-	public void setUid(long uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 
@@ -85,12 +86,12 @@ public class User {
 		this.wechatUnionid = wechatUnionid;
 	}
 
-	public boolean isLogin() {
-		return isLogin;
+	public int getLogin() {
+		return login;
 	}
 
-	public void setLogin(boolean isLogin) {
-		this.isLogin = isLogin;
+	public void setLogin(int login) {
+		this.login = login;
 	}
 
 }

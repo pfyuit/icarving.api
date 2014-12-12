@@ -2,23 +2,23 @@ package cn.icarving.api.pinche.dto;
 
 public class PickedActivityApplyForm {
 
-	private long pickedActivityId;
+	private int pickedActivityId;
 
-	private long applyUserId;
+	private int applyUserId;
 
-	public long getPickedActivityId() {
+	public int getPickedActivityId() {
 		return pickedActivityId;
 	}
 
-	public void setPickedActivityId(long pickedActivityId) {
+	public void setPickedActivityId(int pickedActivityId) {
 		this.pickedActivityId = pickedActivityId;
 	}
 
-	public long getApplyUserId() {
+	public int getApplyUserId() {
 		return applyUserId;
 	}
 
-	public void setApplyUserId(long applyUserId) {
+	public void setApplyUserId(int applyUserId) {
 		this.applyUserId = applyUserId;
 	}
 

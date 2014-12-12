@@ -15,17 +15,17 @@ public class UserService {
 	private UserDao userDao;
 
 	public void register(User user) {
-		user.setLogin(true);
+		user.setLogin(1);
 		userDao.save(user);
 	}
 
 	public void login(User user) {
-		user.setLogin(true);
+		user.setLogin(1);
 		userDao.update(user);
 	}
 
 	public void logoff(User user) {
-		user.setLogin(false);
+		user.setLogin(0);
 		userDao.update(user);
 	}
 
