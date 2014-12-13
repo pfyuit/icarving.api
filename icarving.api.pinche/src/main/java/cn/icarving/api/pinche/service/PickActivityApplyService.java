@@ -19,7 +19,7 @@ import cn.icarving.api.pinche.domain.PickActivityApply;
 import cn.icarving.api.pinche.domain.User;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class PickActivityApplyService {
 
 	@Autowired
@@ -128,18 +128,18 @@ public class PickActivityApplyService {
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.update(pickActivityApply);
-		
+
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		int applyNumber = pickActivity.getApplyNumber();
 		int approveNumber = pickActivity.getApproveNumber();
-		if(oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)){
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)) {
 			approveNumber = approveNumber - 1;
 		}
-		if(oldStatus.equals(ApiStatus.APPLY_STATUS_UNAPPROVED)){
-			applyNumber = applyNumber -1;
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_UNAPPROVED)) {
+			applyNumber = applyNumber - 1;
 		}
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);

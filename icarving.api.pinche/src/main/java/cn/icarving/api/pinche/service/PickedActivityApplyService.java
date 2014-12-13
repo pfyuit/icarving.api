@@ -19,9 +19,9 @@ import cn.icarving.api.pinche.domain.PickedActivityApply;
 import cn.icarving.api.pinche.domain.User;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class PickedActivityApplyService {
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -111,12 +111,12 @@ public class PickedActivityApplyService {
 		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.update(pickedActivityApply);
-		
+
 		PickedActivity pickedActivity = pickedActivityDao.find(pickedActivityApply.getPickedActivityId());
 		if (pickedActivity == null) {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
-		if(oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)){
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)) {
 			pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));

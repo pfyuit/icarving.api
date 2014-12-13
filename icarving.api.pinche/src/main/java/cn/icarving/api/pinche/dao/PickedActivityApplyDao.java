@@ -21,26 +21,20 @@ public class PickedActivityApplyDao extends BaseDao<PickedActivityApply> {
 	}
 
 	public List<PickedActivityApply> findPickedActivityApplyByUser(int uid) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from PickedActivityApply where applyUserId = :applyUserId");
 		query.setParameter("applyUserId", uid);
 		@SuppressWarnings("unchecked")
 		List<PickedActivityApply> result = query.list();
-		session.getTransaction().commit();
-		session.close();
 		return result;
 	}
 
 	public List<PickedActivityApply> findPickedActivityApplyByPickedActivity(int pickedActivityId) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from PickedActivityApply where pickedActivityId = :pickedActivityId");
 		query.setParameter("pickedActivityId", pickedActivityId);
 		@SuppressWarnings("unchecked")
 		List<PickedActivityApply> result = query.list();
-		session.getTransaction().commit();
-		session.close();
 		return result;
 	}
 }

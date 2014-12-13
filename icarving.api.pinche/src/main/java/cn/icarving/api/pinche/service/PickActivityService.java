@@ -22,7 +22,7 @@ import cn.icarving.api.pinche.dto.PickActivityUpdateForm;
 import com.google.common.base.Strings;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class PickActivityService {
 
 	@Autowired

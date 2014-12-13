@@ -21,14 +21,11 @@ public class PickedActivityDao extends BaseDao<PickedActivity> {
 	}
 
 	public List<PickedActivity> findPickedActivityByUser(int uid) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from PickedActivity where ownerId = :owerId");
 		query.setParameter("owerId", uid);
 		@SuppressWarnings("unchecked")
 		List<PickedActivity> result = query.list();
-		session.getTransaction().commit();
-		session.close();
 		return result;
 	}
 }

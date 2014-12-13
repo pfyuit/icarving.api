@@ -21,46 +21,24 @@ public class BaseDao<T> {
 	}
 
 	public void save(T t) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		session.save(t);
-		session.getTransaction().commit();
-		session.close();
 	}
 
 	public void delete(T t) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		session.delete(t);
-		session.getTransaction().commit();
-		session.close();
 	}
 
 	public void update(T t) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		session.update(t);
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	@SuppressWarnings("unchecked")
-	public T find(String id) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
-		T result = (T) session.get(type, id);
-		session.getTransaction().commit();
-		session.close();
-		return result;
 	}
 
 	@SuppressWarnings("unchecked")
 	public T find(int id) {
-		Session session = sessionFactory.openSession();
-		session.getTransaction().begin();
+		Session session = sessionFactory.getCurrentSession();
 		T result = (T) session.get(type, id);
-		session.getTransaction().commit();
-		session.close();
 		return result;
 	}
 

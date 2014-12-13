@@ -8,7 +8,7 @@ import cn.icarving.api.pinche.dao.UserDao;
 import cn.icarving.api.pinche.domain.User;
 
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 
 	@Autowired
