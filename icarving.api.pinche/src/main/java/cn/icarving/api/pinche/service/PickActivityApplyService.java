@@ -43,7 +43,7 @@ public class PickActivityApplyService {
 		applyNumber = applyNumber + 1;
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivityDao.save(pickActivity);
+		pickActivityDao.update(pickActivity);
 
 		pickActivityApplyDao.save(pickActivityApply);
 	}
@@ -56,7 +56,7 @@ public class PickActivityApplyService {
 		}
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivityApplyDao.save(pickActivityApply);
+		pickActivityApplyDao.update(pickActivityApply);
 
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
@@ -72,7 +72,7 @@ public class PickActivityApplyService {
 		if (pickActivity.getApplyNumber() == pickActivity.getCapacity()) {
 			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
 		}
-		pickActivityDao.save(pickActivity);
+		pickActivityDao.update(pickActivity);
 	}
 
 	public void unApprovePickActivityApply(int pickActivityApplyId) {
@@ -83,7 +83,7 @@ public class PickActivityApplyService {
 		}
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivityApplyDao.save(pickActivityApply);
+		pickActivityApplyDao.update(pickActivityApply);
 
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
@@ -95,9 +95,9 @@ public class PickActivityApplyService {
 		applyNumber = applyNumber + 1;
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
-		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
-		pickActivityDao.save(pickActivity);
+		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
+		pickActivityDao.update(pickActivity);
 	}
 
 	public List<PickActivityApply> findPickActivityApplyByUser(int uid) {
@@ -127,7 +127,7 @@ public class PickActivityApplyService {
 		String oldStatus = pickActivityApply.getStatus();
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivityApplyDao.save(pickActivityApply);
+		pickActivityApplyDao.update(pickActivityApply);
 		
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
@@ -145,7 +145,7 @@ public class PickActivityApplyService {
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
-		pickActivityDao.save(pickActivity);
+		pickActivityDao.update(pickActivity);
 	}
 
 }
