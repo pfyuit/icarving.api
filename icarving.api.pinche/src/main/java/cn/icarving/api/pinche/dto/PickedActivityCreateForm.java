@@ -1,15 +1,14 @@
 package cn.icarving.api.pinche.dto;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 
-public class PickedActivityForm {
+public class PickedActivityCreateForm {
 
 	private int ownerId;
 
-	private Timestamp startTime;
+	private String startTime;
 
-	private Timestamp returnTime;
+	private String returnTime;
 
 	private String sourceAddress;
 
@@ -29,19 +28,19 @@ public class PickedActivityForm {
 		this.ownerId = ownerId;
 	}
 
-	public Timestamp getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Timestamp getReturnTime() {
+	public String getReturnTime() {
 		return returnTime;
 	}
 
-	public void setReturnTime(Timestamp returnTime) {
+	public void setReturnTime(String returnTime) {
 		this.returnTime = returnTime;
 	}
 

@@ -20,7 +20,7 @@ public class PickedActivityApplyDao extends BaseDao<PickedActivityApply> {
 		super(PickedActivityApply.class);
 	}
 
-	public List<PickedActivityApply> findPickedActivityApplyByUser(long uid) {
+	public List<PickedActivityApply> findPickedActivityApplyByUser(int uid) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
 		Query query = session.createQuery("from PickedActivityApply where applyUserId = :applyUserId");
@@ -32,10 +32,10 @@ public class PickedActivityApplyDao extends BaseDao<PickedActivityApply> {
 		return result;
 	}
 
-	public List<PickedActivityApply> findPickedActivityApplyByPickedActivity(long pickedActivityId) {
+	public List<PickedActivityApply> findPickedActivityApplyByPickedActivity(int pickedActivityId) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
-		Query query = session.createQuery("from PickActivityApply where pickedActivityId = :pickedActivityId");
+		Query query = session.createQuery("from PickedActivityApply where pickedActivityId = :pickedActivityId");
 		query.setParameter("pickedActivityId", pickedActivityId);
 		@SuppressWarnings("unchecked")
 		List<PickedActivityApply> result = query.list();

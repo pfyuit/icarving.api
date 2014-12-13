@@ -20,7 +20,7 @@ public class PickActivityApplyDao extends BaseDao<PickActivityApply> {
 		super(PickActivityApply.class);
 	}
 
-	public List<PickActivityApply> findPickActivityApplyByUser(long uid) {
+	public List<PickActivityApply> findPickActivityApplyByUser(int uid) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
 		Query query = session.createQuery("from PickActivityApply where applyUserId = :applyUserId");
@@ -32,7 +32,7 @@ public class PickActivityApplyDao extends BaseDao<PickActivityApply> {
 		return result;
 	}
 	
-	public List<PickActivityApply> findPickActivityApplyByPickActivity(long pickActivityId) {
+	public List<PickActivityApply> findPickActivityApplyByPickActivity(int pickActivityId) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
 		Query query = session.createQuery("from PickActivityApply where pickActivityId = :pickActivityId");

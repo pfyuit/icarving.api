@@ -47,29 +47,29 @@ public class ApplyController {
 
 	@RequestMapping(value = "/pick/approve", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse approvePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) long pickActivityApplyId) {
+	ApiResponse approvePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
 		pickActivityApplyService.approvePickActivityApply(pickActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 	@RequestMapping(value = "/pick/unapprove", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse unApprovePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) long pickActivityApplyId) {
+	ApiResponse unApprovePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
 		pickActivityApplyService.unApprovePickActivityApply(pickActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 	@RequestMapping(value = "/pick/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickActivityApplyByUser(@RequestParam(value = "uid", required = true) long uid) {
+	ApiResponse findPickActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 
 	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse cancelPickActivityApply(@RequestParam(value = "uid", required = true) long uid,
-			@RequestParam(value = "pickActivityApplyId", required = true) long pickActivityApplyId) {
+	ApiResponse cancelPickActivityApply(@RequestParam(value = "uid", required = true) int uid,
+			@RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
 		pickActivityApplyService.cancelPickActivityApply(uid, pickActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
@@ -92,29 +92,29 @@ public class ApplyController {
 
 	@RequestMapping(value = "/picked/approve", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse approvePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) long pickedActivityApplyId) {
+	ApiResponse approvePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
 		pickedActivityApplyService.approvePickedActivityApply(pickedActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 	@RequestMapping(value = "/picked/unapprove", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse unApprovePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) long pickedActivityApplyId) {
+	ApiResponse unApprovePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
 		pickedActivityApplyService.unApprovePickedActivityApply(pickedActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
 	@RequestMapping(value = "/picked/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickedActivityApplyByUser(@RequestParam(value = "uid", required = true) long uid) {
+	ApiResponse findPickedActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 	
 	@RequestMapping(value = "/picked/cancel", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse cancelPickedActivityApply(@RequestParam(value = "uid", required = true) long uid,
-			@RequestParam(value = "pickedActivityApplyId", required = true) long pickedActivityApplyId) {
+	ApiResponse cancelPickedActivityApply(@RequestParam(value = "uid", required = true) int uid,
+			@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
 		pickedActivityApplyService.cancelPickedActivityApply(uid, pickedActivityApplyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}

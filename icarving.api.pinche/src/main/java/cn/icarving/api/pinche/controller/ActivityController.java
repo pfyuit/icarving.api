@@ -17,8 +17,10 @@ import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivity;
 import cn.icarving.api.pinche.domain.PickedActivity;
-import cn.icarving.api.pinche.dto.PickActivityForm;
-import cn.icarving.api.pinche.dto.PickedActivityForm;
+import cn.icarving.api.pinche.dto.PickActivityCreateForm;
+import cn.icarving.api.pinche.dto.PickActivityUpdateForm;
+import cn.icarving.api.pinche.dto.PickedActivityCreateForm;
+import cn.icarving.api.pinche.dto.PickedActivityUpdateForm;
 import cn.icarving.api.pinche.service.PickActivityService;
 import cn.icarving.api.pinche.service.PickedActivityService;
 
@@ -34,11 +36,11 @@ public class ActivityController {
 
 	@RequestMapping(value = "/pick/create", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse createPickActivity(@RequestBody PickActivityForm form) {
+	ApiResponse createPickActivity(@RequestBody PickActivityCreateForm form) {
 		PickActivity pickActivity = new PickActivity();
 		pickActivity.setOwnerId(form.getOwnerId());
-		pickActivity.setStartTime(form.getStartTime());
-		pickActivity.setReturnTime(form.getReturnTime());
+		pickActivity.setStartTime(Timestamp.valueOf(form.getStartTime()));
+		pickActivity.setReturnTime(Timestamp.valueOf(form.getReturnTime()));
 		pickActivity.setSourceAddress(form.getSourceAddress());
 		pickActivity.setDestAddress(form.getDestAddress());
 		pickActivity.setCharge(form.getCharge());
@@ -57,21 +59,21 @@ public class ActivityController {
 
 	@RequestMapping(value = "/pick/update", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse updatePickActivity(@RequestBody PickActivity pickActivity) {
-		pickActivityService.updatePickActivity(pickActivity);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickActivity);
+	ApiResponse updatePickActivity(@RequestBody PickActivityUpdateForm form) {
+		PickActivity updatedPickActivity = pickActivityService.updatePickActivity(form);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), updatedPickActivity);
 	}
 
 	@RequestMapping(value = "/pick/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickActivityByUser(@RequestParam(value="uid", required=true) long uid) {
+	ApiResponse findPickActivityByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickActivity> list = pickActivityService.findPickActivityByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
-	
+
 	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse cancelPickActivity(@RequestParam(value="uid", required=true) long uid, @RequestParam(value="pickActivityId", required=true) long pickActivityId) {
+	ApiResponse cancelPickActivity(@RequestParam(value = "uid", required = true) int uid, @RequestParam(value = "pickActivityId", required = true) int pickActivityId) {
 		pickActivityService.cancelPickActivity(uid, pickActivityId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
@@ -81,11 +83,11 @@ public class ActivityController {
 	// //////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/picked/create", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse createPickedActivity(@RequestBody PickedActivityForm form) {
+	ApiResponse createPickedActivity(@RequestBody PickedActivityCreateForm form) {
 		PickedActivity pickedActivity = new PickedActivity();
 		pickedActivity.setOwnerId(form.getOwnerId());
-		pickedActivity.setStartTime(form.getStartTime());
-		pickedActivity.setReturnTime(form.getReturnTime());
+		pickedActivity.setStartTime(Timestamp.valueOf(form.getStartTime()));
+		pickedActivity.setReturnTime(Timestamp.valueOf(form.getReturnTime()));
 		pickedActivity.setSourceAddress(form.getSourceAddress());
 		pickedActivity.setDestAddress(form.getDestAddress());
 		pickedActivity.setCharge(form.getCharge());
@@ -101,21 +103,21 @@ public class ActivityController {
 
 	@RequestMapping(value = "/picked/update", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse updatePickedActivity(@RequestBody PickedActivity pickedActivity) {
-		pickedActivityService.updatePickedActivity(pickedActivity);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), pickedActivity);
+	ApiResponse updatePickedActivity(@RequestBody PickedActivityUpdateForm form) {
+		PickedActivity updatedPickedActivity = pickedActivityService.updatePickedActivity(form);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), updatedPickedActivity);
 	}
 
 	@RequestMapping(value = "/picked/findByUser", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickedActivityByUser(@RequestParam(value="uid", required=true) long uid) {
+	ApiResponse findPickedActivityByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickedActivity> list = pickedActivityService.findPickedActivityByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
-	
+
 	@RequestMapping(value = "/picked/cancel", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse cancelPickedActivity(@RequestParam(value="uid", required=true) long uid, @RequestParam(value="pickedActivityId", required=true) long pickedActivityId) {
+	ApiResponse cancelPickedActivity(@RequestParam(value = "uid", required = true) int uid, @RequestParam(value = "pickedActivityId", required = true) int pickedActivityId) {
 		pickedActivityService.cancelPickedActivity(uid, pickedActivityId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}

@@ -17,6 +17,9 @@ import cn.icarving.api.pinche.dao.UserDao;
 import cn.icarving.api.pinche.domain.PickActivity;
 import cn.icarving.api.pinche.domain.PickActivityApply;
 import cn.icarving.api.pinche.domain.User;
+import cn.icarving.api.pinche.dto.PickActivityUpdateForm;
+
+import com.google.common.base.Strings;
 
 @Service
 @Transactional
@@ -35,20 +38,41 @@ public class PickActivityService {
 		pickActivityDao.save(pickActivity);
 	}
 
-	public void updatePickActivity(PickActivity pickActivity) {
-		User user = userDao.find(pickActivity.getOwnerId());
-		if (user == null) {
-			throw new ApiException(ApiEnum.ACTIVITY_UPDATE_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.ACTIVITY_UPDATE_FAILED_CANNOT_FIND_USER.getMessage());
+	public PickActivity updatePickActivity(PickActivityUpdateForm form) {
+		int pickActiviyId = form.getPickActivityId();
+		PickActivity pickActivity = pickActivityDao.find(pickActiviyId);
+		if (!Strings.isNullOrEmpty(form.getCarType())) {
+			pickActivity.setCarType(form.getCarType());
 		}
+		if (!Strings.isNullOrEmpty(form.getDestAddress())) {
+			pickActivity.setDestAddress(form.getDestAddress());
+		}
+		if (!Strings.isNullOrEmpty(form.getNote())) {
+			pickActivity.setNote(form.getNote());
+		}
+		if (!Strings.isNullOrEmpty(form.getReturnTime())) {
+			pickActivity.setReturnTime(Timestamp.valueOf(form.getReturnTime()));
+		}
+		if (!Strings.isNullOrEmpty(form.getSourceAddress())) {
+			pickActivity.setSourceAddress(form.getSourceAddress());
+		}
+		if (!Strings.isNullOrEmpty(form.getStartTime())) {
+			pickActivity.setStartTime(Timestamp.valueOf(form.getReturnTime()));
+		}
+		if (form.getCharge().doubleValue() > 0) {
+			pickActivity.setCharge(form.getCharge());
+		}
+		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityDao.update(pickActivity);
+		return pickActivity;
 	}
 
-	public List<PickActivity> findPickActivityByUser(long uid) {
+	public List<PickActivity> findPickActivityByUser(int uid) {
 		List<PickActivity> result = pickActivityDao.findPickActivityByUser(uid);
 		return result;
 	}
 
-	public void cancelPickActivity(long uid, long pickActivityId) {
+	public void cancelPickActivity(int uid, int pickActivityId) {
 		User user = userDao.find(uid);
 		if (user == null) {
 			throw new ApiException(ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_USER.getMessage());

@@ -20,7 +20,7 @@ public class PickActivityDao extends BaseDao<PickActivity> {
 		super(PickActivity.class);
 	}
 
-	public List<PickActivity> findPickActivityByUser(long uid) {
+	public List<PickActivity> findPickActivityByUser(int uid) {
 		Session session = sessionFactory.openSession();
 		session.getTransaction().begin();
 		Query query = session.createQuery("from PickActivity where ownerId = :owerId");

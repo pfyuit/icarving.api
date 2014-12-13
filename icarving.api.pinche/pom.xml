@@ -142,6 +142,13 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.12</version>
 		</dependency>
+
+		<!-- Google Guava Configuration -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>16.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>icarving.api.pinche</finalName>

@@ -48,7 +48,7 @@ public class PickActivityApplyService {
 		pickActivityApplyDao.save(pickActivityApply);
 	}
 
-	public void approvePickActivityApply(long pickActivityApplyId) {
+	public void approvePickActivityApply(int pickActivityApplyId) {
 		PickActivityApply pickActivityApply = pickActivityApplyDao.find(pickActivityApplyId);
 		if (pickActivityApply == null) {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
@@ -75,7 +75,7 @@ public class PickActivityApplyService {
 		pickActivityDao.save(pickActivity);
 	}
 
-	public void unApprovePickActivityApply(long pickActivityApplyId) {
+	public void unApprovePickActivityApply(int pickActivityApplyId) {
 		PickActivityApply pickActivityApply = pickActivityApplyDao.find(pickActivityApplyId);
 		if (pickActivityApply == null) {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
@@ -100,7 +100,7 @@ public class PickActivityApplyService {
 		pickActivityDao.save(pickActivity);
 	}
 
-	public List<PickActivityApply> findPickActivityApplyByUser(long uid) {
+	public List<PickActivityApply> findPickActivityApplyByUser(int uid) {
 		User user = userDao.find(uid);
 		if (user == null) {
 			throw new ApiException(ApiEnum.APPLY_FIND_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.APPLY_FIND_FAILED_CANNOT_FIND_USER.getMessage());
@@ -110,7 +110,7 @@ public class PickActivityApplyService {
 		return result;
 	}
 
-	public void cancelPickActivityApply(long uid, long pickActivityApplyId) {
+	public void cancelPickActivityApply(int uid, int pickActivityApplyId) {
 		User user = userDao.find(uid);
 		if (user == null) {
 			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_USER.getMessage());
