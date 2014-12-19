@@ -71,6 +71,11 @@ public class PickedActivityService {
 		List<PickedActivity> result = pickedActivityDao.findPickedActivityByUser(uid);
 		return result;
 	}
+	
+	public List<PickedActivity> findPickedActivityAll() {
+		List<PickedActivity> result = pickedActivityDao.findPickedActivityAll();
+		return result;
+	}
 
 	public void cancelPickedActivity(int uid, int pickedActivityId) {
 		User user = userDao.find(uid);

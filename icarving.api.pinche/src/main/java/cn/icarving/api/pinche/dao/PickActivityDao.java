@@ -28,4 +28,12 @@ public class PickActivityDao extends BaseDao<PickActivity> {
 		List<PickActivity> result = query.list();
 		return result;
 	}
+	
+	public List<PickActivity> findPickActivityAll() {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from PickActivity");
+		@SuppressWarnings("unchecked")
+		List<PickActivity> result = query.list();
+		return result;
+	}
 }

@@ -70,6 +70,13 @@ public class ActivityController {
 		List<PickActivity> list = pickActivityService.findPickActivityByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
+	
+	@RequestMapping(value = "/pick/findAll", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findPickActivityAll() {
+		List<PickActivity> list = pickActivityService.findPickActivityAll();
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+	}
 
 	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
 	public @ResponseBody
@@ -112,6 +119,13 @@ public class ActivityController {
 	public @ResponseBody
 	ApiResponse findPickedActivityByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickedActivity> list = pickedActivityService.findPickedActivityByUser(uid);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+	}
+	
+	@RequestMapping(value = "/picked/findAll", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findPickedActivityAll() {
+		List<PickedActivity> list = pickedActivityService.findPickedActivityAll();
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
 	}
 
