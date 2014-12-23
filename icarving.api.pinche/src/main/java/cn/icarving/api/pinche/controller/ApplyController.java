@@ -17,10 +17,16 @@ import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivityApply;
 import cn.icarving.api.pinche.domain.PickedActivityApply;
+import cn.icarving.api.pinche.dto.PickActivityApplyDto;
+import cn.icarving.api.pinche.dto.PickActivityApplyDtoBuilder;
 import cn.icarving.api.pinche.dto.PickActivityApplyForm;
+import cn.icarving.api.pinche.dto.PickedActivityApplyDto;
+import cn.icarving.api.pinche.dto.PickedActivityApplyDtoBuilder;
 import cn.icarving.api.pinche.dto.PickedActivityApplyForm;
 import cn.icarving.api.pinche.service.PickActivityApplyService;
 import cn.icarving.api.pinche.service.PickedActivityApplyService;
+
+import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping("/apply")
@@ -42,7 +48,7 @@ public class ApplyController {
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyService.createPickActivityApply(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), PickActivityApplyDtoBuilder.build(apply));
 	}
 
 	@RequestMapping(value = "/pick/approve", method = RequestMethod.GET)
@@ -63,7 +69,11 @@ public class ApplyController {
 	public @ResponseBody
 	ApiResponse findPickActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByUser(uid);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+		List<PickActivityApplyDto> dtos = Lists.newArrayList();
+		for(PickActivityApply pickActivityApply : list){
+			dtos.add(PickActivityApplyDtoBuilder.build(pickActivityApply));
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}
 
 	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
@@ -87,7 +97,7 @@ public class ApplyController {
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyService.createPickedActivityApply(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), apply);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), PickedActivityApplyDtoBuilder.build(apply));
 	}
 
 	@RequestMapping(value = "/picked/approve", method = RequestMethod.GET)
@@ -108,7 +118,11 @@ public class ApplyController {
 	public @ResponseBody
 	ApiResponse findPickedActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
 		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByUser(uid);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), list);
+		List<PickedActivityApplyDto> dtos = Lists.newArrayList();
+		for(PickedActivityApply pickedActivityApply : list){
+			dtos.add(PickedActivityApplyDtoBuilder.build(pickedActivityApply));
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}
 	
 	@RequestMapping(value = "/picked/cancel", method = RequestMethod.GET)
