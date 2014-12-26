@@ -1,15 +1,48 @@
 package cn.icarving.api.pinche.common;
 
-public class ApiStatus {
+public enum ApiStatus {
+	
+	ACTIVITY_STATUS_VALID("valid","有效"),
+	ACTIVITY_STATUS_FINISHED("finished","已结束"),
+	ACTIVITY_STATUS_CANCELLED("cancelled","已取消"),
+	ACTIVITY_STATUS_EXPIRED("expired","已过期"),
+	
+	APPLY_STATUS_UNAPPROVED("unapproved","处理中"),
+	APPLY_STATUS_APPROVED("approved","已批准"),
+	APPLY_STATUS_CANCELLED("cancelled","已取消"),
+	APPLY_STATUS_EXPIRED("expired","已过期");
 
-	public static final String ACTIVITY_STATUS_VALID = "valid";
-	public static final String ACTIVITY_STATUS_FINISHED = "finished";
-	public static final String ACTIVITY_STATUS_CANCELLED = "cancelled";
-	public static final String ACTIVITY_STATUS_EXPIRED = "expired";
+	private String status;
+	private String description;
 
-	public static final String APPLY_STATUS_UNAPPROVED = "unapproved";
-	public static final String APPLY_STATUS_APPROVED = "approved";
-	public static final String APPLY_STATUS_CANCELLED = "cancelled";
-	public static final String APPLY_STATUS_EXPIRED = "expired";
+	private ApiStatus(String status, String description) {
+		this.status = status;
+		this.description = description;
+	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public static ApiStatus fromStatus(String status) {
+		for (ApiStatus apiStatus : ApiStatus.values()) {
+			if (apiStatus.getStatus().equals(status)) {
+				return apiStatus;
+			}
+		}
+		throw new IllegalStateException("Not a valid status");
+	}
+	
 }

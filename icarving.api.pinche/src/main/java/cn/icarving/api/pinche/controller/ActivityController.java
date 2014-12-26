@@ -55,7 +55,7 @@ public class ActivityController {
 		pickActivity.setApplyNumber(0);
 		pickActivity.setApproveNumber(0);
 		pickActivity.setNote(form.getNote());
-		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickActivity.setPublishTime(new Timestamp(new Date().getTime()));
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 
@@ -114,7 +114,7 @@ public class ActivityController {
 		pickedActivity.setCharge(form.getCharge());
 		pickedActivity.setCarType(form.getCarType());
 		pickedActivity.setNote(form.getNote());
-		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickedActivity.setPublishTime(new Timestamp(new Date().getTime()));
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 

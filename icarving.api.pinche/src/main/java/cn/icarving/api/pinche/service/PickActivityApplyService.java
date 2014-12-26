@@ -54,7 +54,7 @@ public class PickActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED);
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED.getStatus());
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.update(pickActivityApply);
 
@@ -70,7 +70,7 @@ public class PickActivityApplyService {
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		if (pickActivity.getApplyNumber() == pickActivity.getCapacity()) {
-			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
+			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED.getStatus());
 		}
 		pickActivityDao.update(pickActivity);
 	}
@@ -81,7 +81,7 @@ public class PickActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.update(pickActivityApply);
 
@@ -95,7 +95,7 @@ public class PickActivityApplyService {
 		applyNumber = applyNumber + 1;
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
-		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityDao.update(pickActivity);
 	}
@@ -130,7 +130,7 @@ public class PickActivityApplyService {
 					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
 		}
 		String oldStatus = pickActivityApply.getStatus();
-		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
+		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.update(pickActivityApply);
 
@@ -149,7 +149,7 @@ public class PickActivityApplyService {
 		pickActivity.setApplyNumber(applyNumber);
 		pickActivity.setApproveNumber(approveNumber);
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickActivityDao.update(pickActivity);
 	}
 

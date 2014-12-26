@@ -44,7 +44,7 @@ public class ApplyController {
 		PickActivityApply apply = new PickActivityApply();
 		apply.setPickActivityId(form.getPickActivityId());
 		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
+		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyService.createPickActivityApply(apply);
@@ -104,7 +104,7 @@ public class ApplyController {
 		PickedActivityApply apply = new PickedActivityApply();
 		apply.setPickedActivityId(form.getPickedActivityId());
 		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
+		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
 		apply.setApplyTime(new Timestamp(new Date().getTime()));
 		apply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyService.createPickedActivityApply(apply);

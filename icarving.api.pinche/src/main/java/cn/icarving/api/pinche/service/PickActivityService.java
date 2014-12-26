@@ -87,13 +87,13 @@ public class PickActivityService {
 		if (pickActivity == null) {
 			throw new ApiException(ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
-		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_CANCELLED);
+		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_CANCELLED.getStatus());
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityDao.update(pickActivity);
 
 		List<PickActivityApply> pickActivityApplies = pickActivityApplyDao.findPickActivityApplyByPickActivity(pickActivityId);
 		for (PickActivityApply pickActivityApply : pickActivityApplies) {
-			pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
+			pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 			pickActivityApplyDao.update(pickActivityApply);
 		}
 	}

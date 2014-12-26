@@ -51,7 +51,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED);
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_APPROVED.getStatus());
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.update(pickedActivityApply);
 
@@ -60,7 +60,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
-		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED);
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED.getStatus());
 		pickedActivityDao.update(pickedActivity);
 	}
 
@@ -70,7 +70,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
-		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED);
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.update(pickedActivityApply);
 
@@ -79,7 +79,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
-		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickedActivityDao.update(pickedActivity);
 	}
 
@@ -113,7 +113,7 @@ public class PickedActivityApplyService {
 					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
 		}
 		String oldStatus = pickedActivityApply.getStatus();
-		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED);
+		pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 		pickedActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityApplyDao.update(pickedActivityApply);
 
@@ -122,7 +122,7 @@ public class PickedActivityApplyService {
 			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		if (oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)) {
-			pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID);
+			pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityDao.update(pickedActivity);

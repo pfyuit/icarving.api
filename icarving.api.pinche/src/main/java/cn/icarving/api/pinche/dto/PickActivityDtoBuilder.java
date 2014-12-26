@@ -2,6 +2,7 @@ package cn.icarving.api.pinche.dto;
 
 import java.text.SimpleDateFormat;
 
+import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivity;
 
 public class PickActivityDtoBuilder {
@@ -22,7 +23,7 @@ public class PickActivityDtoBuilder {
 		dto.setReturnTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getReturnTime()));
 		dto.setSourceAddress(pick.getSourceAddress());
 		dto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getStartTime()));
-		dto.setStatus(pick.getStatus());
+		dto.setStatus(ApiStatus.fromStatus(pick.getStatus()).getDescription());
 		return dto;
 	}
 
