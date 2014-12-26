@@ -92,6 +92,11 @@ public class PickedActivityApplyService {
 		List<PickedActivityApply> result = pickedActivityApplyDao.findPickedActivityApplyByUser(uid);
 		return result;
 	}
+	
+	public List<PickedActivityApply> findPickedActivityApplyByPickedActivity(int pickedActivityId) {
+		List<PickedActivityApply> result = pickedActivityApplyDao.findPickedActivityApplyByPickedActivity(pickedActivityId);
+		return result;
+	}
 
 	public void cancelPickedActivityApply(int uid, int pickedActivityApplyId) {
 		User user = userDao.find(uid);

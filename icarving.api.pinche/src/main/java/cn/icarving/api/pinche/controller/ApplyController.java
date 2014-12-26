@@ -75,6 +75,17 @@ public class ApplyController {
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}
+	
+	@RequestMapping(value = "/pick/findByPickActivity", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findPickActivityApplyByPickActivity(@RequestParam(value = "pickActivityId", required = true) int pickActivityId) {
+		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByPickActivity(pickActivityId);
+		List<PickActivityApplyDto> dtos = Lists.newArrayList();
+		for (PickActivityApply pickActivityApply : list) {
+			dtos.add(PickActivityApplyDtoBuilder.build(pickActivityApply));
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
+	}
 
 	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
 	public @ResponseBody
@@ -120,6 +131,17 @@ public class ApplyController {
 		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByUser(uid);
 		List<PickedActivityApplyDto> dtos = Lists.newArrayList();
 		for(PickedActivityApply pickedActivityApply : list){
+			dtos.add(PickedActivityApplyDtoBuilder.build(pickedActivityApply));
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
+	}
+	
+	@RequestMapping(value = "/picked/findByPickedActivity", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findPickedActivityApplyByPickedActivity(@RequestParam(value = "pickedActivityId", required = true) int pickedActivityId) {
+		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByPickedActivity(pickedActivityId);
+		List<PickedActivityApplyDto> dtos = Lists.newArrayList();
+		for (PickedActivityApply pickedActivityApply : list) {
 			dtos.add(PickedActivityApplyDtoBuilder.build(pickedActivityApply));
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
