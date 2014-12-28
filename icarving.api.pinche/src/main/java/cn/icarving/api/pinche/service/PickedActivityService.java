@@ -57,7 +57,7 @@ public class PickedActivityService {
 			pickedActivity.setSourceAddress(form.getSourceAddress());
 		}
 		if (!Strings.isNullOrEmpty(form.getStartTime())) {
-			pickedActivity.setStartTime(Timestamp.valueOf(form.getReturnTime()));
+			pickedActivity.setStartTime(Timestamp.valueOf(form.getStartTime()));
 		}
 		if (form.getCharge().doubleValue() > 0) {
 			pickedActivity.setCharge(form.getCharge());
