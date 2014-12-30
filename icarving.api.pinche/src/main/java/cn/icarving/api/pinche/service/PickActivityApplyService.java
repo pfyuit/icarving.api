@@ -32,11 +32,19 @@ public class PickActivityApplyService {
 	private PickActivityApplyDao pickActivityApplyDao;
 
 	public void createPickActivityApply(PickActivityApply pickActivityApply) {
+		int applyUserId = pickActivityApply.getApplyUserId();
+		List<PickActivityApply> applies = findPickActivityApplyByUser(applyUserId);
+		for (PickActivityApply apply : applies) {
+			if (apply.getPickActivityId() == pickActivityApply.getPickActivityId()) {
+				throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_ALREADY_APPLIED_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_ALREADY_APPLIED_ACTIVITY.getMessage());
+			}
+		}
+
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
 			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
-		if (!pickActivity.getStatus().equals(ApiStatus.ACTIVITY_STATUS_VALID)) {
+		if (!pickActivity.getStatus().equals(ApiStatus.ACTIVITY_STATUS_VALID.getStatus())) {
 			throw new ApiException(ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getCode(), ApiEnum.APPLY_CREATE_FAILED_INVALID_ACTIVITY.getMessage());
 		}
 		int applyNumber = pickActivity.getApplyNumber();
@@ -109,7 +117,7 @@ public class PickActivityApplyService {
 		List<PickActivityApply> result = pickActivityApplyDao.findPickActivityApplyByUser(uid);
 		return result;
 	}
-	
+
 	public List<PickActivityApply> findPickActivityApplyByPickActivity(int pickActivityId) {
 		List<PickActivityApply> result = pickActivityApplyDao.findPickActivityApplyByPickActivity(pickActivityId);
 		return result;
@@ -130,6 +138,9 @@ public class PickActivityApplyService {
 					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
 		}
 		String oldStatus = pickActivityApply.getStatus();
+		if(oldStatus.equals(ApiStatus.APPLY_STATUS_CANCELLED.getStatus())){
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY.getCode(), ApiEnum.APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY.getMessage());
+		}
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 		pickActivityApply.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityApplyDao.update(pickActivityApply);
@@ -140,10 +151,10 @@ public class PickActivityApplyService {
 		}
 		int applyNumber = pickActivity.getApplyNumber();
 		int approveNumber = pickActivity.getApproveNumber();
-		if (oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED)) {
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_APPROVED.getStatus())) {
 			approveNumber = approveNumber - 1;
 		}
-		if (oldStatus.equals(ApiStatus.APPLY_STATUS_UNAPPROVED)) {
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus())) {
 			applyNumber = applyNumber - 1;
 		}
 		pickActivity.setApplyNumber(applyNumber);
