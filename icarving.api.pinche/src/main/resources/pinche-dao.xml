@@ -39,6 +39,7 @@
 				<value>cn.icarving.api.pinche.domain.PickActivityApply</value>
 				<value>cn.icarving.api.pinche.domain.PickedActivity</value>
 				<value>cn.icarving.api.pinche.domain.PickedActivityApply</value>
+				<value>cn.icarving.api.pinche.domain.UserMessage</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
