@@ -36,7 +36,10 @@ public enum ApiEnum {
 	APPLY_CANCEL_FAILED_CANNOT_FIND_USER("1000014", "Cannot find user", "找不到该用户，请重试"),
 	APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000015", "Cannot find pick/picked activity apply", "找不到该用户，请重试"),
 	APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY("1000015", "Already cancelled pick/picked activity apply", "该申请已被取消"),
-	APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY("1000016", "User is not owner of pick/picked activity", "找不到活动申请");
+	APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY("1000016", "User is not owner of pick/picked activity", "找不到活动申请"),
+	
+	MESSAGE_READ_FAILED_CANNOT_FIND_MESSAGE("1000008", "Cannot find user message", "该消息不存在"),
+	MESSAGE_READ_FAILED_ALREADY_READ("1000008", "Already read this message", "该消息已阅读");
 
 	private String code;
 	private String message;

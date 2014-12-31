@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
+import cn.icarving.api.pinche.common.ApiMessage;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.dao.PickActivityApplyDao;
 import cn.icarving.api.pinche.dao.PickActivityDao;
@@ -30,6 +31,9 @@ public class PickActivityApplyService {
 
 	@Autowired
 	private PickActivityApplyDao pickActivityApplyDao;
+
+	@Autowired
+	private UserMessageService userMessageService;
 
 	public void createPickActivityApply(PickActivityApply pickActivityApply) {
 		int applyUserId = pickActivityApply.getApplyUserId();
@@ -54,6 +58,9 @@ public class PickActivityApplyService {
 		pickActivityDao.update(pickActivity);
 
 		pickActivityApplyDao.save(pickActivityApply);
+
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivity.getOwnerId(), "您的捡人活动" + pickActivity.getPickActivityId() + "有一条新的申请");
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, applyUserId, "您已申请捡人活动" + pickActivity.getPickActivityId());
 	}
 
 	public void approvePickActivityApply(int pickActivityApplyId) {
@@ -81,6 +88,9 @@ public class PickActivityApplyService {
 			pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED.getStatus());
 		}
 		pickActivityDao.update(pickActivity);
+
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivity.getOwnerId(), "您已批准捡人活动" + pickActivity.getPickActivityId() + "的申请" + pickActivityApplyId);
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivityApply.getApplyUserId(), "您的捡人活动申请" + pickActivityApply.getPickActivityApplyId() + "已被批准");
 	}
 
 	public void unApprovePickActivityApply(int pickActivityApplyId) {
@@ -95,7 +105,8 @@ public class PickActivityApplyService {
 
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
-			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
+			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(),
+					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		int approveNumber = pickActivity.getApproveNumber();
 		approveNumber = approveNumber - 1;
@@ -106,6 +117,9 @@ public class PickActivityApplyService {
 		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivityDao.update(pickActivity);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivity.getOwnerId(), "您已拒绝捡人活动" + pickActivity.getPickActivityId() + "的申请" + pickActivityApplyId);
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivityApply.getApplyUserId(), "您的捡人活动申请" + pickActivityApply.getPickActivityApplyId() + "已被拒绝");
 	}
 
 	public List<PickActivityApply> findPickActivityApplyByUser(int uid) {
@@ -131,14 +145,15 @@ public class PickActivityApplyService {
 
 		PickActivityApply pickActivityApply = pickActivityApplyDao.find(pickActivityApplyId);
 		if (pickActivityApply == null) {
-			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(), ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
+			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getCode(),
+					ApiEnum.APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY.getMessage());
 		}
 		if (pickActivityApply.getApplyUserId() != uid) {
 			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getCode(),
 					ApiEnum.APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY.getMessage());
 		}
 		String oldStatus = pickActivityApply.getStatus();
-		if(oldStatus.equals(ApiStatus.APPLY_STATUS_CANCELLED.getStatus())){
+		if (oldStatus.equals(ApiStatus.APPLY_STATUS_CANCELLED.getStatus())) {
 			throw new ApiException(ApiEnum.APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY.getCode(), ApiEnum.APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY.getMessage());
 		}
 		pickActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
@@ -147,7 +162,8 @@ public class PickActivityApplyService {
 
 		PickActivity pickActivity = pickActivityDao.find(pickActivityApply.getPickActivityId());
 		if (pickActivity == null) {
-			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
+			throw new ApiException(ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(),
+					ApiEnum.APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		int applyNumber = pickActivity.getApplyNumber();
 		int approveNumber = pickActivity.getApproveNumber();
@@ -162,6 +178,9 @@ public class PickActivityApplyService {
 		pickActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickActivityDao.update(pickActivity);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivityApply.getApplyUserId(), "您已取消捡人活动申请" + pickActivityApply.getPickActivityApplyId());
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickActivity.getOwnerId(), "捡人活动申请" + pickActivityApply.getPickActivityApplyId()+"已被申请人取消");
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
+import cn.icarving.api.pinche.common.ApiMessage;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.dao.PickedActivityApplyDao;
 import cn.icarving.api.pinche.dao.PickedActivityDao;
@@ -30,6 +31,9 @@ public class PickedActivityApplyService {
 
 	@Autowired
 	private PickedActivityApplyDao pickedActivityApplyDao;
+	
+	@Autowired
+	private UserMessageService userMessageService;
 
 	public void createPickedActivityApply(PickedActivityApply pickedActivityApply) {
 		int applyUserId = pickedActivityApply.getApplyUserId();
@@ -51,6 +55,9 @@ public class PickedActivityApplyService {
 		pickedActivityDao.update(pickedActivity);
 
 		pickedActivityApplyDao.save(pickedActivityApply);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "您的搭车活动" + pickedActivity.getPickedActivityId() + "有一条新的申请");
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, applyUserId, "您已申请搭车活动" + pickedActivity.getPickedActivityId());
 	}
 
 	public void approvePickedActivityApply(int pickedActivityApplyId) {
@@ -70,6 +77,9 @@ public class PickedActivityApplyService {
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_FINISHED.getStatus());
 		pickedActivityDao.update(pickedActivity);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "您已批准搭车活动" + pickedActivity.getPickedActivityId() + "的申请" + pickedActivityApplyId);
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivityApply.getApplyUserId(), "您的搭车活动申请" + pickedActivityApply.getPickedActivityApplyId() + "已被批准");
 	}
 
 	public void unApprovePickedActivityApply(int pickedActivityApplyId) {
@@ -89,6 +99,9 @@ public class PickedActivityApplyService {
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_VALID.getStatus());
 		pickedActivityDao.update(pickedActivity);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "您已拒绝搭车活动" + pickedActivity.getPickedActivityId() + "的申请" + pickedActivityApplyId);
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivityApply.getApplyUserId(), "您的搭车活动申请" + pickedActivityApply.getPickedActivityApplyId() + "已被拒绝");
 	}
 
 	public List<PickedActivityApply> findPickedActivityApplyByUser(int uid) {
@@ -137,6 +150,9 @@ public class PickedActivityApplyService {
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityDao.update(pickedActivity);
+		
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivityApply.getApplyUserId(), "您已取消搭车活动申请" + pickedActivityApply.getPickedActivityApplyId());
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "搭车活动申请" + pickedActivityApply.getPickedActivityApplyId()+"已被申请人取消");
 	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
+import cn.icarving.api.pinche.common.ApiMessage;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.dao.PickedActivityApplyDao;
 import cn.icarving.api.pinche.dao.PickedActivityDao;
@@ -33,6 +34,12 @@ public class PickedActivityService {
 
 	@Autowired
 	private PickedActivityApplyDao pickedActivityApplyDao;
+
+	@Autowired
+	private UserMessageService userMessageService;
+
+	@Autowired
+	private PickedActivityApplyService pickedActivityApplyService;
 
 	public void createPickedActivity(PickedActivity pickedActivity) {
 		pickedActivityDao.save(pickedActivity);
@@ -64,6 +71,13 @@ public class PickedActivityService {
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityDao.update(pickedActivity);
+
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "您已更新搭车活动" + pickedActiviyId);
+		List<PickedActivityApply> result = pickedActivityApplyService.findPickedActivityApplyByPickedActivity(pickedActiviyId);
+		for (PickedActivityApply apply : result) {
+			userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getApplyUserId(), "搭车活动" + pickedActiviyId + "已被发起人更新");
+		}
+
 		return pickedActivity;
 	}
 
@@ -71,7 +85,7 @@ public class PickedActivityService {
 		List<PickedActivity> result = pickedActivityDao.findPickedActivityByUser(uid);
 		return result;
 	}
-	
+
 	public List<PickedActivity> findPickedActivityAll() {
 		List<PickedActivity> result = pickedActivityDao.findPickedActivityAll();
 		return result;
@@ -85,16 +99,19 @@ public class PickedActivityService {
 
 		PickedActivity pickedActivity = pickedActivityDao.find(pickedActivityId);
 		if (pickedActivity == null) {
-			throw new ApiException(ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(), ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
+			throw new ApiException(ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getCode(),
+					ApiEnum.ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY.getMessage());
 		}
 		pickedActivity.setStatus(ApiStatus.ACTIVITY_STATUS_CANCELLED.getStatus());
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));
 		pickedActivityDao.update(pickedActivity);
 
+		userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivity.getOwnerId(), "您已取消搭车活动" + pickedActivityId + "，所有申请被自动取消");
 		List<PickedActivityApply> pickedActivityApplies = pickedActivityApplyDao.findPickedActivityApplyByPickedActivity(pickedActivityId);
 		for (PickedActivityApply pickedActivityApply : pickedActivityApplies) {
 			pickedActivityApply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 			pickedActivityApplyDao.update(pickedActivityApply);
+			userMessageService.createUserMessage(ApiMessage.SYSTEM_UID, pickedActivityApply.getApplyUserId(), "搭车活动" + pickedActivityApply + "已被发起人取消，您的申请被自动取消");
 		}
 	}
 
