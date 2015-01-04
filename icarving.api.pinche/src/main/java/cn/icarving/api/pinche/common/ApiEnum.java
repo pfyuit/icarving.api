@@ -39,7 +39,9 @@ public enum ApiEnum {
 	APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY("1000016", "User is not owner of pick/picked activity", "找不到活动申请"),
 	
 	MESSAGE_READ_FAILED_CANNOT_FIND_MESSAGE("1000008", "Cannot find user message", "该消息不存在"),
-	MESSAGE_READ_FAILED_ALREADY_READ("1000008", "Already read this message", "该消息已阅读");
+	MESSAGE_READ_FAILED_ALREADY_READ("1000008", "Already read this message", "该消息已阅读"),
+	
+	SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY("1000008", "Source address cannot be empty", "出发地不能为空");
 
 	private String code;
 	private String message;

@@ -25,18 +25,20 @@ public class SearchPickedActivityDao {
 		Session session = sessionFactory.getCurrentSession();
 
 		StringBuilder sb = new StringBuilder("SELECT * FROM icarving_pinche.picked_activity WHERE ");
+		if (!Strings.isNullOrEmpty(sourceAddress)) {
+			sb.append(" source_address LIKE ").append("'%").append(sourceAddress.trim()).append("%' ");
+		}
+		
+		if (!Strings.isNullOrEmpty(destAddress)) {
+			sb.append(" AND dest_address LIKE ").append("'%").append(destAddress.trim()).append("%' ");
+		}
 		if (startTime != null) {
-			sb.append(" start_time LIKE ").append("'").append(new SimpleDateFormat("yyyy-MM-dd").format(startTime)).append("%' ");
+			sb.append(" AND start_time LIKE ").append("'").append(new SimpleDateFormat("yyyy-MM-dd").format(startTime)).append("%' ");
 		}
 		if (returnTime != null) {
 			sb.append(" AND return_time LIKE ").append("'").append(new SimpleDateFormat("yyyy-MM-dd").format(returnTime)).append("' ");
 		}
-		if (!Strings.isNullOrEmpty(sourceAddress)) {
-			sb.append(" AND source_address LIKE ").append("'%").append(sourceAddress.trim()).append("%' ");
-		}
-		if (!Strings.isNullOrEmpty(destAddress)) {
-			sb.append(" AND dest_address LIKE ").append("'%").append(destAddress.trim()).append("%' ");
-		}
+
 		sb.append(";");
 
 		Query query = session.createSQLQuery(sb.toString()).addEntity(PickedActivity.class);

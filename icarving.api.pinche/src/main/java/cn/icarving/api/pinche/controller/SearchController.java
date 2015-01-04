@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
+import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.domain.PickActivity;
 import cn.icarving.api.pinche.domain.PickedActivity;
@@ -21,6 +22,7 @@ import cn.icarving.api.pinche.dto.SearchPickActivityForm;
 import cn.icarving.api.pinche.dto.SearchPickedActivityForm;
 import cn.icarving.api.pinche.service.SearchService;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 @Controller
@@ -33,6 +35,9 @@ public class SearchController {
 	@RequestMapping(value = "/pickActivity", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse searchPickActivity(@RequestBody SearchPickActivityForm form) {
+		if(Strings.isNullOrEmpty(form.getSourceAddress())){
+			throw new ApiException(ApiEnum.SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY.getCode(), ApiEnum.SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY.getMessage());
+		}
 		List<PickActivity> list = searchService.searchPickActivity(form);
 		List<PickActivityDto> dtos = Lists.newArrayList();
 		for (PickActivity pick : list) {
@@ -44,6 +49,9 @@ public class SearchController {
 	@RequestMapping(value = "/pickedActivity", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse searchPickedActivity(@RequestBody SearchPickedActivityForm form) {
+		if(Strings.isNullOrEmpty(form.getSourceAddress())){
+			throw new ApiException(ApiEnum.SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY.getCode(), ApiEnum.SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY.getMessage());
+		}
 		List<PickedActivity> list = searchService.searchPickedActivity(form);
 		List<PickedActivityDto> dtos = Lists.newArrayList();
 		for (PickedActivity pick : list) {
