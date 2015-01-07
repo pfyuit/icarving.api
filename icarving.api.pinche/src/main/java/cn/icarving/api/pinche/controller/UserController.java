@@ -1,5 +1,7 @@
 package cn.icarving.api.pinche.controller;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,11 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiResponse;
-import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.domain.User;
 import cn.icarving.api.pinche.dto.RegisterForm;
+import cn.icarving.api.pinche.dto.WechatRegisterOrLoginForm;
 import cn.icarving.api.pinche.service.UserService;
 
 @Controller
@@ -32,7 +35,7 @@ public class UserController {
 	public @ResponseBody
 	ApiResponse userRegister(@RequestBody RegisterForm registerForm) {
 		User user = userService.findUser(registerForm.getUsername());
-		if (user != null ) {
+		if (user != null) {
 			throw new ApiException(ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getCode(), ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getMessage());
 		}
 
@@ -58,6 +61,42 @@ public class UserController {
 		}
 
 		userService.login(user);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
+	}
+
+	@RequestMapping(value = "/wechatRegisterOrLogin", method = RequestMethod.POST)
+	public @ResponseBody
+	ApiResponse wechatRegisterOrLogin(@RequestBody WechatRegisterOrLoginForm wechatRegisterOrLoginForm) {
+		User user = userService.findUserByUnionid(wechatRegisterOrLoginForm.getUnionid());
+		if (user == null) {
+			user = userService.findUserByOpenid(wechatRegisterOrLoginForm.getOpenid());
+		}
+
+		// 该微信用户已注册，直接登录
+		if (user != null) {
+			userLogin(user.getUsername(), user.getPassword());
+			return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
+		}
+
+		// 新微信用户，检查昵称是否有重复，如有重复昵称，则处理当前昵称得到用户名
+		user = userService.findUser(wechatRegisterOrLoginForm.getUsername());
+		if (user != null) {
+			String nickName = wechatRegisterOrLoginForm.getUsername();
+			nickName = nickName + new Random().nextInt(10000);
+			wechatRegisterOrLoginForm.setUsername(nickName);
+			wechatRegisterOrLoginForm.setPassword(nickName);
+		}
+
+		// 注册新微信用户
+		user = new User();
+		user.setWechatUnionid(wechatRegisterOrLoginForm.getUnionid());
+		user.setWechatOpenid(wechatRegisterOrLoginForm.getOpenid());
+		user.setUsername(wechatRegisterOrLoginForm.getUsername());
+		user.setPassword(wechatRegisterOrLoginForm.getPassword());
+		user.setName(wechatRegisterOrLoginForm.getName());
+		user.setPhone(wechatRegisterOrLoginForm.getPhone());
+
+		userService.register(user);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}
 

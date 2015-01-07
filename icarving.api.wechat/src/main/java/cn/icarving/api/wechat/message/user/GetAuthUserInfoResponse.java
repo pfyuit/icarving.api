@@ -6,6 +6,7 @@ public class GetAuthUserInfoResponse {
 	private String openid;
 	private String nickname;
 	private String sex;
+	private String language;
 	private String province;
 	private String city;
 	private String country;
@@ -35,6 +36,14 @@ public class GetAuthUserInfoResponse {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getProvince() {

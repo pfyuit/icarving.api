@@ -33,6 +33,8 @@ import cn.icarving.api.wechat.message.user.UpdateGroupResponse;
 import cn.icarving.api.wechat.message.user.UpdateNoteRequest;
 import cn.icarving.api.wechat.message.user.UpdateNoteResponse;
 import cn.icarving.api.wechat.message.user.ValidateUserAccessTokenResponse;
+import cn.icarving.api.wechat.message.user.WechatRegisterOrLoginRequest;
+import cn.icarving.api.wechat.message.user.WechatRegisterOrLoginResponse;
 
 @Service
 public class UserService {
@@ -206,10 +208,10 @@ public class UserService {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("appid ", appid));
+			params.add(new BasicNameValuePair("appid", appid));
 			params.add(new BasicNameValuePair("secret", secret));
 			params.add(new BasicNameValuePair("code", code));
-			params.add(new BasicNameValuePair("grantType", grantType));
+			params.add(new BasicNameValuePair("grant_type", grantType));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_ACCESS_TOKEN_GET, params);
 			HttpEntity entity = response.getEntity();
 			result = objectMapper.readValue(EntityUtils.toString(entity), GetUserAccessTokenResponse.class);
@@ -256,7 +258,7 @@ public class UserService {
 			params.add(new BasicNameValuePair("lang", lang));
 			HttpResponse response = networkService.get(NetworkService.AUTH_USER_INFO_GET, params);
 			HttpEntity entity = response.getEntity();
-			result = objectMapper.readValue(EntityUtils.toString(entity), GetAuthUserInfoResponse.class);
+			result = objectMapper.readValue(EntityUtils.toString(entity, "UTF-8"), GetAuthUserInfoResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -287,5 +289,34 @@ public class UserService {
 		}
 
 		return result;
+	}
+
+	public WechatRegisterOrLoginResponse registerOrLoginPincheUser(String unionid, String openid, String nickName) {
+		WechatRegisterOrLoginResponse result = null;
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			WechatRegisterOrLoginRequest request = new WechatRegisterOrLoginRequest();
+			request.setUnionid(unionid);
+			request.setOpenid(openid);
+			request.setUsername(nickName);
+			request.setPassword(nickName);
+			request.setName("");
+			request.setPhone("");
+			String payload = objectMapper.writeValueAsString(request);
+
+			HttpResponse response = networkService.post(NetworkService.WECHAT_PINCHE_REGISTER_OR_LOGIN, payload);
+			HttpEntity entity = response.getEntity();
+			String res = EntityUtils.toString(entity, "UTF-8");
+			LOGGER.info("GetResponseString: " + res);
+			result = objectMapper.readValue(res, WechatRegisterOrLoginResponse.class);
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+
 	}
 }

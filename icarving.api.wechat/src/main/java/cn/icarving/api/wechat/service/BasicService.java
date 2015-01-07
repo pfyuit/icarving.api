@@ -9,6 +9,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -21,6 +22,8 @@ import cn.icarving.api.wechat.message.user.GetServerIPResponse;
 @Service
 public class BasicService {
 
+	private static Logger LOGGER = Logger.getLogger(BasicService.class);
+
 	@Autowired
 	private NetworkService networkService;
 
@@ -30,11 +33,14 @@ public class BasicService {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("grant_type", grantType));
-			params.add(new BasicNameValuePair("openid", grantType));
-			params.add(new BasicNameValuePair("secret", grantType));
+			params.add(new BasicNameValuePair("appid", appid));
+			params.add(new BasicNameValuePair("secret", secret));
 			HttpResponse response = networkService.get(NetworkService.SYSTEM_BASIC_TOKEN, params);
 			HttpEntity entity = response.getEntity();
-			result = objectMapper.readValue(EntityUtils.toString(entity), GetAccessTokenResponse.class);
+			String res = EntityUtils.toString(entity);
+			LOGGER.info("GetResponseString: " + res);
+			result = objectMapper.readValue(res, GetAccessTokenResponse.class);
+			NetworkService.GLOBAL_API_ACCESS_TOKEN = result.getAccess_token();
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -51,9 +57,11 @@ public class BasicService {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			HttpResponse response = networkService.get(NetworkService.SYSTEM_BASIC_SERVER_IP, params);
+			HttpResponse response = networkService.get(NetworkService.SYSTEM_BASIC_SERVER_IP + "?access_token=" + NetworkService.GLOBAL_API_ACCESS_TOKEN, params);
 			HttpEntity entity = response.getEntity();
-			result = objectMapper.readValue(EntityUtils.toString(entity), GetServerIPResponse.class);
+			String res = EntityUtils.toString(entity);
+			LOGGER.info("GetResponseString: " + res);
+			result = objectMapper.readValue(res, GetServerIPResponse.class);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {

@@ -42,4 +42,14 @@ public class UserService {
 		return user;
 	}
 
+	public User findUserByOpenid(String openid) {
+		User user = userDao.findByOpenid(openid);
+		return user;
+	}
+
+	public User findUserByUnionid(String unionid) {
+		User user = userDao.findByUnionid(unionid);
+		return user;
+	}
+
 }

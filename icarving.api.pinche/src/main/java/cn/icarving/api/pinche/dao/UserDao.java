@@ -28,4 +28,22 @@ public class UserDao extends BaseDao<User> {
 		List<User> result = query.list();
 		return result.isEmpty()? null : result.get(0);
 	}
+	
+	public User findByOpenid(String openid) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM User WHERE wechatOpenid = :wechatOpenid");
+		query.setParameter("wechatOpenid", openid);
+		@SuppressWarnings("unchecked")
+		List<User> result = query.list();
+		return result.isEmpty()? null : result.get(0);
+	}
+	
+	public User findByUnionid(String unionid) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM User WHERE wechatUnionid = :wechatUnionid");
+		query.setParameter("wechatUnionid", unionid);
+		@SuppressWarnings("unchecked")
+		List<User> result = query.list();
+		return result.isEmpty()? null : result.get(0);
+	}
 }

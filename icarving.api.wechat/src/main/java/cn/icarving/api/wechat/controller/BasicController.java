@@ -19,7 +19,7 @@ public class BasicController {
 
 	@RequestMapping("/accessToken")
 	public @ResponseBody
-	GetAccessTokenResponse getAccessToken(@RequestParam(value = "grant_type ", required = true) String grantType, @RequestParam(value = "appid", required = true) String appid,
+	GetAccessTokenResponse getAccessToken(@RequestParam(value = "grant_type", required = true) String grantType, @RequestParam(value = "appid", required = true) String appid,
 			@RequestParam(value = "secret", required = true) String secret) {
 		return basicService.getAccessToken(grantType, appid, secret);
 	}
