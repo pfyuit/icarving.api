@@ -78,15 +78,6 @@ public class UserController {
 			return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 		}
 
-		// 新微信用户，检查昵称是否有重复，如有重复昵称，则处理当前昵称得到用户名
-		user = userService.findUser(wechatRegisterOrLoginForm.getUsername());
-		if (user != null) {
-			String nickName = wechatRegisterOrLoginForm.getUsername();
-			nickName = nickName + new Random().nextInt(10000);
-			wechatRegisterOrLoginForm.setUsername(nickName);
-			wechatRegisterOrLoginForm.setPassword(nickName);
-		}
-
 		// 注册新微信用户
 		user = new User();
 		user.setWechatUnionid(wechatRegisterOrLoginForm.getUnionid());

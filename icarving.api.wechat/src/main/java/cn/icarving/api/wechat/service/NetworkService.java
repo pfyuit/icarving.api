@@ -21,8 +21,8 @@ public class NetworkService {
 
 	public static String GLOBAL_API_ACCESS_TOKEN = "";
 	
-	public static final String WECHAT_PUBLIC_APP_ID = "wx2518d6ae1fdaa431";
-	public static final String WECHAT_PUBLIC_APP_SECRET = "8ede63049860185817c69eef0142ddf6";
+	public static final String WECHAT_PUBLIC_APP_ID = "APPID";
+	public static final String WECHAT_PUBLIC_APP_SECRET = "APPSECRET";
 	public static final String WECHAT_PINCHE_REGISTER_OR_LOGIN = "http://127.0.0.1:8080/icarving.api.pinche/user/wechatRegisterOrLogin";
 
 	public static final String CUSTOMER_SEND = "https://api.weixin.qq.com/cgi-bin/message/custom/send";

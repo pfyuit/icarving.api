@@ -298,9 +298,9 @@ public class UserService {
 			WechatRegisterOrLoginRequest request = new WechatRegisterOrLoginRequest();
 			request.setUnionid(unionid);
 			request.setOpenid(openid);
-			request.setUsername(nickName);
-			request.setPassword(nickName);
-			request.setName("");
+			request.setUsername(unionid);
+			request.setPassword(unionid);
+			request.setName(nickName);
 			request.setPhone("");
 			String payload = objectMapper.writeValueAsString(request);
 

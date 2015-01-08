@@ -109,9 +109,8 @@ public class UserController {
 		LOGGER.info("User: " + wechatRegisterOrLoginResponse.getResponse().getUsername() + "  registered or logged in the pinche application");
 
 		try {
-			String url = "http://www.icarving.cn/pinche/#/tab/view?uid="
-					+ URLEncoder.encode(wechatRegisterOrLoginResponse.getResponse().getUid() + "&username=" + wechatRegisterOrLoginResponse.getResponse().getUsername()
-							+ "&password=" + wechatRegisterOrLoginResponse.getResponse().getPassword(), "UTF-8");
+			String url = "http://www.icarving.cn/pinche/#/tab/view?uid=" + wechatRegisterOrLoginResponse.getResponse().getUid() + "&username="
+					+ wechatRegisterOrLoginResponse.getResponse().getUsername() + "&password=" + wechatRegisterOrLoginResponse.getResponse().getPassword();
 			response.sendRedirect(url);
 		} catch (IOException e) {
 			LOGGER.error("Redirect to url failed");
