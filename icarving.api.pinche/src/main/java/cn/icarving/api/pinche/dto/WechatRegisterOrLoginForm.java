@@ -1,13 +1,16 @@
 package cn.icarving.api.pinche.dto;
 
 public class WechatRegisterOrLoginForm {
-
 	private String unionid;
 	private String openid;
 	private String username;
 	private String password;
 	private String name;
 	private String phone;
+	private String sex;
+	private String country;
+	private String province;
+	private String city;
 
 	public String getOpenid() {
 		return openid;
@@ -55,6 +58,38 @@ public class WechatRegisterOrLoginForm {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

@@ -1,6 +1,5 @@
 package cn.icarving.api.pinche.domain;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -21,6 +20,15 @@ public class PickActivity {
 	@Column(name = "owner_id")
 	private int ownerId;
 
+	@Column(name = "owner_name")
+	private String ownerName;
+
+	@Column(name = "owner_phone")
+	private int ownerPhone;
+
+	@Column(name = "owner_avatar")
+	private String ownerAvatar;
+
 	@Column(name = "start_time")
 	private Timestamp startTime;
 
@@ -33,7 +41,9 @@ public class PickActivity {
 	@Column(name = "dest_address")
 	private String destAddress;
 
-	private BigDecimal charge;
+	private String venue;
+
+	private String charge;
 
 	@Column(name = "car_type")
 	private String carType;
@@ -72,6 +82,30 @@ public class PickActivity {
 		this.ownerId = ownerId;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public int getOwnerPhone() {
+		return ownerPhone;
+	}
+
+	public void setOwnerPhone(int ownerPhone) {
+		this.ownerPhone = ownerPhone;
+	}
+
+	public String getOwnerAvatar() {
+		return ownerAvatar;
+	}
+
+	public void setOwnerAvatar(String ownerAvatar) {
+		this.ownerAvatar = ownerAvatar;
+	}
+
 	public Timestamp getStartTime() {
 		return startTime;
 	}
@@ -104,11 +138,19 @@ public class PickActivity {
 		this.destAddress = destAddress;
 	}
 
-	public BigDecimal getCharge() {
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
+
+	public String getCharge() {
 		return charge;
 	}
 
-	public void setCharge(BigDecimal charge) {
+	public void setCharge(String charge) {
 		this.charge = charge;
 	}
 

@@ -1,23 +1,16 @@
 package cn.icarving.api.pinche.dto;
 
-import java.math.BigDecimal;
-
 public class PickedActivityCreateForm {
-
 	private int ownerId;
-
+	private int phone;
 	private String startTime;
-
 	private String returnTime;
-
 	private String sourceAddress;
-
 	private String destAddress;
-
-	private BigDecimal charge = BigDecimal.ZERO;
-
+	private int capacity;
+	private String charge;
+	private String venue;
 	private String carType;
-
 	private String note;
 
 	public int getOwnerId() {
@@ -26,6 +19,14 @@ public class PickedActivityCreateForm {
 
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
 	}
 
 	public String getStartTime() {
@@ -60,12 +61,28 @@ public class PickedActivityCreateForm {
 		this.destAddress = destAddress;
 	}
 
-	public BigDecimal getCharge() {
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public String getCharge() {
 		return charge;
 	}
 
-	public void setCharge(BigDecimal charge) {
+	public void setCharge(String charge) {
 		this.charge = charge;
+	}
+
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
 	}
 
 	public String getCarType() {

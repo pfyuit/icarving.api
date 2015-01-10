@@ -1,7 +1,5 @@
 package cn.icarving.api.pinche.controller;
 
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +32,7 @@ public class UserController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse userRegister(@RequestBody RegisterForm registerForm) {
-		User user = userService.findUser(registerForm.getUsername());
+		User user = userService.findUserByUserName(registerForm.getUsername());
 		if (user != null) {
 			throw new ApiException(ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getCode(), ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getMessage());
 		}
@@ -52,7 +50,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse userLogin(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
-		User user = userService.findUser(username);
+		User user = userService.findUserByUserName(username);
 		if (user == null) {
 			throw new ApiException(ApiEnum.USER_LOGIN_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_LOGIN_FAILED_CANNOT_FIND_USER.getMessage());
 		}
@@ -86,6 +84,10 @@ public class UserController {
 		user.setPassword(wechatRegisterOrLoginForm.getPassword());
 		user.setName(wechatRegisterOrLoginForm.getName());
 		user.setPhone(wechatRegisterOrLoginForm.getPhone());
+		user.setSex(wechatRegisterOrLoginForm.getSex());
+		user.setCountry(wechatRegisterOrLoginForm.getCountry());
+		user.setProvince(wechatRegisterOrLoginForm.getProvince());
+		user.setCity(wechatRegisterOrLoginForm.getCity());
 
 		userService.register(user);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
@@ -94,7 +96,7 @@ public class UserController {
 	@RequestMapping(value = "/logoff", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse userLogoff(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
-		User user = userService.findUser(username);
+		User user = userService.findUserByUserName(username);
 		if (user == null) {
 			throw new ApiException(ApiEnum.USER_LOGOFF_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_LOGOFF_FAILED_CANNOT_FIND_USER.getMessage());
 		}
@@ -109,7 +111,7 @@ public class UserController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse userUpdate(@RequestBody User user) {
-		User dbUser = userService.findUser(user.getUsername());
+		User dbUser = userService.findUserByUserName(user.getUsername());
 		if (dbUser == null) {
 			throw new ApiException(ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getMessage());
 		}

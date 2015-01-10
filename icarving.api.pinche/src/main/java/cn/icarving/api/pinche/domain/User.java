@@ -14,6 +14,10 @@ public class User {
 	@GeneratedValue
 	private int uid;
 
+	private String avatar;
+
+	private String sex;
+
 	private String name;
 
 	private String phone;
@@ -28,6 +32,12 @@ public class User {
 	@Column(name = "wechat_unionid")
 	private String wechatUnionid;
 
+	private String country;
+
+	private String province;
+
+	private String city;
+
 	private int login;
 
 	public int getUid() {
@@ -36,6 +46,14 @@ public class User {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getName() {
@@ -92,6 +110,38 @@ public class User {
 
 	public void setLogin(int login) {
 		this.login = login;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

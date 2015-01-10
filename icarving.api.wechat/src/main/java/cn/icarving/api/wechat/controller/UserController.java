@@ -105,7 +105,8 @@ public class UserController {
 				+ getAuthUserInfoResponse.getNickname());
 
 		WechatRegisterOrLoginResponse wechatRegisterOrLoginResponse = userService.registerOrLoginPincheUser(getAuthUserInfoResponse.getUnionid(),
-				getAuthUserInfoResponse.getOpenid(), getAuthUserInfoResponse.getNickname());
+				getAuthUserInfoResponse.getOpenid(), getAuthUserInfoResponse.getNickname(), getAuthUserInfoResponse.getSex(), getAuthUserInfoResponse.getCountry(),
+				getAuthUserInfoResponse.getProvince(), getAuthUserInfoResponse.getCity());
 		LOGGER.info("User: " + wechatRegisterOrLoginResponse.getResponse().getUsername() + "  registered or logged in the pinche application");
 
 		try {

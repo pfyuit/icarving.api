@@ -1,8 +1,12 @@
 package cn.icarving.api.pinche.dto;
 
-public class PickActivityDto {
-	private int pickActivityId;
+public class ActivityDto {
+	private int activityId;
+	private int activityType; // 1-pick, 2-picked
 	private int ownerId;
+	private String ownerName;
+	private String ownerAvatar;
+	private int ownerPhone;
 	private String startTime;
 	private String returnTime;
 	private String sourceAddress;
@@ -17,12 +21,20 @@ public class PickActivityDto {
 	private String publishTime;
 	private String lastModify;
 
-	public int getPickActivityId() {
-		return pickActivityId;
+	public int getActivityId() {
+		return activityId;
 	}
 
-	public void setPickActivityId(int pickActivityId) {
-		this.pickActivityId = pickActivityId;
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
+	}
+
+	public int getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(int activityType) {
+		this.activityType = activityType;
 	}
 
 	public int getOwnerId() {
@@ -31,6 +43,30 @@ public class PickActivityDto {
 
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getOwnerAvatar() {
+		return ownerAvatar;
+	}
+
+	public void setOwnerAvatar(String ownerAvatar) {
+		this.ownerAvatar = ownerAvatar;
+	}
+
+	public int getOwnerPhone() {
+		return ownerPhone;
+	}
+
+	public void setOwnerPhone(int ownerPhone) {
+		this.ownerPhone = ownerPhone;
 	}
 
 	public String getStartTime() {

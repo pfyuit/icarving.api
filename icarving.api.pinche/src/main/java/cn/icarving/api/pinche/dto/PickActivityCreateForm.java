@@ -1,25 +1,16 @@
 package cn.icarving.api.pinche.dto;
 
-import java.math.BigDecimal;
-
 public class PickActivityCreateForm {
-
 	private int ownerId;
-
-	private String startTime;
-
-	private String returnTime;
-
-	private String sourceAddress;
-
-	private String destAddress;
-
-	private BigDecimal charge = BigDecimal.ZERO;
-
-	private String carType;
-
+	private int phone;
 	private int capacity;
-
+	private String startTime;
+	private String returnTime;
+	private String sourceAddress;
+	private String destAddress;
+	private String charge;
+	private String venue;
+	private String carType;
 	private String note;
 
 	public int getOwnerId() {
@@ -28,6 +19,22 @@ public class PickActivityCreateForm {
 
 	public void setOwnerId(int ownerId) {
 		this.ownerId = ownerId;
+	}
+
+	public int getPhone() {
+		return phone;
+	}
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	public String getStartTime() {
@@ -62,12 +69,20 @@ public class PickActivityCreateForm {
 		this.destAddress = destAddress;
 	}
 
-	public BigDecimal getCharge() {
+	public String getCharge() {
 		return charge;
 	}
 
-	public void setCharge(BigDecimal charge) {
+	public void setCharge(String charge) {
 		this.charge = charge;
+	}
+
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
 	}
 
 	public String getCarType() {
@@ -76,14 +91,6 @@ public class PickActivityCreateForm {
 
 	public void setCarType(String carType) {
 		this.carType = carType;
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
 	}
 
 	public String getNote() {

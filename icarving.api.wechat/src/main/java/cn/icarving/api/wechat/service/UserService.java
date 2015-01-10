@@ -291,7 +291,7 @@ public class UserService {
 		return result;
 	}
 
-	public WechatRegisterOrLoginResponse registerOrLoginPincheUser(String unionid, String openid, String nickName) {
+	public WechatRegisterOrLoginResponse registerOrLoginPincheUser(String unionid, String openid, String nickName, String sex, String country, String province, String city) {
 		WechatRegisterOrLoginResponse result = null;
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -302,6 +302,9 @@ public class UserService {
 			request.setPassword(unionid);
 			request.setName(nickName);
 			request.setPhone("");
+			request.setSex(sex);
+			request.setCountry(country);
+			request.setCity(city);
 			String payload = objectMapper.writeValueAsString(request);
 
 			HttpResponse response = networkService.post(NetworkService.WECHAT_PINCHE_REGISTER_OR_LOGIN, payload);

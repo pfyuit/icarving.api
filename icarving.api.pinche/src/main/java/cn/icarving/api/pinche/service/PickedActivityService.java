@@ -66,7 +66,7 @@ public class PickedActivityService {
 		if (!Strings.isNullOrEmpty(form.getStartTime())) {
 			pickedActivity.setStartTime(Timestamp.valueOf(form.getStartTime()));
 		}
-		if (form.getCharge().doubleValue() > 0) {
+		if (!Strings.isNullOrEmpty(form.getCharge())) {
 			pickedActivity.setCharge(form.getCharge());
 		}
 		pickedActivity.setLastModify(new Timestamp(new Date().getTime()));

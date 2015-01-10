@@ -37,7 +37,11 @@ public class UserService {
 		userDao.update(user);
 	}
 
-	public User findUser(String username) {
+	public User findUserByUid(int uid) {
+		return userDao.find(uid);
+	}
+
+	public User findUserByUserName(String username) {
 		User user = userDao.findByUserName(username);
 		return user;
 	}

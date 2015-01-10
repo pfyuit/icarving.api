@@ -1,7 +1,5 @@
 package cn.icarving.api.pinche.dto;
 
-import java.math.BigDecimal;
-
 public class PickedActivityDto {
 	private int pickedActivityId;
 	private int ownerId;
@@ -9,7 +7,8 @@ public class PickedActivityDto {
 	private String returnTime;
 	private String sourceAddress;
 	private String destAddress;
-	private BigDecimal charge;
+	private int capacity;
+	private String charge;
 	private String carType;
 	private String status;
 	private String note;
@@ -63,12 +62,20 @@ public class PickedActivityDto {
 	public void setDestAddress(String destAddress) {
 		this.destAddress = destAddress;
 	}
+	
+	public int getCapacity() {
+		return capacity;
+	}
 
-	public BigDecimal getCharge() {
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public String getCharge() {
 		return charge;
 	}
 
-	public void setCharge(BigDecimal charge) {
+	public void setCharge(String charge) {
 		this.charge = charge;
 	}
 
