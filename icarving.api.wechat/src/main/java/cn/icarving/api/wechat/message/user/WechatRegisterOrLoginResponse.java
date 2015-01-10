@@ -38,6 +38,11 @@ public class WechatRegisterOrLoginResponse {
 		private String wechatOpenid;
 		private String wechatUnionid;
 		private int login;
+		private String avatar;
+		private String sex;
+		private String country;
+		private String province;
+		private String city;
 
 		public int getUid() {
 			return uid;
@@ -101,6 +106,46 @@ public class WechatRegisterOrLoginResponse {
 
 		public void setLogin(int login) {
 			this.login = login;
+		}
+
+		public String getAvatar() {
+			return avatar;
+		}
+
+		public void setAvatar(String avatar) {
+			this.avatar = avatar;
+		}
+
+		public String getSex() {
+			return sex;
+		}
+
+		public void setSex(String sex) {
+			this.sex = sex;
+		}
+
+		public String getCountry() {
+			return country;
+		}
+
+		public void setCountry(String country) {
+			this.country = country;
+		}
+
+		public String getProvince() {
+			return province;
+		}
+
+		public void setProvince(String province) {
+			this.province = province;
+		}
+
+		public String getCity() {
+			return city;
+		}
+
+		public void setCity(String city) {
+			this.city = city;
 		}
 
 	}

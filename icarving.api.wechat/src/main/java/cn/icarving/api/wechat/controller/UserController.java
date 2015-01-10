@@ -102,11 +102,12 @@ public class UserController {
 
 		GetAuthUserInfoResponse getAuthUserInfoResponse = getAuthUserInfo(getUserAccessTokenResponse.getAccess_token(), getUserAccessTokenResponse.getOpenid(), "zh_CN");
 		LOGGER.info("openid: " + getAuthUserInfoResponse.getOpenid() + ", unionid: " + getAuthUserInfoResponse.getUnionid() + ", nickname: "
-				+ getAuthUserInfoResponse.getNickname());
+				+ getAuthUserInfoResponse.getNickname() + ", sex: " + getAuthUserInfoResponse.getSex() + ", country: " + getAuthUserInfoResponse.getCountry() + ", province: "
+				+ getAuthUserInfoResponse.getProvince() + ", city: " + getAuthUserInfoResponse.getCity() + ", headimgurl: " + getAuthUserInfoResponse.getHeadimgurl());
 
 		WechatRegisterOrLoginResponse wechatRegisterOrLoginResponse = userService.registerOrLoginPincheUser(getAuthUserInfoResponse.getUnionid(),
 				getAuthUserInfoResponse.getOpenid(), getAuthUserInfoResponse.getNickname(), getAuthUserInfoResponse.getSex(), getAuthUserInfoResponse.getCountry(),
-				getAuthUserInfoResponse.getProvince(), getAuthUserInfoResponse.getCity());
+				getAuthUserInfoResponse.getProvince(), getAuthUserInfoResponse.getCity(), getAuthUserInfoResponse.getHeadimgurl());
 		LOGGER.info("User: " + wechatRegisterOrLoginResponse.getResponse().getUsername() + "  registered or logged in the pinche application");
 
 		try {

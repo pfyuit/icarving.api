@@ -11,6 +11,7 @@ public class WechatRegisterOrLoginForm {
 	private String country;
 	private String province;
 	private String city;
+	private String avatar;
 
 	public String getOpenid() {
 		return openid;
@@ -90,6 +91,14 @@ public class WechatRegisterOrLoginForm {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 }

@@ -88,6 +88,7 @@ public class UserController {
 		user.setCountry(wechatRegisterOrLoginForm.getCountry());
 		user.setProvince(wechatRegisterOrLoginForm.getProvince());
 		user.setCity(wechatRegisterOrLoginForm.getCity());
+		user.setAvatar(wechatRegisterOrLoginForm.getAvatar());
 
 		userService.register(user);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
