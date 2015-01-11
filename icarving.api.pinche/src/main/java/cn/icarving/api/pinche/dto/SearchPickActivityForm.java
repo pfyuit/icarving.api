@@ -6,6 +6,16 @@ public class SearchPickActivityForm {
 	private String returnTime;
 	private String sourceAddress;
 	private String destAddress;
+	
+	public SearchPickActivityForm(){		
+	}
+
+	public SearchPickActivityForm(String startTime, String returnTime, String sourceAddress, String destAddress) {
+		this.startTime = startTime;
+		this.returnTime = returnTime;
+		this.sourceAddress = sourceAddress;
+		this.destAddress = destAddress;
+	}
 
 	public String getStartTime() {
 		return startTime;
