@@ -16,7 +16,9 @@ import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.PickActivity;
+import cn.icarving.api.pinche.domain.PickActivityApply;
 import cn.icarving.api.pinche.domain.PickedActivity;
+import cn.icarving.api.pinche.domain.PickedActivityApply;
 import cn.icarving.api.pinche.domain.User;
 import cn.icarving.api.pinche.dto.ActivityDto;
 import cn.icarving.api.pinche.dto.ActivityDtoBuilder;
@@ -28,7 +30,9 @@ import cn.icarving.api.pinche.dto.PickedActivityCreateForm;
 import cn.icarving.api.pinche.dto.PickedActivityDto;
 import cn.icarving.api.pinche.dto.PickedActivityDtoBuilder;
 import cn.icarving.api.pinche.dto.PickedActivityUpdateForm;
+import cn.icarving.api.pinche.service.PickActivityApplyService;
 import cn.icarving.api.pinche.service.PickActivityService;
+import cn.icarving.api.pinche.service.PickedActivityApplyService;
 import cn.icarving.api.pinche.service.PickedActivityService;
 import cn.icarving.api.pinche.service.UserService;
 
@@ -46,6 +50,12 @@ public class ActivityController {
 
 	@Autowired
 	private PickedActivityService pickedActivityService;
+
+	@Autowired
+	private PickActivityApplyService pickActivityApplyService;
+
+	@Autowired
+	private PickedActivityApplyService pickedActivityApplyService;
 
 	@RequestMapping(value = "/pick/create", method = RequestMethod.POST)
 	public @ResponseBody
@@ -200,6 +210,45 @@ public class ActivityController {
 				continue;
 			}
 			dtos.add(ActivityDtoBuilder.buildPickedActivity(picked));
+		}
+
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
+	}
+
+	@RequestMapping(value = "/findMy", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findActivityMy(@RequestParam(value = "uid", required = true) int uid) {
+		List<ActivityDto> dtos = Lists.newArrayList();
+
+		List<PickActivity> list = pickActivityService.findPickActivityAll();
+		List<PickedActivity> list1 = pickedActivityService.findPickedActivityAll();
+
+		for (PickActivity pick : list) {
+			List<PickActivityApply> applies = pickActivityApplyService.findPickActivityApplyByPickActivity(pick.getPickActivityId());
+			boolean hasApplied = false;
+			for (PickActivityApply apply : applies) {
+				if (apply.getApplyUserId() == uid) {
+					hasApplied = true;
+					break;
+				}
+			}
+			if (pick.getOwnerId() == uid || hasApplied == true) {
+				dtos.add(ActivityDtoBuilder.buildPickActivity(pick));
+			}
+		}
+
+		for (PickedActivity picked : list1) {
+			List<PickedActivityApply> applies = pickedActivityApplyService.findPickedActivityApplyByPickedActivity(picked.getPickedActivityId());
+			boolean hasApplied = false;
+			for (PickedActivityApply apply : applies) {
+				if (apply.getApplyUserId() == uid) {
+					hasApplied = true;
+					break;
+				}
+			}
+			if (picked.getOwnerId() == uid || hasApplied == true) {
+				dtos.add(ActivityDtoBuilder.buildPickedActivity(picked));
+			}
 		}
 
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);

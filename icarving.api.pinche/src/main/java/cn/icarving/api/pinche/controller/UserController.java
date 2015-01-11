@@ -124,4 +124,14 @@ public class UserController {
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}
 
+	@RequestMapping(value = "/info", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse userInfo(@RequestParam(value = "uid", required = true) int uid) {
+		User user = userService.findUserByUid(uid);
+		if (user == null) {
+			throw new ApiException(ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getMessage());
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
+	}
+
 }
