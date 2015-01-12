@@ -9,19 +9,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "pick_activity_apply")
-public class PickActivityApply {
+@Table(name = "apply")
+public class Apply {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "pick_activity_apply_id")
-	private int pickActivityApplyId;
+	@Column(name = "apply_id")
+	private int applyId;
 
-	@Column(name = "pick_activity_id")
-	private int pickActivityId;
+	@Column(name = "activity_id")
+	private int activityId;
 
-	@Column(name = "apply_user_id")
-	private int applyUserId;
+	@Column(name = "owner_id")
+	private int ownerId;
+
+	@Column(name = "owner_name")
+	private String ownerName;
 
 	private String status;
 
@@ -31,28 +34,28 @@ public class PickActivityApply {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public int getPickActivityApplyId() {
-		return pickActivityApplyId;
+	public int getApplyId() {
+		return applyId;
 	}
 
-	public void setPickActivityApplyId(int pickActivityApplyId) {
-		this.pickActivityApplyId = pickActivityApplyId;
+	public void setApplyId(int applyId) {
+		this.applyId = applyId;
 	}
 
-	public int getPickActivityId() {
-		return pickActivityId;
+	public int getActivityId() {
+		return activityId;
 	}
 
-	public void setPickActivityId(int pickActivityId) {
-		this.pickActivityId = pickActivityId;
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
 	}
 
-	public int getApplyUserId() {
-		return applyUserId;
+	public int getOwnerId() {
+		return ownerId;
 	}
 
-	public void setApplyUserId(int applyUserId) {
-		this.applyUserId = applyUserId;
+	public void setOwnerId(int ownerId) {
+		this.ownerId = ownerId;
 	}
 
 	public String getStatus() {
@@ -77,6 +80,14 @@ public class PickActivityApply {
 
 	public void setLastModify(Timestamp lastModify) {
 		this.lastModify = lastModify;
+	}
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
 
 }

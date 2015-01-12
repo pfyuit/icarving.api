@@ -9,13 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_message")
-public class UserMessage {
+@Table(name = "message")
+public class Message {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "user_message_id")
-	private int userMessageId;
+	@Column(name = "message_id")
+	private int messageId;
 
 	/**
 	 * uid =0 means from system, it indicates the system event, such as the
@@ -42,11 +42,11 @@ public class UserMessage {
 	private Timestamp lastModify;
 
 	public int getUserMessageId() {
-		return userMessageId;
+		return messageId;
 	}
 
 	public void setUserMessageId(int userMessageId) {
-		this.userMessageId = userMessageId;
+		this.messageId = userMessageId;
 	}
 
 	public int getFromUid() {

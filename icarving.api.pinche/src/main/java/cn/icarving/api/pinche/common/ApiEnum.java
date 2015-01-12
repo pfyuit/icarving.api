@@ -4,44 +4,24 @@ public enum ApiEnum {
 
 	API_SUCCESS("1000000", "Api operation success", "操作成功"),
 	
-	USER_REGISTER_FAILED_USER_ALREADY_REGISTERED("1000001", "User already registered", "该用户已经注册"),
+	USER_ALREADY_REGISTERED("1000001", "User already registered", "该用户已经注册"),	
+	USER_CANNOT_FIND("1000002", "Cannot find user", "找不到该用户，请重试"),
+	USER_PASSWORD_NOT_MATCH("1000003", "Password not match", "密码不对，请重试"),
+
+	ACTIVITY_CANNOT_FIND("1000008", "Cannot find activity", "找不到活动"),
+	ACTIVITY_ALREADY_CANCELLED("1000008", "Cannot find activity", "该活动已取消"),
+
+	APPLY_ACTIVITY_INVALID("1000008", "Invalid activity", "该活动已经无法申请"),
+	APPLY_ALREADY_APPLIED_ACTIVITY("1000008", "Already applied activity", "您已申请过该活动"),
+	APPLY_CANNOT_FIND("1000010", "Cannot find activity apply", "找不到活动申请"),
+	APPLY_ALREADY_APPROVED("1000015", "Already approved activity apply", "该申请已批准"),
+	APPLY_ALREADY_UNAPPROVED("1000015", "Already unapproved activity apply", "该申请已拒绝"),
+	APPLY_ALREADY_CANCELLED("1000015", "Already cancelled activity apply", "该申请已被取消"),
 	
-	USER_LOGIN_FAILED_CANNOT_FIND_USER("1000002", "Cannot find user", "找不到该用户，请重试"),
-	USER_LOGIN_FAILED_PASSWORD_NOT_MATCH("1000003", "Password not match", "密码不匹配，请重试"),
+	MESSAGE_CANNOT_FIND("1000008", "Cannot find user message", "该消息不存在"),
+	MESSAGE_ALREADY_READ("1000008", "Already read this message", "该消息已阅读"),
 	
-	USER_LOGOFF_FAILED_CANNOT_FIND_USER("1000004", "Cannot find user", "找不到该用户，请重试"),
-	USER_LOGOFF_FAILED_PASSWORD_NOT_MATCH("1000005", "Password not match", "密码不匹配，请重试"),
-	
-	USER_UPDATE_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user", "找不到该用户，请重试"),
-	USER_UPDATE_FAILED_PASSWORD_NOT_MATCH("1000007", "Password not match", "密码不匹配，请重试"),
-	
-	ACTIVITY_UPDATE_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user", "找不到该用户，请重试"),
-	
-	ACTIVITY_CANCEL_FAILED_CANNOT_FIND_USER("1000006", "Cannot find user", "找不到该用户，请重试"),
-	ACTIVITY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity", "找不到活动"),
-	
-	APPLY_CREATE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000008", "Cannot find pick/picked activity", "找不到活动"),
-	APPLY_CREATE_FAILED_INVALID_ACTIVITY("1000008", "Invalid pick/picked activity", "该活动已经无法申请"),
-	
-	APPLY_CREATE_FAILED_ALREADY_APPLIED_ACTIVITY("1000008", "Already applied pick/picked activity", "您已申请过该活动"),
-	
-	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000009", "Cannot find pick/picked activity", "找不到活动"),
-	APPLY_APPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000010", "Cannot find pick/picked activity apply", "找不到活动申请"),
-	
-	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY("1000011", "Cannot find pick/picked activity", "找不到活动"),
-	APPLY_UNAPPROVE_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000012", "Cannot find pick/picked activity apply", "找不到活动申请"),
-	
-	APPLY_FIND_FAILED_CANNOT_FIND_USER("1000013", "Cannot find user", "找不到该用户，请重试"),
-	
-	APPLY_CANCEL_FAILED_CANNOT_FIND_USER("1000014", "Cannot find user", "找不到该用户，请重试"),
-	APPLY_CANCEL_FAILED_CANNOT_FIND_PICK_ACTIVITY_APPLY("1000015", "Cannot find pick/picked activity apply", "找不到该用户，请重试"),
-	APPLY_CANCEL_FAILED_ALREADY_CANCELLED_APPLY("1000015", "Already cancelled pick/picked activity apply", "该申请已被取消"),
-	APPLY_CANCEL_FAILED_NOT_OWNER_OF_PICK_ACTIVITY_APPLY("1000016", "User is not owner of pick/picked activity", "找不到活动申请"),
-	
-	MESSAGE_READ_FAILED_CANNOT_FIND_MESSAGE("1000008", "Cannot find user message", "该消息不存在"),
-	MESSAGE_READ_FAILED_ALREADY_READ("1000008", "Already read this message", "该消息已阅读"),
-	
-	SEARCH_FAILED_SOURCE_ADDRESS_CANNOT_EMPTY("1000008", "Source address cannot be empty", "出发地不能为空");
+	SEARCH_ADDRESS_CANNOT_EMPTY("1000008", "Source address cannot be empty", "出发地不能为空");
 
 	private String code;
 	private String message;

@@ -8,32 +8,32 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import cn.icarving.api.pinche.domain.PickedActivity;
+import cn.icarving.api.pinche.domain.Activity;
 
 @Repository
-public class PickedActivityDao extends BaseDao<PickedActivity> {
+public class ActivityDao extends BaseDao<Activity> {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public PickedActivityDao() {
-		super(PickedActivity.class);
+	public ActivityDao() {
+		super(Activity.class);
 	}
 
-	public List<PickedActivity> findPickedActivityByUser(int uid) {
+	public List<Activity> findActivityByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from PickedActivity where ownerId = :owerId");
+		Query query = session.createQuery("from Activity where ownerId = :owerId");
 		query.setParameter("owerId", uid);
 		@SuppressWarnings("unchecked")
-		List<PickedActivity> result = query.list();
+		List<Activity> result = query.list();
 		return result;
 	}
 	
-	public List<PickedActivity> findPickedActivityAll() {
+	public List<Activity> findActivityAll() {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from PickedActivity");
+		Query query = session.createQuery("from Activity");
 		@SuppressWarnings("unchecked")
-		List<PickedActivity> result = query.list();
+		List<Activity> result = query.list();
 		return result;
 	}
 }

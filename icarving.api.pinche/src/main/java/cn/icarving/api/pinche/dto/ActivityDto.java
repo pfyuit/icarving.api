@@ -1,17 +1,23 @@
 package cn.icarving.api.pinche.dto;
 
+import java.util.List;
+
 public class ActivityDto {
 	private int activityId;
 	private int activityType; // 1-pick, 2-picked
 	private int ownerId;
 	private String ownerName;
 	private String ownerAvatar;
-	private int ownerPhone;
+	private String ownerPhone;
+	private String ownerCountry;
+	private String ownerProvince;
+	private String ownerCity;
 	private String startTime;
 	private String returnTime;
 	private String sourceAddress;
 	private String destAddress;
 	private String charge;
+	private String venue;
 	private String carType;
 	private int capacity;
 	private int applyNumber;
@@ -20,6 +26,7 @@ public class ActivityDto {
 	private String note;
 	private String publishTime;
 	private String lastModify;
+	private List<ApplyDto> applies;
 
 	public int getActivityId() {
 		return activityId;
@@ -61,11 +68,11 @@ public class ActivityDto {
 		this.ownerAvatar = ownerAvatar;
 	}
 
-	public int getOwnerPhone() {
+	public String getOwnerPhone() {
 		return ownerPhone;
 	}
 
-	public void setOwnerPhone(int ownerPhone) {
+	public void setOwnerPhone(String ownerPhone) {
 		this.ownerPhone = ownerPhone;
 	}
 
@@ -171,6 +178,46 @@ public class ActivityDto {
 
 	public void setLastModify(String lastModify) {
 		this.lastModify = lastModify;
+	}
+
+	public String getOwnerCountry() {
+		return ownerCountry;
+	}
+
+	public void setOwnerCountry(String ownerCountry) {
+		this.ownerCountry = ownerCountry;
+	}
+
+	public String getOwnerProvince() {
+		return ownerProvince;
+	}
+
+	public void setOwnerProvince(String ownerProvince) {
+		this.ownerProvince = ownerProvince;
+	}
+
+	public String getOwnerCity() {
+		return ownerCity;
+	}
+
+	public void setOwnerCity(String ownerCity) {
+		this.ownerCity = ownerCity;
+	}
+
+	public String getVenue() {
+		return venue;
+	}
+
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
+
+	public List<ApplyDto> getApplies() {
+		return applies;
+	}
+
+	public void setApplies(List<ApplyDto> applies) {
+		this.applies = applies;
 	}
 
 }

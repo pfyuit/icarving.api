@@ -1,7 +1,6 @@
 package cn.icarving.api.pinche.dto;
 
 public class SendUserMessageForm {
-
 	private String fromUid;
 	private String toUid;
 	private String content;

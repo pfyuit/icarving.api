@@ -1,13 +1,9 @@
 package cn.icarving.api.pinche.dto;
 
 public class RegisterForm {
-
 	private String username;
-
 	private String password;
-
 	private String name;
-
 	private String phone;
 
 	public String getUsername() {

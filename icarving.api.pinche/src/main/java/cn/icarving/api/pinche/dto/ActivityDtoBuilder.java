@@ -1,58 +1,47 @@
 package cn.icarving.api.pinche.dto;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import cn.icarving.api.pinche.common.ApiStatus;
-import cn.icarving.api.pinche.domain.PickActivity;
-import cn.icarving.api.pinche.domain.PickedActivity;
+import cn.icarving.api.pinche.domain.Activity;
+import cn.icarving.api.pinche.domain.Apply;
+
+import com.google.common.collect.Lists;
 
 public class ActivityDtoBuilder {
-	private static final int ACTIVITY_TYPE_PICK = 1;
-	private static final int ACTIVITY_TYPE_PICKED = 2;
 
-	public static ActivityDto buildPickActivity(PickActivity pick) {
+	public static ActivityDto buildActivity(Activity activity, List<Apply> applies) {
 		ActivityDto dto = new ActivityDto();
-		dto.setApplyNumber(pick.getApplyNumber());
-		dto.setApproveNumber(pick.getApproveNumber());
-		dto.setCapacity(pick.getCapacity());
-		dto.setCarType(pick.getCarType());
-		dto.setCharge(pick.getCharge());
-		dto.setDestAddress(pick.getDestAddress());
-		dto.setLastModify(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getLastModify()));
-		dto.setNote(pick.getNote());
-		dto.setOwnerId(pick.getOwnerId());
-		dto.setOwnerName(pick.getOwnerName());
-		dto.setOwnerPhone(pick.getOwnerPhone());
-		dto.setOwnerAvatar(pick.getOwnerAvatar());
-		dto.setActivityId(pick.getPickActivityId());
-		dto.setActivityType(ACTIVITY_TYPE_PICK);
-		dto.setPublishTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getPublishTime()));
-		dto.setReturnTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getReturnTime()));
-		dto.setSourceAddress(pick.getSourceAddress());
-		dto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(pick.getStartTime()));
-		dto.setStatus(ApiStatus.fromStatus(pick.getStatus()).getDescription());
-		return dto;
-	}
+		dto.setApplyNumber(activity.getApplyNumber());
+		dto.setApproveNumber(activity.getApproveNumber());
+		dto.setCapacity(activity.getCapacity());
+		dto.setCarType(activity.getCarType());
+		dto.setCharge(activity.getCharge());
+		dto.setDestAddress(activity.getDestAddress());
+		dto.setLastModify(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getLastModify()));
+		dto.setNote(activity.getNote());
+		dto.setOwnerId(activity.getOwnerId());
+		dto.setOwnerName(activity.getOwnerName());
+		dto.setOwnerPhone(activity.getOwnerPhone());
+		dto.setOwnerAvatar(activity.getOwnerAvatar());
+		dto.setActivityId(activity.getActivityId());
+		dto.setActivityType(activity.getActivityType());
+		dto.setPublishTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getPublishTime()));
+		dto.setReturnTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getReturnTime()));
+		dto.setSourceAddress(activity.getSourceAddress());
+		dto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getStartTime()));
+		dto.setStatus(ApiStatus.fromStatus(activity.getStatus()).getDescription());
 
-	public static ActivityDto buildPickedActivity(PickedActivity picked) {
-		ActivityDto dto = new ActivityDto();
-		dto.setCapacity(picked.getCapacity());
-		dto.setCarType(picked.getCarType());
-		dto.setCharge(picked.getCharge());
-		dto.setDestAddress(picked.getDestAddress());
-		dto.setLastModify(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(picked.getLastModify()));
-		dto.setNote(picked.getNote());
-		dto.setOwnerId(picked.getOwnerId());
-		dto.setOwnerName(picked.getOwnerName());
-		dto.setOwnerPhone(picked.getOwnerPhone());
-		dto.setOwnerAvatar(picked.getOwnerAvatar());
-		dto.setActivityId(picked.getPickedActivityId());
-		dto.setActivityType(ACTIVITY_TYPE_PICKED);
-		dto.setPublishTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(picked.getPublishTime()));
-		dto.setReturnTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(picked.getReturnTime()));
-		dto.setSourceAddress(picked.getSourceAddress());
-		dto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(picked.getStartTime()));
-		dto.setStatus(ApiStatus.fromStatus(picked.getStatus()).getDescription());
+		if (applies != null && !applies.isEmpty()) {
+			List<ApplyDto> applyDtos = Lists.newArrayList();
+			for (Apply apply : applies) {
+				ApplyDto applyDto = ApplyDtoBuilder.buildApply(apply);
+				applyDtos.add(applyDto);
+			}
+			dto.setApplies(applyDtos);
+		}
+
 		return dto;
 	}
 

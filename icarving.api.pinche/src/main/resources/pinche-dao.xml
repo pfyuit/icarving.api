@@ -35,11 +35,9 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>cn.icarving.api.pinche.domain.User</value>
-				<value>cn.icarving.api.pinche.domain.PickActivity</value>
-				<value>cn.icarving.api.pinche.domain.PickActivityApply</value>
-				<value>cn.icarving.api.pinche.domain.PickedActivity</value>
-				<value>cn.icarving.api.pinche.domain.PickedActivityApply</value>
-				<value>cn.icarving.api.pinche.domain.UserMessage</value>
+				<value>cn.icarving.api.pinche.domain.Activity</value>
+				<value>cn.icarving.api.pinche.domain.Apply</value>
+				<value>cn.icarving.api.pinche.domain.Message</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

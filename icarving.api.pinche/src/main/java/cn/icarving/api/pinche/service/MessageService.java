@@ -11,18 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiMessage;
-import cn.icarving.api.pinche.dao.UserMessageDao;
-import cn.icarving.api.pinche.domain.UserMessage;
+import cn.icarving.api.pinche.dao.MessageDao;
+import cn.icarving.api.pinche.domain.Message;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class UserMessageService {
+public class MessageService {
 
 	@Autowired
-	private UserMessageDao userMessageDao;
+	private MessageDao userMessageDao;
 
 	public void createUserMessage(int fromUid, int toUid, String content) {
-		UserMessage msg = new UserMessage();
+		Message msg = new Message();
 		msg.setFromUid(fromUid);
 		msg.setToUid(toUid);
 		msg.setContent(content);
@@ -33,17 +33,17 @@ public class UserMessageService {
 		userMessageDao.save(msg);
 	}
 
-	public List<UserMessage> findAllMessagesByUser(int uid) {
+	public List<Message> findAllMessagesByUser(int uid) {
 		return userMessageDao.findAllMessagesByUser(uid);
 	}
 
 	public void readUserMessage(int userMessageId) {
-		UserMessage msg = userMessageDao.find(userMessageId);
+		Message msg = userMessageDao.find(userMessageId);
 		if (msg == null) {
-			throw new ApiException(ApiEnum.MESSAGE_READ_FAILED_CANNOT_FIND_MESSAGE.getCode(), ApiEnum.MESSAGE_READ_FAILED_CANNOT_FIND_MESSAGE.getMessage());
+			throw new ApiException(ApiEnum.MESSAGE_CANNOT_FIND.getCode(), ApiEnum.MESSAGE_CANNOT_FIND.getMessage());
 		}
 		if (msg.getStatus() == ApiMessage.MESSAGE_STATUS_READ) {
-			throw new ApiException(ApiEnum.MESSAGE_READ_FAILED_ALREADY_READ.getCode(), ApiEnum.MESSAGE_READ_FAILED_ALREADY_READ.getMessage());
+			throw new ApiException(ApiEnum.MESSAGE_ALREADY_READ.getCode(), ApiEnum.MESSAGE_ALREADY_READ.getMessage());
 		}
 		msg.setStatus(ApiMessage.MESSAGE_STATUS_READ);
 		userMessageDao.update(msg);

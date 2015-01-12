@@ -9,13 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "picked_activity")
-public class PickedActivity {
+@Table(name = "activity")
+public class Activity {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "picked_activity_id")
-	private int pickedActivityId;
+	@Column(name = "activity_id")
+	private int activityId;
+
+	@Column(name = "activity_type")
+	private int activityType; // 1-pick, 2-picked
 
 	@Column(name = "owner_id")
 	private int ownerId;
@@ -24,10 +27,19 @@ public class PickedActivity {
 	private String ownerName;
 
 	@Column(name = "owner_phone")
-	private int ownerPhone;
+	private String ownerPhone;
 
 	@Column(name = "owner_avatar")
 	private String ownerAvatar;
+
+	@Column(name = "owner_country")
+	private String ownerCountry;
+
+	@Column(name = "owner_province")
+	private String ownerProvince;
+
+	@Column(name = "owner_city")
+	private String ownerCity;
 
 	@Column(name = "start_time")
 	private Timestamp startTime;
@@ -41,14 +53,20 @@ public class PickedActivity {
 	@Column(name = "dest_address")
 	private String destAddress;
 
-	private int capacity;
+	private String venue;
 
 	private String charge;
 
-	private String venue;
-
 	@Column(name = "car_type")
 	private String carType;
+
+	private int capacity;
+
+	@Column(name = "apply_number")
+	private int applyNumber;
+
+	@Column(name = "approve_number")
+	private int approveNumber;
 
 	private String status;
 
@@ -60,12 +78,20 @@ public class PickedActivity {
 	@Column(name = "last_modify")
 	private Timestamp lastModify;
 
-	public int getPickedActivityId() {
-		return pickedActivityId;
+	public int getActivityId() {
+		return activityId;
 	}
 
-	public void setPickedActivityId(int pickedActivityId) {
-		this.pickedActivityId = pickedActivityId;
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
+	}
+
+	public int getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(int activityType) {
+		this.activityType = activityType;
 	}
 
 	public int getOwnerId() {
@@ -84,11 +110,11 @@ public class PickedActivity {
 		this.ownerName = ownerName;
 	}
 
-	public int getOwnerPhone() {
+	public String getOwnerPhone() {
 		return ownerPhone;
 	}
 
-	public void setOwnerPhone(int ownerPhone) {
+	public void setOwnerPhone(String ownerPhone) {
 		this.ownerPhone = ownerPhone;
 	}
 
@@ -98,6 +124,30 @@ public class PickedActivity {
 
 	public void setOwnerAvatar(String ownerAvatar) {
 		this.ownerAvatar = ownerAvatar;
+	}
+
+	public String getOwnerCountry() {
+		return ownerCountry;
+	}
+
+	public void setOwnerCountry(String ownerCountry) {
+		this.ownerCountry = ownerCountry;
+	}
+
+	public String getOwnerProvince() {
+		return ownerProvince;
+	}
+
+	public void setOwnerProvince(String ownerProvince) {
+		this.ownerProvince = ownerProvince;
+	}
+
+	public String getOwnerCity() {
+		return ownerCity;
+	}
+
+	public void setOwnerCity(String ownerCity) {
+		this.ownerCity = ownerCity;
 	}
 
 	public Timestamp getStartTime() {
@@ -132,12 +182,12 @@ public class PickedActivity {
 		this.destAddress = destAddress;
 	}
 
-	public int getCapacity() {
-		return capacity;
+	public String getVenue() {
+		return venue;
 	}
 
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
+	public void setVenue(String venue) {
+		this.venue = venue;
 	}
 
 	public String getCharge() {
@@ -148,20 +198,36 @@ public class PickedActivity {
 		this.charge = charge;
 	}
 
-	public String getVenue() {
-		return venue;
-	}
-
-	public void setVenue(String venue) {
-		this.venue = venue;
-	}
-
 	public String getCarType() {
 		return carType;
 	}
 
 	public void setCarType(String carType) {
 		this.carType = carType;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	public int getApplyNumber() {
+		return applyNumber;
+	}
+
+	public void setApplyNumber(int applyNumber) {
+		this.applyNumber = applyNumber;
+	}
+
+	public int getApproveNumber() {
+		return approveNumber;
+	}
+
+	public void setApproveNumber(int approveNumber) {
+		this.approveNumber = approveNumber;
 	}
 
 	public String getStatus() {

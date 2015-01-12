@@ -1,7 +1,5 @@
 package cn.icarving.api.pinche.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,173 +12,69 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiResponse;
-import cn.icarving.api.pinche.common.ApiStatus;
-import cn.icarving.api.pinche.domain.PickActivityApply;
-import cn.icarving.api.pinche.domain.PickedActivityApply;
-import cn.icarving.api.pinche.domain.User;
+import cn.icarving.api.pinche.domain.Apply;
+import cn.icarving.api.pinche.dto.ApplyCreateForm;
 import cn.icarving.api.pinche.dto.ApplyDto;
 import cn.icarving.api.pinche.dto.ApplyDtoBuilder;
-import cn.icarving.api.pinche.dto.PickActivityApplyDto;
-import cn.icarving.api.pinche.dto.PickActivityApplyDtoBuilder;
-import cn.icarving.api.pinche.dto.PickActivityApplyForm;
-import cn.icarving.api.pinche.dto.PickedActivityApplyDto;
-import cn.icarving.api.pinche.dto.PickedActivityApplyDtoBuilder;
-import cn.icarving.api.pinche.dto.PickedActivityApplyForm;
-import cn.icarving.api.pinche.service.PickActivityApplyService;
-import cn.icarving.api.pinche.service.PickedActivityApplyService;
-import cn.icarving.api.pinche.service.UserService;
+import cn.icarving.api.pinche.service.ApplyService;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 @Controller
 @RequestMapping("/apply")
 public class ApplyController {
-
+	
 	@Autowired
-	private UserService userService;
+	private ApplyService applyService;
 
-	@Autowired
-	private PickActivityApplyService pickActivityApplyService;
-
-	@Autowired
-	private PickedActivityApplyService pickedActivityApplyService;
-
-	@RequestMapping(value = "/pick/create", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse createPickActivityApply(@RequestBody PickActivityApplyForm form) {
-		PickActivityApply apply = new PickActivityApply();
-		apply.setPickActivityId(form.getPickActivityId());
-		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
-		apply.setApplyTime(new Timestamp(new Date().getTime()));
-		apply.setLastModify(new Timestamp(new Date().getTime()));
-		pickActivityApplyService.createPickActivityApply(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), PickActivityApplyDtoBuilder.build(apply));
+	ApiResponse createApply(@RequestBody ApplyCreateForm form) {
+		Apply apply = applyService.createApply(form);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
-	@RequestMapping(value = "/pick/approve", method = RequestMethod.GET)
+	@RequestMapping(value = "/approve", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse approvePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
-		pickActivityApplyService.approvePickActivityApply(pickActivityApplyId);
+	ApiResponse approveApply(@RequestParam(value = "applyId", required = true) int applyId) {
+		applyService.approveApply(applyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
-	@RequestMapping(value = "/pick/unapprove", method = RequestMethod.GET)
+	@RequestMapping(value = "/unapprove", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse unApprovePickActivityApply(@RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
-		pickActivityApplyService.unApprovePickActivityApply(pickActivityApplyId);
+	ApiResponse unApproveApply(@RequestParam(value = "applyId", required = true) int applyId) {
+		applyService.unApproveApply(applyId);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 
-	@RequestMapping(value = "/pick/findByUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findPickActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
-		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByUser(uid);
-		List<PickActivityApplyDto> dtos = Lists.newArrayList();
-		for (PickActivityApply pickActivityApply : list) {
-			dtos.add(PickActivityApplyDtoBuilder.build(pickActivityApply));
+	ApiResponse cancelApply(@RequestParam(value = "uid", required = true) int uid, @RequestParam(value = "applyId", required = true) int applyId) {
+		applyService.cancelApply(uid, applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+	}
+
+	@RequestMapping(value = "/findByUser", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
+		List<Apply> list = applyService.findApplyByUser(uid);
+		List<ApplyDto> dtos = Lists.newArrayList();
+		for (Apply apply : list) {
+			dtos.add(ApplyDtoBuilder.buildApply(apply));
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}
 
-	@RequestMapping(value = "/pick/findByPickActivity", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse findPickActivityApplyByPickActivity(@RequestParam(value = "pickActivityId", required = true) int pickActivityId) {
-		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByPickActivity(pickActivityId);
-		List<PickActivityApplyDto> dtos = Lists.newArrayList();
-		for (PickActivityApply pickActivityApply : list) {
-			dtos.add(PickActivityApplyDtoBuilder.build(pickActivityApply));
-		}
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
-	}
-
-	@RequestMapping(value = "/pick/cancel", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse cancelPickActivityApply(@RequestParam(value = "uid", required = true) int uid, @RequestParam(value = "pickActivityApplyId", required = true) int pickActivityApplyId) {
-		pickActivityApplyService.cancelPickActivityApply(uid, pickActivityApplyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
-	}
-
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/picked/create", method = RequestMethod.POST)
-	public @ResponseBody
-	ApiResponse createPickedActivityApply(@RequestBody PickedActivityApplyForm form) {
-		PickedActivityApply apply = new PickedActivityApply();
-		apply.setPickedActivityId(form.getPickedActivityId());
-		apply.setApplyUserId(form.getApplyUserId());
-		apply.setStatus(ApiStatus.APPLY_STATUS_UNAPPROVED.getStatus());
-		apply.setApplyTime(new Timestamp(new Date().getTime()));
-		apply.setLastModify(new Timestamp(new Date().getTime()));
-		pickedActivityApplyService.createPickedActivityApply(apply);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), PickedActivityApplyDtoBuilder.build(apply));
-	}
-
-	@RequestMapping(value = "/picked/approve", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse approvePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
-		pickedActivityApplyService.approvePickedActivityApply(pickedActivityApplyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
-	}
-
-	@RequestMapping(value = "/picked/unapprove", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse unApprovePickedActivityApply(@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
-		pickedActivityApplyService.unApprovePickedActivityApply(pickedActivityApplyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
-	}
-
-	@RequestMapping(value = "/picked/findByUser", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse findPickedActivityApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
-		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByUser(uid);
-		List<PickedActivityApplyDto> dtos = Lists.newArrayList();
-		for (PickedActivityApply pickedActivityApply : list) {
-			dtos.add(PickedActivityApplyDtoBuilder.build(pickedActivityApply));
-		}
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
-	}
-
-	@RequestMapping(value = "/picked/findByPickedActivity", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse findPickedActivityApplyByPickedActivity(@RequestParam(value = "pickedActivityId", required = true) int pickedActivityId) {
-		List<PickedActivityApply> list = pickedActivityApplyService.findPickedActivityApplyByPickedActivity(pickedActivityId);
-		List<PickedActivityApplyDto> dtos = Lists.newArrayList();
-		for (PickedActivityApply pickedActivityApply : list) {
-			dtos.add(PickedActivityApplyDtoBuilder.build(pickedActivityApply));
-		}
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
-	}
-
-	@RequestMapping(value = "/picked/cancel", method = RequestMethod.GET)
-	public @ResponseBody
-	ApiResponse cancelPickedActivityApply(@RequestParam(value = "uid", required = true) int uid,
-			@RequestParam(value = "pickedActivityApplyId", required = true) int pickedActivityApplyId) {
-		pickedActivityApplyService.cancelPickedActivityApply(uid, pickedActivityApplyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
-	}
-
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////////////////////////////////////////
-	// //////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/findByActivity", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse findApplyByActivity(@RequestParam(value = "activityId", required = true) int activityId) {
 		List<ApplyDto> dtos = Lists.newArrayList();
-		List<PickActivityApply> list = pickActivityApplyService.findPickActivityApplyByPickActivity(activityId);
-		List<PickedActivityApply> list1 = pickedActivityApplyService.findPickedActivityApplyByPickedActivity(activityId);
-		for (PickActivityApply pickApply : list) {
-			User user = userService.findUserByUid(pickApply.getApplyUserId());
-			String name = Strings.isNullOrEmpty(user.getName()) ? "" : user.getName();
-			dtos.add(ApplyDtoBuilder.buildPickActivityApply(pickApply, name));
-		}
-		for (PickedActivityApply pickedApply : list1) {
-			User user = userService.findUserByUid(pickedApply.getApplyUserId());
-			String name = Strings.isNullOrEmpty(user.getName()) ? "" : user.getName();
-			dtos.add(ApplyDtoBuilder.buildPickedActivityApply(pickedApply, name));
+		List<Apply> list = applyService.findApplyByActivity(activityId);
+		for (Apply apply : list) {
+			dtos.add(ApplyDtoBuilder.buildApply(apply));
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}
+
 }

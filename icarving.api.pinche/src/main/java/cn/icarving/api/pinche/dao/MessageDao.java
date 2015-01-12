@@ -8,42 +8,42 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import cn.icarving.api.pinche.domain.UserMessage;
+import cn.icarving.api.pinche.domain.Message;
 
 @Repository
-public class UserMessageDao extends BaseDao<UserMessage> {
+public class MessageDao extends BaseDao<Message> {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public UserMessageDao() {
-		super(UserMessage.class);
+	public MessageDao() {
+		super(Message.class);
 	}
 
-	public List<UserMessage> findAllMessagesByUser(int uid) {
+	public List<Message> findAllMessagesByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserMessage WHERE toUid = :toUid");
+		Query query = session.createQuery("FROM Message WHERE toUid = :toUid");
 		query.setParameter("toUid", uid);
 		@SuppressWarnings("unchecked")
-		List<UserMessage> result = query.list();
+		List<Message> result = query.list();
 		return result;
 	}
 
-	public List<UserMessage> findUnreadMessagesByUser(int uid) {
+	public List<Message> findUnreadMessagesByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserMessage WHERE toUid = :toUid AND status = 0");
+		Query query = session.createQuery("FROM Message WHERE toUid = :toUid AND status = 0");
 		query.setParameter("toUid", uid);
 		@SuppressWarnings("unchecked")
-		List<UserMessage> result = query.list();
+		List<Message> result = query.list();
 		return result;
 	}
 
-	public List<UserMessage> findReadMessagesByUser(int uid) {
+	public List<Message> findReadMessagesByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM UserMessage WHERE toUid = :toUid AND status = 1");
+		Query query = session.createQuery("FROM Message WHERE toUid = :toUid AND status = 1");
 		query.setParameter("toUid", uid);
 		@SuppressWarnings("unchecked")
-		List<UserMessage> result = query.list();
+		List<Message> result = query.list();
 		return result;
 	}
 }

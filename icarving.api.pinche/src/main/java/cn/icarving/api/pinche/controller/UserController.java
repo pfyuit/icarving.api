@@ -23,18 +23,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public @ResponseBody
-	User userRegister() {
-		throw new ApiException("1000001", "wrong request");
-	}
-
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse userRegister(@RequestBody RegisterForm registerForm) {
 		User user = userService.findUserByUserName(registerForm.getUsername());
 		if (user != null) {
-			throw new ApiException(ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getCode(), ApiEnum.USER_REGISTER_FAILED_USER_ALREADY_REGISTERED.getMessage());
+			throw new ApiException(ApiEnum.USER_ALREADY_REGISTERED.getCode(), ApiEnum.USER_ALREADY_REGISTERED.getMessage());
 		}
 
 		user = new User();
@@ -52,10 +46,10 @@ public class UserController {
 	ApiResponse userLogin(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
 		User user = userService.findUserByUserName(username);
 		if (user == null) {
-			throw new ApiException(ApiEnum.USER_LOGIN_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_LOGIN_FAILED_CANNOT_FIND_USER.getMessage());
+			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
 		}
 		if (!user.getPassword().equals(password)) {
-			throw new ApiException(ApiEnum.USER_LOGIN_FAILED_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_LOGIN_FAILED_PASSWORD_NOT_MATCH.getMessage());
+			throw new ApiException(ApiEnum.USER_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_PASSWORD_NOT_MATCH.getMessage());
 		}
 
 		userService.login(user);
@@ -99,10 +93,10 @@ public class UserController {
 	ApiResponse userLogoff(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
 		User user = userService.findUserByUserName(username);
 		if (user == null) {
-			throw new ApiException(ApiEnum.USER_LOGOFF_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_LOGOFF_FAILED_CANNOT_FIND_USER.getMessage());
+			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
 		}
 		if (!user.getPassword().equals(password)) {
-			throw new ApiException(ApiEnum.USER_LOGOFF_FAILED_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_LOGOFF_FAILED_PASSWORD_NOT_MATCH.getMessage());
+			throw new ApiException(ApiEnum.USER_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_PASSWORD_NOT_MATCH.getMessage());
 		}
 
 		userService.logoff(user);
@@ -114,10 +108,10 @@ public class UserController {
 	ApiResponse userUpdate(@RequestBody User user) {
 		User dbUser = userService.findUserByUserName(user.getUsername());
 		if (dbUser == null) {
-			throw new ApiException(ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getMessage());
+			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
 		}
 		if (!dbUser.getPassword().equals(user.getPassword())) {
-			throw new ApiException(ApiEnum.USER_UPDATE_FAILED_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_UPDATE_FAILED_PASSWORD_NOT_MATCH.getMessage());
+			throw new ApiException(ApiEnum.USER_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_PASSWORD_NOT_MATCH.getMessage());
 		}
 
 		userService.updateProfile(user);
@@ -129,7 +123,7 @@ public class UserController {
 	ApiResponse userInfo(@RequestParam(value = "uid", required = true) int uid) {
 		User user = userService.findUserByUid(uid);
 		if (user == null) {
-			throw new ApiException(ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getCode(), ApiEnum.USER_UPDATE_FAILED_CANNOT_FIND_USER.getMessage());
+			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}

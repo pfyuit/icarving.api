@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.icarving.api.pinche.common.ApiEnum;
 import cn.icarving.api.pinche.common.ApiResponse;
-import cn.icarving.api.pinche.domain.UserMessage;
+import cn.icarving.api.pinche.domain.Message;
 import cn.icarving.api.pinche.dto.SendUserMessageForm;
-import cn.icarving.api.pinche.service.UserMessageService;
+import cn.icarving.api.pinche.service.MessageService;
 
 @Controller
 @RequestMapping("/message")
-public class UserMessageController {
+public class MessageController {
 
 	@Autowired
-	private UserMessageService userMessageService;
+	private MessageService userMessageService;
 
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody
@@ -34,7 +34,7 @@ public class UserMessageController {
 	@RequestMapping(value = "/{uid}/all", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse findAllMessagesByUser(@PathVariable(value = "uid") int uid) {
-		List<UserMessage> messages = userMessageService.findAllMessagesByUser(uid);
+		List<Message> messages = userMessageService.findAllMessagesByUser(uid);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), messages);
 	}
 

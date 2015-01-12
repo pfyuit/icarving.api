@@ -1,9 +1,8 @@
 package cn.icarving.api.pinche.dto;
 
-public class PickActivityCreateForm {
-	private int ownerId;
-	private int phone;
-	private int capacity;
+public class ActivityUpdateForm {
+	private int activityId;
+	private String phone;
 	private String startTime;
 	private String returnTime;
 	private String sourceAddress;
@@ -13,28 +12,20 @@ public class PickActivityCreateForm {
 	private String carType;
 	private String note;
 
-	public int getOwnerId() {
-		return ownerId;
+	public int getActivityId() {
+		return activityId;
 	}
 
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
+	public void setActivityId(int activityId) {
+		this.activityId = activityId;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
 	}
 
 	public String getStartTime() {

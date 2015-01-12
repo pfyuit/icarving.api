@@ -8,32 +8,33 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import cn.icarving.api.pinche.domain.PickActivity;
+import cn.icarving.api.pinche.domain.Apply;
 
 @Repository
-public class PickActivityDao extends BaseDao<PickActivity> {
+public class ApplyDao extends BaseDao<Apply> {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public PickActivityDao() {
-		super(PickActivity.class);
+	public ApplyDao() {
+		super(Apply.class);
 	}
 
-	public List<PickActivity> findPickActivityByUser(int uid) {
+	public List<Apply> findApplyByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from PickActivity where ownerId = :owerId");
-		query.setParameter("owerId", uid);
+		Query query = session.createQuery("from Apply where ownerId = :ownerId");
+		query.setParameter("ownerId", uid);
 		@SuppressWarnings("unchecked")
-		List<PickActivity> result = query.list();
+		List<Apply> result = query.list();
 		return result;
 	}
-	
-	public List<PickActivity> findPickActivityAll() {
+
+	public List<Apply> findApplyByActivity(int activityId) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from PickActivity");
+		Query query = session.createQuery("from Apply where activityId = :activityId");
+		query.setParameter("activityId", activityId);
 		@SuppressWarnings("unchecked")
-		List<PickActivity> result = query.list();
+		List<Apply> result = query.list();
 		return result;
 	}
 }

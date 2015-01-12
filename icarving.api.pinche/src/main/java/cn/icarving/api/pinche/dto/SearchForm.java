@@ -1,16 +1,15 @@
 package cn.icarving.api.pinche.dto;
 
-public class SearchPickedActivityForm {
-
+public class SearchForm {
 	private String startTime;
 	private String returnTime;
 	private String sourceAddress;
 	private String destAddress;
 
-	public SearchPickedActivityForm() {
+	public SearchForm() {
 	}
 
-	public SearchPickedActivityForm(String startTime, String returnTime, String sourceAddress, String destAddress) {
+	public SearchForm(String startTime, String returnTime, String sourceAddress, String destAddress) {
 		this.startTime = startTime;
 		this.returnTime = returnTime;
 		this.sourceAddress = sourceAddress;
