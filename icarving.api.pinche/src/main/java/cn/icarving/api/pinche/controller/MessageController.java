@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
+
 import cn.icarving.api.pinche.common.ApiEnum;
+import cn.icarving.api.pinche.common.ApiMessage;
 import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.domain.Message;
 import cn.icarving.api.pinche.dto.SendUserMessageForm;
@@ -38,11 +41,24 @@ public class MessageController {
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), messages);
 	}
 
+	@RequestMapping(value = "/{activityId}/allmessage", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse findAllMessagesByActivity(@PathVariable(value = "activityId") int activityId) {
+		List<Message> messages = userMessageService.findAllMessagesByActivity(activityId);
+		List<Message> result = Lists.newArrayList();
+		for (Message msg : messages) {
+			if (msg.getMessageType() == ApiMessage.MESSAGE_TYPE_MESSAGE) {
+				result.add(msg);
+			}
+		}
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), result);
+	}
+
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse sendUserMessage(@RequestBody SendUserMessageForm form) {
 		userMessageService.createUserMessage(form.getMessageType(), form.getActivityId(), form.getActivitySourceAddress(), form.getActivityDestAddress(), form.getApplyId(),
-				form.getFromUid(), form.getToUid(), form.getContent());
+				form.getFromUid(), form.getToUid(), form.getToName(), form.getContent(), form.getIsReply());
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 

@@ -13,6 +13,7 @@ import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiMessage;
 import cn.icarving.api.pinche.dao.MessageDao;
 import cn.icarving.api.pinche.domain.Message;
+import cn.icarving.api.pinche.domain.User;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -21,7 +22,12 @@ public class MessageService {
 	@Autowired
 	private MessageDao userMessageDao;
 
-	public void createUserMessage(int messageType, int activityId, String activitySourceAddress, String activityDestAddress, int applyId, int fromUid, int toUid, String content) {
+	@Autowired
+	private UserService userService;
+
+	public void createUserMessage(int messageType, int activityId, String activitySourceAddress, String activityDestAddress, int applyId, int fromUid, int toUid, String toName,
+			String content, int isReply) {
+		User user = userService.findUserByUid(fromUid);
 		Message msg = new Message();
 		msg.setMessageType(messageType);
 		msg.setActivityId(activityId);
@@ -29,9 +35,12 @@ public class MessageService {
 		msg.setActivityDestAddress(activityDestAddress);
 		msg.setApplyId(applyId);
 		msg.setFromUid(fromUid);
+		msg.setFromName(user == null ? "" : user.getName());
 		msg.setToUid(toUid);
+		msg.setToName(toName);
 		msg.setContent(content);
 		msg.setStatus(ApiMessage.MESSAGE_STATUS_UNREAD);
+		msg.setIsReply(isReply);
 		msg.setCreateTime(new Timestamp(new Date().getTime()));
 		msg.setLastModify(new Timestamp(new Date().getTime()));
 
@@ -40,6 +49,10 @@ public class MessageService {
 
 	public List<Message> findAllMessagesByUser(int uid) {
 		return userMessageDao.findAllMessagesByUser(uid);
+	}
+
+	public List<Message> findAllMessagesByActivity(int activityId) {
+		return userMessageDao.findAllMessagesByActivity(activityId);
 	}
 
 	public void readUserMessage(int userMessageId) {

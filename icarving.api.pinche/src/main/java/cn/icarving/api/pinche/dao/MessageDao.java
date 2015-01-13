@@ -28,6 +28,15 @@ public class MessageDao extends BaseDao<Message> {
 		List<Message> result = query.list();
 		return result;
 	}
+	
+	public List<Message> findAllMessagesByActivity(int activityId) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("FROM Message WHERE activityId = :activityId");
+		query.setParameter("activityId", activityId);
+		@SuppressWarnings("unchecked")
+		List<Message> result = query.list();
+		return result;
+	}
 
 	public List<Message> findUnreadMessagesByUser(int uid) {
 		Session session = sessionFactory.getCurrentSession();
@@ -46,4 +55,5 @@ public class MessageDao extends BaseDao<Message> {
 		List<Message> result = query.list();
 		return result;
 	}
+
 }

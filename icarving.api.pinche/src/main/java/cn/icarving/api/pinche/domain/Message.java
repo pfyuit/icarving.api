@@ -43,8 +43,14 @@ public class Message {
 	@Column(name = "from_uid")
 	private int fromUid;
 
+	@Column(name = "from_name")
+	private String fromName;
+
 	@Column(name = "to_uid")
 	private int toUid;
+
+	@Column(name = "to_name")
+	private String toName;
 
 	private String content;
 
@@ -52,6 +58,9 @@ public class Message {
 	 * 0 - unread, 1- read
 	 */
 	private int status;
+
+	@Column(name = "is_reply")
+	private int isReply;
 
 	@Column(name = "create_time")
 	private Timestamp createTime;
@@ -161,6 +170,30 @@ public class Message {
 
 	public void setActivityDestAddress(String activityDestAddress) {
 		this.activityDestAddress = activityDestAddress;
+	}
+
+	public String getFromName() {
+		return fromName;
+	}
+
+	public void setFromName(String fromName) {
+		this.fromName = fromName;
+	}
+
+	public String getToName() {
+		return toName;
+	}
+
+	public void setToName(String toName) {
+		this.toName = toName;
+	}
+
+	public int getIsReply() {
+		return isReply;
+	}
+
+	public void setIsReply(int isReply) {
+		this.isReply = isReply;
 	}
 
 }

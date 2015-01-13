@@ -8,7 +8,9 @@ public class SendUserMessageForm {
 	private int applyId;
 	private int fromUid;
 	private int toUid;
+	private String toName;
 	private String content;
+	private int isReply;
 
 	public int getFromUid() {
 		return fromUid;
@@ -72,6 +74,22 @@ public class SendUserMessageForm {
 
 	public void setApplyId(int applyId) {
 		this.applyId = applyId;
+	}
+
+	public String getToName() {
+		return toName;
+	}
+
+	public void setToName(String toName) {
+		this.toName = toName;
+	}
+
+	public int getIsReply() {
+		return isReply;
+	}
+
+	public void setIsReply(int isReply) {
+		this.isReply = isReply;
 	}
 
 }
