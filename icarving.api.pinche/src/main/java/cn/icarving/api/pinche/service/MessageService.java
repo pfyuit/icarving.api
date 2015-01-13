@@ -21,8 +21,13 @@ public class MessageService {
 	@Autowired
 	private MessageDao userMessageDao;
 
-	public void createUserMessage(int fromUid, int toUid, String content) {
+	public void createUserMessage(int messageType, int activityId, String activitySourceAddress, String activityDestAddress, int applyId, int fromUid, int toUid, String content) {
 		Message msg = new Message();
+		msg.setMessageType(messageType);
+		msg.setActivityId(activityId);
+		msg.setActivitySourceAddress(activitySourceAddress);
+		msg.setActivityDestAddress(activityDestAddress);
+		msg.setApplyId(applyId);
 		msg.setFromUid(fromUid);
 		msg.setToUid(toUid);
 		msg.setContent(content);

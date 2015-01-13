@@ -41,7 +41,8 @@ public class MessageController {
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse sendUserMessage(@RequestBody SendUserMessageForm form) {
-		userMessageService.createUserMessage(Integer.parseInt(form.getFromUid()), Integer.parseInt(form.getToUid()), form.getContent());
+		userMessageService.createUserMessage(form.getMessageType(), form.getActivityId(), form.getActivitySourceAddress(), form.getActivityDestAddress(), form.getApplyId(),
+				form.getFromUid(), form.getToUid(), form.getContent());
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
 	}
 

@@ -101,10 +101,12 @@ public class ActivityService {
 		activity.setLastModify(new Timestamp(new Date().getTime()));
 		activityDao.update(activity);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已更新捡人活动" + activiyId);
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), ApiMessage.NO_APPLY_ID,
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已更新捡人活动");
 		List<Apply> result = applyService.findApplyByActivity(activiyId);
 		for (Apply apply : result) {
-			messageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getOwnerId(), "捡人活动" + activiyId + "已被发起人更新");
+			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+					ApiMessage.SYSTEM_UID, apply.getOwnerId(), "捡人活动已被发起人更新");
 		}
 
 		return activity;
@@ -137,12 +139,14 @@ public class ActivityService {
 		activity.setLastModify(new Timestamp(new Date().getTime()));
 		activityDao.update(activity);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已取消捡人活动" + activityId + "。所有申请被自动取消");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), ApiMessage.NO_APPLY_ID,
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已取消捡人活动。所有申请被自动取消");
 		List<Apply> applies = applyDao.findApplyByActivity(activityId);
 		for (Apply apply : applies) {
 			apply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 			applyDao.update(apply);
-			messageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getOwnerId(), "捡人活动" + apply + "已被发起人取消，您的申请被自动取消");
+			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+					ApiMessage.SYSTEM_UID, apply.getOwnerId(), "捡人活动已被发起人取消，您的申请被自动取消");
 		}
 	}
 

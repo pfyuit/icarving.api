@@ -25,6 +25,9 @@ public class ActivityDtoBuilder {
 		dto.setOwnerName(activity.getOwnerName());
 		dto.setOwnerPhone(activity.getOwnerPhone());
 		dto.setOwnerAvatar(activity.getOwnerAvatar());
+		dto.setOwnerCountry(activity.getOwnerCountry());
+		dto.setOwnerProvince(activity.getOwnerProvince());
+		dto.setOwnerCity(activity.getOwnerCity());
 		dto.setActivityId(activity.getActivityId());
 		dto.setActivityType(activity.getActivityType());
 		dto.setPublishTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getPublishTime()));

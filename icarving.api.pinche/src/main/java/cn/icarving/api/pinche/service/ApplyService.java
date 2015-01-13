@@ -71,8 +71,10 @@ public class ApplyService {
 
 		applyDao.save(apply);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您的捡人活动" + activity.getActivityId() + "有一条新的申请");
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, applyUserId, "您已申请捡人活动" + activity.getActivityId());
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您的捡人活动有一条新的申请");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, applyUserId, "您已申请捡人活动");
 		return apply;
 	}
 
@@ -107,8 +109,10 @@ public class ApplyService {
 
 		activityDao.update(activity);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已批准捡人活动" + activity.getActivityId() + "的申请" + applyId);
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您的捡人活动申请" + apply.getApplyId() + "已被批准");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已批准捡人活动申请");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您的捡人活动申请已被批准");
 	}
 
 	public void unApproveApply(int applyId) {
@@ -139,8 +143,10 @@ public class ApplyService {
 		activity.setLastModify(new Timestamp(new Date().getTime()));
 		activityDao.update(activity);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已拒绝捡人活动" + activity.getActivityId() + "的申请" + applyId);
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您的捡人活动申请" + apply.getApplyId() + "已被拒绝");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "您已拒绝捡人活动申请");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您的捡人活动申请已被拒绝");
 	}
 
 	public List<Apply> findApplyByUser(int uid) {
@@ -207,8 +213,10 @@ public class ApplyService {
 		activity.setLastModify(new Timestamp(new Date().getTime()));
 		activityDao.update(activity);
 
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您已取消捡人活动申请" + apply.getApplyId());
-		messageService.createUserMessage(ApiMessage.SYSTEM_UID, activity.getOwnerId(), "捡人活动申请" + apply.getApplyId() + "已被申请人取消");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, apply.getOwnerId(), "您已取消捡人活动申请");
+		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), "捡人活动申请已被申请人取消");
 	}
 
 }
