@@ -1,7 +1,5 @@
 package cn.icarving.api.pinche.dto;
 
-import java.util.List;
-
 public class ActivityDto {
 	private int activityId;
 	private int activityType; // 1-pick, 2-picked
@@ -26,7 +24,6 @@ public class ActivityDto {
 	private String note;
 	private String publishTime;
 	private String lastModify;
-	private List<ApplyDto> applies;
 
 	public int getActivityId() {
 		return activityId;
@@ -210,14 +207,6 @@ public class ActivityDto {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
-	}
-
-	public List<ApplyDto> getApplies() {
-		return applies;
-	}
-
-	public void setApplies(List<ApplyDto> applies) {
-		this.applies = applies;
 	}
 
 }

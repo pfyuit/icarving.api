@@ -25,7 +25,7 @@ public class MessageService {
 	@Autowired
 	private UserService userService;
 
-	public void createUserMessage(int messageType, int activityId, String activitySourceAddress, String activityDestAddress, int applyId, int fromUid, int toUid, String toName,
+	public Message createUserMessage(int messageType, int activityId, String activitySourceAddress, String activityDestAddress, int applyId, int fromUid, int toUid, String toName,
 			String content, int isReply) {
 		User user = userService.findUserByUid(fromUid);
 		Message msg = new Message();
@@ -45,6 +45,7 @@ public class MessageService {
 		msg.setLastModify(new Timestamp(new Date().getTime()));
 
 		userMessageDao.save(msg);
+		return msg;
 	}
 
 	public List<Message> findAllMessagesByUser(int uid) {
@@ -55,7 +56,7 @@ public class MessageService {
 		return userMessageDao.findAllMessagesByActivity(activityId);
 	}
 
-	public void readUserMessage(int userMessageId) {
+	public Message readUserMessage(int userMessageId) {
 		Message msg = userMessageDao.find(userMessageId);
 		if (msg == null) {
 			throw new ApiException(ApiEnum.MESSAGE_CANNOT_FIND.getCode(), ApiEnum.MESSAGE_CANNOT_FIND.getMessage());
@@ -65,6 +66,7 @@ public class MessageService {
 		}
 		msg.setStatus(ApiMessage.MESSAGE_STATUS_READ);
 		userMessageDao.update(msg);
+		return msg;
 	}
 
 }

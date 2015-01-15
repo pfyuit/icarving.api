@@ -28,7 +28,7 @@ public class ActivityDao extends BaseDao<Activity> {
 		List<Activity> result = query.list();
 		return result;
 	}
-	
+
 	public List<Activity> findActivityAll() {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Activity");

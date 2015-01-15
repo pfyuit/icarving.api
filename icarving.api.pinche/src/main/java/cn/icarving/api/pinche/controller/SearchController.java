@@ -14,7 +14,6 @@ import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.Activity;
-import cn.icarving.api.pinche.domain.Apply;
 import cn.icarving.api.pinche.dto.ActivityDto;
 import cn.icarving.api.pinche.dto.ActivityDtoBuilder;
 import cn.icarving.api.pinche.dto.SearchForm;
@@ -46,8 +45,7 @@ public class SearchController {
 			if (!activity.getStatus().equals(ApiStatus.ACTIVITY_STATUS_VALID.getStatus())) {
 				continue;
 			}
-			List<Apply> applies = applyService.findApplyByActivity(activity.getActivityId());
-			dtos.add(ActivityDtoBuilder.buildActivity(activity, applies));
+			dtos.add(ActivityDtoBuilder.buildActivity(activity));
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
 	}

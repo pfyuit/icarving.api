@@ -78,7 +78,7 @@ public class ApplyService {
 		return apply;
 	}
 
-	public void approveApply(int applyId) {
+	public Apply approveApply(int applyId) {
 		Apply apply = applyDao.find(applyId);
 		if (apply == null) {
 			throw new ApiException(ApiEnum.APPLY_CANNOT_FIND.getCode(), ApiEnum.APPLY_CANNOT_FIND.getMessage());
@@ -113,9 +113,11 @@ public class ApplyService {
 				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已批准捡人活动申请", 0);
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
 				ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "您的捡人活动申请已被批准", 0);
+
+		return apply;
 	}
 
-	public void unApproveApply(int applyId) {
+	public Apply unApproveApply(int applyId) {
 		Apply apply = applyDao.find(applyId);
 		if (apply == null) {
 			throw new ApiException(ApiEnum.APPLY_CANNOT_FIND.getCode(), ApiEnum.APPLY_CANNOT_FIND.getMessage());
@@ -129,7 +131,7 @@ public class ApplyService {
 			throw new ApiException(ApiEnum.ACTIVITY_CANNOT_FIND.getCode(), ApiEnum.ACTIVITY_CANNOT_FIND.getMessage());
 		}
 
-		List<Apply> applies = findApplyByActivity(activity.getActivityId());
+		List<Apply> applies = findApplyByActivityId(activity.getActivityId());
 		for (Apply app : applies) {
 			if (app.getApplyId() == applyId) {
 				int approveNumber = activity.getApproveNumber();
@@ -147,6 +149,13 @@ public class ApplyService {
 				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已拒绝捡人活动申请", 0);
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
 				ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "您的捡人活动申请已被拒绝", 0);
+
+		return apply;
+	}
+
+	public Apply findApplyByApplyId(int applyId) {
+		Apply result = applyDao.find(applyId);
+		return result;
 	}
 
 	public List<Apply> findApplyByUser(int uid) {
@@ -165,7 +174,7 @@ public class ApplyService {
 		return result;
 	}
 
-	public List<Apply> findApplyByActivity(int activityId) {
+	public List<Apply> findApplyByActivityId(int activityId) {
 		List<Apply> applies = applyDao.findApplyByActivity(activityId);
 		List<Apply> result = Lists.newArrayList();
 		for (Apply apply : applies) {
@@ -176,7 +185,7 @@ public class ApplyService {
 		return result;
 	}
 
-	public void cancelApply(int uid, int applyId) {
+	public Apply cancelApply(int uid, int applyId) {
 		User user = userDao.find(uid);
 		if (user == null) {
 			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
@@ -217,6 +226,8 @@ public class ApplyService {
 				ApiMessage.SYSTEM_UID, apply.getOwnerId(), apply.getOwnerName(), "您已取消捡人活动申请", 0);
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activity.getActivityId(), activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
 				ApiMessage.SYSTEM_UID, activity.getOwnerId(), apply.getOwnerName(), "捡人活动申请已被申请人取消", 0);
+
+		return apply;
 	}
 
 }

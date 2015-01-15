@@ -103,7 +103,7 @@ public class ActivityService {
 
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), ApiMessage.NO_APPLY_ID,
 				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已更新捡人活动", 0);
-		List<Apply> result = applyService.findApplyByActivity(activiyId);
+		List<Apply> result = applyService.findApplyByActivityId(activiyId);
 		for (Apply apply : result) {
 			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
 					ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "捡人活动已被发起人更新", 0);
@@ -116,13 +116,18 @@ public class ActivityService {
 		List<Activity> result = activityDao.findActivityByUser(uid);
 		return result;
 	}
+	
+	public Activity findActivityByActivityId(int activityId) {
+		Activity result = activityDao.find(activityId);
+		return result;
+	}
 
 	public List<Activity> findActivityAll() {
 		List<Activity> result = activityDao.findActivityAll();
 		return result;
 	}
 
-	public void cancelActivity(int uid, int activityId) {
+	public Activity cancelActivity(int uid, int activityId) {
 		User user = userDao.find(uid);
 		if (user == null) {
 			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
@@ -148,6 +153,8 @@ public class ActivityService {
 			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
 					ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "捡人活动已被发起人取消，您的申请被自动取消", 0);
 		}
+		
+		return activity;
 	}
 
 }

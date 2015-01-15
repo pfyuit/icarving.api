@@ -23,7 +23,7 @@ import com.google.common.collect.Lists;
 @Controller
 @RequestMapping("/apply")
 public class ApplyController {
-	
+
 	@Autowired
 	private ApplyService applyService;
 
@@ -37,40 +37,36 @@ public class ApplyController {
 	@RequestMapping(value = "/approve", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse approveApply(@RequestParam(value = "applyId", required = true) int applyId) {
-		applyService.approveApply(applyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+		Apply apply = applyService.approveApply(applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
 	@RequestMapping(value = "/unapprove", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse unApproveApply(@RequestParam(value = "applyId", required = true) int applyId) {
-		applyService.unApproveApply(applyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+		Apply apply = applyService.unApproveApply(applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
 	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse cancelApply(@RequestParam(value = "uid", required = true) int uid, @RequestParam(value = "applyId", required = true) int applyId) {
-		applyService.cancelApply(uid, applyId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+		Apply apply = applyService.cancelApply(uid, applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
-	@RequestMapping(value = "/findByUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByApplyId", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findApplyByUser(@RequestParam(value = "uid", required = true) int uid) {
-		List<Apply> list = applyService.findApplyByUser(uid);
-		List<ApplyDto> dtos = Lists.newArrayList();
-		for (Apply apply : list) {
-			dtos.add(ApplyDtoBuilder.buildApply(apply));
-		}
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), dtos);
+	ApiResponse findApplyByApplyId(@RequestParam(value = "applyId", required = true) int applyId) {
+		Apply apply = applyService.findApplyByApplyId(applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
-	@RequestMapping(value = "/findByActivity", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByActivityId", method = RequestMethod.GET)
 	public @ResponseBody
-	ApiResponse findApplyByActivity(@RequestParam(value = "activityId", required = true) int activityId) {
+	ApiResponse findApplyByActivityId(@RequestParam(value = "activityId", required = true) int activityId) {
 		List<ApplyDto> dtos = Lists.newArrayList();
-		List<Apply> list = applyService.findApplyByActivity(activityId);
+		List<Apply> list = applyService.findApplyByActivityId(activityId);
 		for (Apply apply : list) {
 			dtos.add(ApplyDtoBuilder.buildApply(apply));
 		}

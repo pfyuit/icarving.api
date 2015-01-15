@@ -1,17 +1,13 @@
 package cn.icarving.api.pinche.dto;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import cn.icarving.api.pinche.common.ApiStatus;
 import cn.icarving.api.pinche.domain.Activity;
-import cn.icarving.api.pinche.domain.Apply;
-
-import com.google.common.collect.Lists;
 
 public class ActivityDtoBuilder {
 
-	public static ActivityDto buildActivity(Activity activity, List<Apply> applies) {
+	public static ActivityDto buildActivity(Activity activity) {
 		ActivityDto dto = new ActivityDto();
 		dto.setApplyNumber(activity.getApplyNumber());
 		dto.setApproveNumber(activity.getApproveNumber());
@@ -35,16 +31,6 @@ public class ActivityDtoBuilder {
 		dto.setSourceAddress(activity.getSourceAddress());
 		dto.setStartTime(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(activity.getStartTime()));
 		dto.setStatus(ApiStatus.fromStatus(activity.getStatus()).getDescription());
-
-		if (applies != null && !applies.isEmpty()) {
-			List<ApplyDto> applyDtos = Lists.newArrayList();
-			for (Apply apply : applies) {
-				ApplyDto applyDto = ApplyDtoBuilder.buildApply(apply);
-				applyDtos.add(applyDto);
-			}
-			dto.setApplies(applyDtos);
-		}
-
 		return dto;
 	}
 

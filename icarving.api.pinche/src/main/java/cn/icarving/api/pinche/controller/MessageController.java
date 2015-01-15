@@ -30,8 +30,8 @@ public class MessageController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse readMessage(@RequestParam(value = "msgId", required = true) int msgId) {
-		userMessageService.readUserMessage(msgId);
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+		Message msg = userMessageService.readUserMessage(msgId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), msg);
 	}
 
 	@RequestMapping(value = "/{uid}/all", method = RequestMethod.GET)
@@ -57,9 +57,9 @@ public class MessageController {
 	@RequestMapping(value = "/send", method = RequestMethod.POST)
 	public @ResponseBody
 	ApiResponse sendUserMessage(@RequestBody SendUserMessageForm form) {
-		userMessageService.createUserMessage(form.getMessageType(), form.getActivityId(), form.getActivitySourceAddress(), form.getActivityDestAddress(), form.getApplyId(),
-				form.getFromUid(), form.getToUid(), form.getToName(), form.getContent(), form.getIsReply());
-		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), null);
+		Message msg = userMessageService.createUserMessage(form.getMessageType(), form.getActivityId(), form.getActivitySourceAddress(), form.getActivityDestAddress(),
+				form.getApplyId(), form.getFromUid(), form.getToUid(), form.getToName(), form.getContent(), form.getIsReply());
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), msg);
 	}
 
 }
