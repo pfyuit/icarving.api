@@ -151,7 +151,7 @@ public class ActivityService {
 			apply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 			applyDao.update(apply);
 			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
-					ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "捡人活动已被发起人取消，您的申请被自动取消", 0);
+					ApiMessage.SYSTEM_UID, apply.getOwnerId(), apply.getOwnerName(), "捡人活动已被发起人取消，您的申请被自动取消", 0);
 		}
 		
 		return activity;

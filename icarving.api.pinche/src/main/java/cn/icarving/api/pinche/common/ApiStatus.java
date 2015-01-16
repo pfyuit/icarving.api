@@ -5,12 +5,11 @@ public enum ApiStatus {
 	ACTIVITY_STATUS_VALID("valid","有效"),
 	ACTIVITY_STATUS_FINISHED("finished","已结束"),
 	ACTIVITY_STATUS_CANCELLED("cancelled","已取消"),
-	ACTIVITY_STATUS_EXPIRED("expired","已过期"),
 	
-	APPLY_STATUS_UNAPPROVED("unapproved","处理中"),
+	APPLY_STATUS_UNAPPROVED("unapproved","等待批准"),
 	APPLY_STATUS_APPROVED("approved","已批准"),
-	APPLY_STATUS_CANCELLED("cancelled","已取消"),
-	APPLY_STATUS_EXPIRED("expired","已过期");
+	APPLY_STATUS_REJECTED("rejected","已拒绝"),
+	APPLY_STATUS_CANCELLED("cancelled","已取消");
 
 	private String status;
 	private String description;

@@ -55,6 +55,13 @@ public class ApplyController {
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
 	}
 
+	@RequestMapping(value = "/renew", method = RequestMethod.GET)
+	public @ResponseBody
+	ApiResponse renewApply(@RequestParam(value = "applyId", required = true) int applyId) {
+		Apply apply = applyService.renewApply(applyId);
+		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), ApplyDtoBuilder.buildApply(apply));
+	}
+
 	@RequestMapping(value = "/findByApplyId", method = RequestMethod.GET)
 	public @ResponseBody
 	ApiResponse findApplyByApplyId(@RequestParam(value = "applyId", required = true) int applyId) {

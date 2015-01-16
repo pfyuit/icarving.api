@@ -14,9 +14,10 @@ public enum ApiEnum {
 	APPLY_ACTIVITY_INVALID("1000008", "Invalid activity", "该活动已经无法申请"),
 	APPLY_ALREADY_APPLIED_ACTIVITY("1000008", "Already applied activity", "您已申请过该活动"),
 	APPLY_CANNOT_FIND("1000010", "Cannot find activity apply", "找不到活动申请"),
+	APPLY_ALREADY_UNAPPROVED("1000015", "Already approved activity apply", "该申请正等待批准"),
 	APPLY_ALREADY_APPROVED("1000015", "Already approved activity apply", "该申请已批准"),
-	APPLY_ALREADY_UNAPPROVED("1000015", "Already unapproved activity apply", "该申请已拒绝"),
-	APPLY_ALREADY_CANCELLED("1000015", "Already cancelled activity apply", "该申请已被取消"),
+	APPLY_ALREADY_REJECTED("1000015", "Already unapproved activity apply", "该申请已拒绝"),
+	APPLY_ALREADY_CANCELLED("1000015", "Already cancelled activity apply", "该申请已取消"),
 	
 	MESSAGE_CANNOT_FIND("1000008", "Cannot find user message", "该消息不存在"),
 	MESSAGE_ALREADY_READ("1000008", "Already read this message", "该消息已阅读"),
