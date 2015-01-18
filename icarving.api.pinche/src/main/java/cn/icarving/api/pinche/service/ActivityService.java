@@ -102,11 +102,11 @@ public class ActivityService {
 		activityDao.update(activity);
 
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), ApiMessage.NO_APPLY_ID,
-				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已更新捡人活动", 0);
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已更新活动", 0);
 		List<Apply> result = applyService.findApplyByActivityId(activiyId);
 		for (Apply apply : result) {
 			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activiyId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
-					ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "捡人活动已被发起人更新", 0);
+					ApiMessage.SYSTEM_UID, apply.getOwnerId(), activity.getOwnerName(), "活动已被发起人更新", 0);
 		}
 
 		return activity;
@@ -142,16 +142,17 @@ public class ActivityService {
 		}
 		activity.setStatus(ApiStatus.ACTIVITY_STATUS_CANCELLED.getStatus());
 		activity.setLastModify(new Timestamp(new Date().getTime()));
+		activity.setApproveNumber(0);
 		activityDao.update(activity);
 
 		messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), ApiMessage.NO_APPLY_ID,
-				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已取消捡人活动。所有申请被自动取消", 0);
+				ApiMessage.SYSTEM_UID, activity.getOwnerId(), activity.getOwnerName(), "您已取消活动。所有申请被自动取消", 0);
 		List<Apply> applies = applyDao.findApplyByActivity(activityId);
 		for (Apply apply : applies) {
 			apply.setStatus(ApiStatus.APPLY_STATUS_CANCELLED.getStatus());
 			applyDao.update(apply);
 			messageService.createUserMessage(ApiMessage.MESSAGE_TYPE_NOTIFY, activityId, activity.getSourceAddress(), activity.getDestAddress(), apply.getApplyId(),
-					ApiMessage.SYSTEM_UID, apply.getOwnerId(), apply.getOwnerName(), "捡人活动已被发起人取消，您的申请被自动取消", 0);
+					ApiMessage.SYSTEM_UID, apply.getOwnerId(), apply.getOwnerName(), "活动已被发起人取消，您的申请被自动取消", 0);
 		}
 		
 		return activity;
