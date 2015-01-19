@@ -13,6 +13,7 @@ import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.common.ApiResponse;
 import cn.icarving.api.pinche.domain.User;
 import cn.icarving.api.pinche.dto.RegisterForm;
+import cn.icarving.api.pinche.dto.UserUpdateForm;
 import cn.icarving.api.pinche.dto.WechatRegisterOrLoginForm;
 import cn.icarving.api.pinche.service.UserService;
 
@@ -105,16 +106,8 @@ public class UserController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	ApiResponse userUpdate(@RequestBody User user) {
-		User dbUser = userService.findUserByUserName(user.getUsername());
-		if (dbUser == null) {
-			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
-		}
-		if (!dbUser.getPassword().equals(user.getPassword())) {
-			throw new ApiException(ApiEnum.USER_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_PASSWORD_NOT_MATCH.getMessage());
-		}
-
-		userService.updateProfile(user);
+	ApiResponse userUpdate(@RequestBody UserUpdateForm form) {
+		User user = userService.updateUser(form);
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}
 

@@ -4,8 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Strings;
+
+import cn.icarving.api.pinche.common.ApiEnum;
+import cn.icarving.api.pinche.common.ApiException;
 import cn.icarving.api.pinche.dao.UserDao;
 import cn.icarving.api.pinche.domain.User;
+import cn.icarving.api.pinche.dto.UserUpdateForm;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -33,8 +38,31 @@ public class UserService {
 		userDao.delete(user);
 	}
 
-	public void updateProfile(User user) {
+	public User updateUser(UserUpdateForm form) {
+		User user = findUserByUid(form.getUid());
+		if (user == null) {
+			throw new ApiException(ApiEnum.USER_CANNOT_FIND.getCode(), ApiEnum.USER_CANNOT_FIND.getMessage());
+		}
+		if (!user.getPassword().equals(form.getPassword())) {
+			throw new ApiException(ApiEnum.USER_PASSWORD_NOT_MATCH.getCode(), ApiEnum.USER_PASSWORD_NOT_MATCH.getMessage());
+		}
+		if (!Strings.isNullOrEmpty(form.getName())) {
+			user.setName(form.getName());
+		}
+		if (!Strings.isNullOrEmpty(form.getCountry())) {
+			user.setCountry(form.getCountry());
+		}
+		if (!Strings.isNullOrEmpty(form.getProvince())) {
+			user.setProvince(form.getProvince());
+		}
+		if (!Strings.isNullOrEmpty(form.getCity())) {
+			user.setCity(form.getCity());
+		}
+		if (!Strings.isNullOrEmpty(form.getPhone())) {
+			user.setPhone(form.getPhone());
+		}
 		userDao.update(user);
+		return user;
 	}
 
 	public User findUserByUid(int uid) {
