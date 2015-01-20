@@ -1,13 +1,13 @@
 package cn.icarving.api.wechat.controller;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -113,6 +113,37 @@ public class UserController {
 		try {
 			String url = "http://www.icarving.cn/pinche/#/tab/view?uid=" + wechatRegisterOrLoginResponse.getResponse().getUid() + "&username="
 					+ wechatRegisterOrLoginResponse.getResponse().getUsername() + "&password=" + wechatRegisterOrLoginResponse.getResponse().getPassword();
+			response.sendRedirect(url);
+		} catch (IOException e) {
+			LOGGER.error("Redirect to url failed");
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping("/auth/callbackdetail/{id}")
+	public @ResponseBody
+	void authCallbackDetail(@PathVariable int id, @RequestParam(value = "code", required = true) String code, @RequestParam(value = "state", required = true) String state,
+			HttpServletResponse response) {
+		LOGGER.info("code: " + code + ", state=" + state);
+
+		GetUserAccessTokenResponse getUserAccessTokenResponse = getUserAccessToken(NetworkService.WECHAT_PUBLIC_APP_ID, NetworkService.WECHAT_PUBLIC_APP_SECRET, code,
+				"authorization_code");
+		LOGGER.info("access token: " + getUserAccessTokenResponse.getAccess_token() + ", openid: " + getUserAccessTokenResponse.getOpenid());
+
+		GetAuthUserInfoResponse getAuthUserInfoResponse = getAuthUserInfo(getUserAccessTokenResponse.getAccess_token(), getUserAccessTokenResponse.getOpenid(), "zh_CN");
+		LOGGER.info("openid: " + getAuthUserInfoResponse.getOpenid() + ", unionid: " + getAuthUserInfoResponse.getUnionid() + ", nickname: "
+				+ getAuthUserInfoResponse.getNickname() + ", sex: " + getAuthUserInfoResponse.getSex() + ", country: " + getAuthUserInfoResponse.getCountry() + ", province: "
+				+ getAuthUserInfoResponse.getProvince() + ", city: " + getAuthUserInfoResponse.getCity() + ", headimgurl: " + getAuthUserInfoResponse.getHeadimgurl());
+
+		WechatRegisterOrLoginResponse wechatRegisterOrLoginResponse = userService.registerOrLoginPincheUser(getAuthUserInfoResponse.getUnionid(),
+				getAuthUserInfoResponse.getOpenid(), getAuthUserInfoResponse.getNickname(), getAuthUserInfoResponse.getSex(), getAuthUserInfoResponse.getCountry(),
+				getAuthUserInfoResponse.getProvince(), getAuthUserInfoResponse.getCity(), getAuthUserInfoResponse.getHeadimgurl());
+		LOGGER.info("User: " + wechatRegisterOrLoginResponse.getResponse().getUsername() + "  registered or logged in the pinche application");
+
+		try {
+			String url = "http://www.icarving.cn/pinche/#/tab/view/activitydetail/" + id + "?uid=" + wechatRegisterOrLoginResponse.getResponse().getUid() + "&username="
+					+ wechatRegisterOrLoginResponse.getResponse().getUsername() + "&password=" + wechatRegisterOrLoginResponse.getResponse().getPassword();
+			LOGGER.info("Redicret to: " + url);
 			response.sendRedirect(url);
 		} catch (IOException e) {
 			LOGGER.error("Redirect to url failed");
