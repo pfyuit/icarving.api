@@ -22,7 +22,10 @@ public enum ApiEnum {
 	MESSAGE_CANNOT_FIND("1000008", "Cannot find user message", "该消息不存在"),
 	MESSAGE_ALREADY_READ("1000008", "Already read this message", "该消息已阅读"),
 	
-	SEARCH_ADDRESS_CANNOT_EMPTY("1000008", "Source address cannot be empty", "出发地不能为空");
+	SEARCH_ADDRESS_CANNOT_EMPTY("1000008", "Source address cannot be empty", "出发地不能为空"),
+	
+	INVITATION_CANNOT_FIND_INVITATION("1000008", "Cannot find invitation", "无效邀请码，请重试"),
+	INVITATION_ALREADY_USED("1000008", "Invitation already used", "该邀请码已被使用，请重试");
 
 	private String code;
 	private String message;

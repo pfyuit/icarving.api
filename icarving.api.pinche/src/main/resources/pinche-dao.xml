@@ -38,6 +38,7 @@
 				<value>cn.icarving.api.pinche.domain.Activity</value>
 				<value>cn.icarving.api.pinche.domain.Apply</value>
 				<value>cn.icarving.api.pinche.domain.Message</value>
+				<value>cn.icarving.api.pinche.domain.Invitation</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
