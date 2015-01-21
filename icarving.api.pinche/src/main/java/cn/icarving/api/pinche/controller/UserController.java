@@ -85,7 +85,13 @@ public class UserController {
 		user.setCity(wechatRegisterOrLoginForm.getCity());
 		user.setAvatar(wechatRegisterOrLoginForm.getAvatar());
 
-		userService.register(user);
+		try {
+			userService.register(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+			user.setName("NickName");
+			userService.register(user);
+		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}
 
