@@ -84,4 +84,15 @@ public class UserService {
 		return user;
 	}
 
+	public String doFilter(String str) {
+		String strResult = "", strOneStr = "";
+		for (int i = 0; i < str.length(); i++) {
+			strOneStr = str.substring(i, i + 1);
+			if (strOneStr.matches("[\u4e00-\u9fa5]+") || strOneStr.matches("[\\x00-\\x7F]+")) {
+				strResult = strResult + strOneStr;
+			}
+		}
+		return strResult;
+	}
+
 }

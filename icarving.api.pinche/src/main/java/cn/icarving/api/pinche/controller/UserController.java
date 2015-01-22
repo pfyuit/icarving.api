@@ -89,8 +89,14 @@ public class UserController {
 			userService.register(user);
 		} catch (Exception e) {
 			e.printStackTrace();
-			user.setName("NickName");
-			userService.register(user);
+			try {
+				user.setName(userService.doFilter(wechatRegisterOrLoginForm.getName()));
+				userService.register(user);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+				user.setName("NickName");
+				userService.register(user);
+			}
 		}
 		return new ApiResponse(ApiEnum.API_SUCCESS.getCode(), ApiEnum.API_SUCCESS.getMessage(), user);
 	}
